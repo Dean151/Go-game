@@ -6,14 +6,15 @@ import java.util.List;
 /**
  * Created by Thomas on 12/4/2014.
  */
+
+//Should Record the state of an intersection Empty, stone Player 1, stone Player 2 (Possibly extensible to stone Player 3)
 public class Intersection {
-    //Should Record the state of an intersection Empty, stone Player 1, stone Player 2 (Possibly extensible to stone Player 3)
+    public final static int EMPTY = 0;
+
     int state;
-    List<Intersection> neighbours;
 
     public Intersection() {
-        state=0;
-        neighbours = new ArrayList<Intersection>();
+        this.state = EMPTY;
     }
 
     public int getState() {
@@ -24,11 +25,7 @@ public class Intersection {
         this.state = state;
     }
 
-    public void addNeighbour(Intersection n) {
-        neighbours.add(n);
-    }
-
-    public List<Intersection> getNeighbours() {
-        return neighbours;
+    public boolean isEmpty() {
+        return state == EMPTY;
     }
 }

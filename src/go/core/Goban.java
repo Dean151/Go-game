@@ -13,19 +13,14 @@ public class Goban {
         this.height = height;
         intersections = new Intersection[width][height];
 
-        for(int i=0;i<width;i++) {
-            for (int j=0;j<height;j++) {
+        for(int i=0; i<this.width; i++) {
+            for (int j=0; j<this.height; j++) {
                 intersections[i][j] = new Intersection();
             }
         }
+    }
 
-        for(int i=0;i<width;i++) {
-            for(int j=0;j<height;j++){
-                if (i-1>0) intersections[i-1][j].addNeighbour(intersections[i][j]);
-                if (i+1<width) intersections[i+1][j].addNeighbour(intersections[i][j]);
-                if (j-1<0) intersections[i][j-1].addNeighbour(intersections[i][j-1]);
-                if (j>height) intersections[i][j+1].addNeighbour(intersections[i][j+1]);
-            }
-        }
+    public boolean isInGoban(int x, int y) {
+        return (x >= 0 && x < width && y >= 0 && y < height);
     }
 }
