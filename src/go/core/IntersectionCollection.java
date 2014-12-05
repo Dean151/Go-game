@@ -12,4 +12,18 @@ public class IntersectionCollection implements Iterable {
     //Should be able to for any given Intersection to give the adjacent Intersections in the Collection
     //Should implement the adding and removing of single our collections of Intersections
 
+    @Override
+    public Iterator<IntersectionCollection> iterator() {
+        return new Iterator<IntersectionCollection>() {
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public IntersectionCollection next() {
+                return null;
+            }
+        };
+    }
 }

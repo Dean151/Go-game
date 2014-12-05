@@ -11,7 +11,6 @@ public class Goban {
     public Goban(int width, int height) {
         this.width = width;
         this.height = height;
-
         intersections = new Intersection[width][height];
 
         for(int i=0;i<width;i++) {
