@@ -23,4 +23,12 @@ public class Goban {
     public boolean isInGoban(int x, int y) {
         return (x >= 0 && x < width && y >= 0 && y < height);
     }
+
+    public boolean isEmpty(int x, int y) {
+        if (isInGoban(x, y)) {
+            return intersections[x][y].isEmpty();
+        } else {
+            return false;
+        }
+    }
 }
