@@ -20,10 +20,22 @@ public class Goban {
         }
     }
 
+    /**
+     * Check if (x,y) is inside the Goban
+     * @param x x coord
+     * @param y y coord
+     * @return boolean true if in Goban , false otherwise
+     */
     public boolean isInGoban(int x, int y) {
         return (x >= 0 && x < width && y >= 0 && y < height);
     }
 
+    /**
+     * Check if (x,y) is a valid empty position
+     * @param x x coord
+     * @param y y coord
+     * @return boolean true if empty and valid, false otherwise
+     */
     public boolean isEmpty(int x, int y) {
         if (isInGoban(x, y)) {
             return intersections[x][y].isEmpty();

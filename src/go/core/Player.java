@@ -6,4 +6,9 @@ package go.core;
 public class Player {
     private int identifier;
     private int capturedStones; // Counts the stones captured by the enemy
+
+    public Player(int id) {
+        this.identifier = id;
+        this.capturedStones = 0;
+    }
 }
