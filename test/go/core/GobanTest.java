@@ -18,19 +18,19 @@ public class GobanTest extends TestCase {
 
     @Test
     public void testIsInGoban() throws Exception {
-        assertEquals(true, goban.isInGoban(0,0));
-        assertEquals(false, goban.isInGoban(-1,0));
-        assertEquals(false, goban.isInGoban(0,-1));
-        assertEquals(true, goban.isInGoban(9,2));
-        assertEquals(true, goban.isInGoban(18,18));
-        assertEquals(false, goban.isInGoban(19,4));
-        assertEquals(false, goban.isInGoban(9,19));
-        assertEquals(false, goban.isInGoban(21,24));
+        assertTrue(goban.isInGoban(0, 0));
+        assertFalse(goban.isInGoban(-1, 0));
+        assertFalse(goban.isInGoban(0, -1));
+        assertTrue(goban.isInGoban(9, 2));
+        assertTrue(goban.isInGoban(18, 18));
+        assertFalse(goban.isInGoban(19, 4));
+        assertFalse(goban.isInGoban(9, 19));
+        assertFalse(goban.isInGoban(21, 24));
     }
 
     @Test
     public void testIsEmpty() throws Exception {
-        assertEquals(true, goban.isEmpty(3, 2));
-        assertEquals(false, goban.isEmpty(-1, -1));
+        assertTrue(goban.isEmpty(3, 2));
+        assertFalse(goban.isEmpty(-1, -1));
     }
 }
