@@ -14,3 +14,6 @@ hs_err_pid*
 # Idea files
 *.iml
 .idea/
+
+# TP Subject
+*.pdf
