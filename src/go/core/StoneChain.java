@@ -34,16 +34,13 @@ public class StoneChain {
      * @param playedStone the stone played this turn
      * @return a new StoneChain created by fusing both StoneChains
      */
-    public StoneChain add(StoneChain stoneChain, Intersection playedStone) {
-        // Create new StoneChain
-        StoneChain newStoneChain = new StoneChain(stones, liberties, owner);
+    public void add(StoneChain stoneChain, Intersection playedStone) {
         // Fuse stone sets
-        newStoneChain.stones.addAll(stoneChain.stones);
+        this.stones.addAll(stoneChain.stones);
         // Fuse liberties
-        newStoneChain.liberties.addAll(stoneChain.liberties);
+        this.liberties.addAll(stoneChain.liberties);
         // remove played stone from liberties
-        newStoneChain.liberties.remove(playedStone);
-        return newStoneChain;
+        this.liberties.remove(playedStone);
     }
 
     /**
