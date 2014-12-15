@@ -77,4 +77,19 @@ public class Goban {
 
         return freedomNumber;
     }
+
+    /**
+     * Get the Goban actual state in text
+     * @return String with Goban actual stage
+     */
+    @Override
+    public String toString() {
+        String string = "";
+        for(int y=0; y<this.height; y++) {
+            for (int x = 0; x < this.width; x++) {
+                string += Integer.toString(intersections[x][y].getState());
+            }
+            string += "\n";
+        }
+    }
 }
