@@ -45,23 +45,23 @@ public class Goban {
     }
 
     /**
-     * Check if (x,y) has freedoms
+     * Check if (x,y) has liberties
      * @param x x coord
      * @param y y coord
-     * @return true if the position has freedom, false otherwise
+     * @return true if the position has liberties, false otherwise
      */
-    public boolean hasFreedom(int x, int y) {
-        return freedomNumber(x, y)==0;
+    public boolean hasLiberties(int x, int y) {
+        return libertyCount(x, y) != 0;
     }
 
     /**
-     * check the number of freedom for (x,y)
+     * check the number of liberties for (x,y)
      * @param x x coord
      * @param y y coord
-     * @return the number of freedom of this intersection
+     * @return the number of liberties of this intersection
      */
-    public int freedomNumber(int x, int y) {
-        int freedomNumber = 0;
+    public int libertyCount(int x, int y) {
+        int libertyCount = 0;
 
         int[] dx = {-1,0,1,0};
         int[] dy = {0,-1,0,1};
@@ -71,11 +71,11 @@ public class Goban {
             int newY = y + dy[i];
 
             if (isEmpty(newX, newY)) {
-                freedomNumber++;
+                libertyCount++;
             }
         }
 
-        return freedomNumber;
+        return libertyCount;
     }
 
     /**
@@ -91,5 +91,7 @@ public class Goban {
             }
             string += "\n";
         }
+
+        return string;
     }
 }
