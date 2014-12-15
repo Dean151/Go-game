@@ -33,12 +33,23 @@ public class Goban {
         return (x >= 0 && x < width && y >= 0 && y < height);
     }
 
+    /**
+     * Check if intersection is inside the goban
+     * @param intersection intersection to check
+     * @return
+     */
     public boolean isInGoban(Intersection intersection) {
         int x = intersection.getX();
         int y = intersection.getY();
         return (x >= 0 && x < width && y >= 0 && y < height);
     }
 
+    /**
+     * Intersection getter at (x,y)
+     * @param x x coord
+     * @param y y coord
+     * @return
+     */
     public Intersection getIntersection(int x, int y) {
         if (isInGoban(x, y)) {
             return intersections[x][y];

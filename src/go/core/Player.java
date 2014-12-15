@@ -24,7 +24,7 @@ public class Player {
      * add nb to capturedStones
      * @param nb number of stones to add in captured stones
      */
-    public void addCapturedStone(int nb) {
+    public void addCapturedStones(int nb) {
         capturedStones += nb;
     }
 
