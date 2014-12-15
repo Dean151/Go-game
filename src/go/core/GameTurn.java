@@ -35,7 +35,7 @@ public class GameTurn {
      * @param X The x coordinate of the played stone, this game turn, -1 if the player passes
      * @param Y The y coordinate of the played stone, this game turn, -1 if the player passes
      * @param player The player making the given game turn
-     * @param freedIntersections A set of Intersections which may have been freed, due to being eaten
+     * @param freedIntersections A set of Intersections which may have been freed, due to being captured
      */
     public GameTurn(GameTurn prev, int X, int Y, Player player , Set<Intersection> freedIntersections ) {
         gobanState = prev.gobanState.clone();
