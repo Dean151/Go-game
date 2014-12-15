@@ -13,6 +13,22 @@ public class Player {
     }
 
     /**
+     * capturedStones getter
+     * @return capturedStones
+     */
+    public int getCapturedStones() {
+        return capturedStones;
+    }
+
+    /**
+     * add nb to capturedStones
+     * @param nb number of stones to add in captured stones
+     */
+    public void addCapturedStone(int nb) {
+        capturedStones += nb;
+    }
+
+    /**
      * Method to make the player play
      */
     public void play() {
