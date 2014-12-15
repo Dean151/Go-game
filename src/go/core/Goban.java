@@ -60,7 +60,7 @@ public class Goban {
         // Should be in goban
         if (!isInGoban(intersection)) return false;
 
-        // Should prevent overplayer another stone
+        // Should prevent play over another stone
         if (intersection.getStoneChain() != null) return false;
 
         // Should prevent suicide
