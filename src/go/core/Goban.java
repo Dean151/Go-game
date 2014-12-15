@@ -33,6 +33,12 @@ public class Goban {
         return (x >= 0 && x < width && y >= 0 && y < height);
     }
 
+    public boolean isInGoban(Intersection intersection) {
+        int x = intersection.getX();
+        int y = intersection.getY();
+        return (x >= 0 && x < width && y >= 0 && y < height);
+    }
+
     public Intersection getIntersection(int x, int y) {
         if (isInGoban(x, y)) {
             return intersections[x][y];
@@ -51,6 +57,16 @@ public class Goban {
 
         // TODO check if the move is valid
 
-        return false;
+        // Should be in goban
+        if (!isInGoban(intersection)) return false;
+
+        // Should prevent overplayer another stone
+        if (intersection.getStoneChain() != null) return false;
+
+        // Should prevent suicide
+
+        // Should avoid ko
+
+        return true;
     }
 }
