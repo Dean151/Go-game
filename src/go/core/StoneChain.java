@@ -63,7 +63,7 @@ public class StoneChain {
     public void die() {
         for (Intersection rollingStone : this.stones) {
             rollingStone.setStoneChain(null);
-            List<StoneChain> adjacentStoneChains = rollingStone.getAdjacentStoneChains();
+            Set<StoneChain> adjacentStoneChains = rollingStone.getAdjacentStoneChains();
             for (StoneChain stoneChain : adjacentStoneChains) {
                 stoneChain.liberties.add(rollingStone);
             }
