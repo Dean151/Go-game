@@ -13,18 +13,6 @@ public class StoneChain {
     private Set<Intersection> stones;
     private Set<Intersection> liberties;
 
-    public Player getOwner() {
-        return owner;
-    }
-
-    public Set<Intersection> getLiberties() {
-        return liberties;
-    }
-
-    public Set<Intersection> getStones() {
-        return stones;
-    }
-
     private Player owner;
 
     public StoneChain(Set<Intersection> stones, Set<Intersection> liberties, Player owner) {
@@ -37,8 +25,37 @@ public class StoneChain {
         stones = new HashSet<Intersection>();
         stones.add(intersection);
         this.owner = owner;
-        liberties = new HashSet<Intersection>();
-        liberties.addAll(intersection.getEmptyNeighbors());
+        liberties = new HashSet<Intersection>(intersection.getEmptyNeighbors());
+    }
+
+    public StoneChain(StoneChain stoneChain) {
+        this.stones = new HashSet<Intersection>(stoneChain.stones);
+        this.liberties = new HashSet<Intersection>(stoneChain.liberties);
+        this.owner = stoneChain.owner;
+    }
+
+    /**
+     * owner getter
+     * @return owner
+     */
+    public Player getOwner() {
+        return owner;
+    }
+
+    /**
+     * liberties getter
+     * @return Set of liberties
+     */
+    public Set<Intersection> getLiberties() {
+        return liberties;
+    }
+
+    /**
+     * stones getter
+     * @return Set of stones
+     */
+    public Set<Intersection> getStones() {
+        return stones;
     }
 
     /**
