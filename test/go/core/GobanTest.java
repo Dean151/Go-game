@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class GobanTest extends TestCase {
 
@@ -13,7 +14,7 @@ public class GobanTest extends TestCase {
 
     @Before
     public void setUp() throws Exception {
-        goban = new Goban(19, 19);
+        goban = new Goban(3, 3);
     }
 
     @Test
@@ -21,16 +22,24 @@ public class GobanTest extends TestCase {
         assertTrue(goban.isInGoban(0, 0));
         assertFalse(goban.isInGoban(-1, 0));
         assertFalse(goban.isInGoban(0, -1));
-        assertTrue(goban.isInGoban(9, 2));
-        assertTrue(goban.isInGoban(18, 18));
-        assertFalse(goban.isInGoban(19, 4));
-        assertFalse(goban.isInGoban(9, 19));
-        assertFalse(goban.isInGoban(21, 24));
+        assertTrue(goban.isInGoban(2, 2));
+        assertTrue(goban.isInGoban(0, 2));
+        assertFalse(goban.isInGoban(3, 1));
+        assertFalse(goban.isInGoban(1, 4));
+        assertFalse(goban.isInGoban(5, 4));
+
+        Intersection intersection = new Intersection(goban, 1, 1);
+        assertTrue(goban.isInGoban(intersection));
+        intersection = new Intersection(goban, 4, 2);
+        assertFalse(goban.isInGoban(intersection));
     }
 
     @Test
-    public void testIsEmpty() throws Exception {
-        assertTrue(goban.isEmpty(3, 2));
-        assertFalse(goban.isEmpty(-1, -1));
+    public void testIsValidMove() throws Exception {
+        Intersection intersection = new Intersection(goban, 1, 1);
+        Player player = new Player(1);
+        assertTrue(goban.isValidMove(intersection, player));
+        intersection = new Intersection(goban, 1, 3);
+        assertFalse(goban.isValidMove(intersection, player));
     }
 }

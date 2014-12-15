@@ -1,7 +1,6 @@
 package go.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Thomas on 12/4/2014.
@@ -63,10 +62,23 @@ public class Intersection {
      * Adjacent Stone Chains getter
      * @return List of adjacents stone chains
      */
-    public List<StoneChain> getAdjacentStoneChains() {
-        List<StoneChain> adjacentStoneChains = new ArrayList<StoneChain>();
+    public Set<StoneChain> getAdjacentStoneChains() {
+        Set<StoneChain> adjacentStoneChains = new HashSet<StoneChain>();
 
-        // TODO get adjacent stone chains
+        int[] dx = {-1,0,1,0}, dy = {0,-1,0,1};
+        assert dx.length == dy.length : "dx and dy should have the same length";
+
+        for (int i = 0; i < dx.length - 1; i++) {
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+
+            if (goban.isInGoban(newX, newY)) {
+                Intersection adjIntersection = goban.getIntersection(newX, newY);
+                if (adjIntersection.stoneChain != null) {
+                    adjacentStoneChains.add(adjIntersection.stoneChain);
+                }
+            }
+        }
 
         return adjacentStoneChains;
     }
@@ -86,9 +98,9 @@ public class Intersection {
             int newY = y + dy[i];
 
             if (goban.isInGoban(newX, newY)) {
-                Intersection newIntersection = goban.getIntersection(newX, newY);
-                if (newIntersection.isEmpty()) {
-                    emptyNeighbors.add(newIntersection);
+                Intersection adjIntersection = goban.getIntersection(newX, newY);
+                if (adjIntersection.isEmpty()) {
+                    emptyNeighbors.add(adjIntersection);
                 }
             }
         }
