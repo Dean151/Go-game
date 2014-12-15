@@ -7,39 +7,92 @@ import java.util.List;
  * Created by Thomas on 12/4/2014.
  */
 
-//Should Record the state of an intersection Empty, stone Player 1, stone Player 2 (Possibly extensible to stone Player 3)
 public class Intersection {
-    public final static int EMPTY = 0;
+    private Goban goban;
+    private int x,y;
+    private StoneChain stoneChain;
 
-    int state;
-
-    public Intersection() {
-        this.state = EMPTY;
+    public Intersection(Goban goban, int x, int y) {
+        this.goban = goban;
+        this.x = x;
+        this.y = y;
+        this.stoneChain = null;
     }
 
     /**
-     * State getter
-     * @return 0 if empty, 1 or 2 for P1 or P2
+     * x getter
+     * @return x
      */
-    public int getState() {
-        return state;
+    public int getX() {
+        return x;
     }
 
     /**
-     * Allow to change the value of state
-     * @param state new state (0 is empty, 1 for P1 stone, 2 for P2 stone
+     * y getter
+     * @return y
      */
-    public void setState(int state) {
-        if (state >= 0 && state <= 2) { // We make sure we have a valid State in parameter
-            this.state = state;
-        }
+    public int getY() {
+        return y;
     }
 
     /**
-     * Check if this intersection is empty
+     * stoneChain getter
+     * @return stoneChain
+     */
+    public StoneChain getStoneChain() {
+        return stoneChain;
+    }
+
+    /**
+     * stoneChain setter
+     * @param stoneChain can be null
+     */
+    public void setStoneChain(StoneChain stoneChain) {
+        this.stoneChain = stoneChain;
+    }
+
+    /**
+     * get to know if the intersection is empty or not
      * @return true if empty, false otherwise
      */
     public boolean isEmpty() {
-        return state == EMPTY;
+        return stoneChain == null;
+    }
+
+    /**
+     * Adjacent Stone Chains getter
+     * @return List of adjacents stone chains
+     */
+    public List<StoneChain> getAdjacentStoneChains() {
+        List<StoneChain> adjacentStoneChains = new ArrayList<StoneChain>();
+
+        // TODO get adjacent stone chains
+
+        return adjacentStoneChains;
+    }
+
+    /**
+     * Empty neighbors getter
+     * @return List of empty neighbors intersections
+     */
+    public List<Intersection> getEmptyNeighbors() {
+        List<Intersection> emptyNeighbors = new ArrayList<Intersection>();
+
+        int[] dx = {-1,0,1,0}, dy = {0,-1,0,1};
+        assert dx.length == dy.length : "dx and dy should have the same length";
+
+        for (int i = 0; i < dx.length - 1; i++) {
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+
+            if (goban.isInGoban(newX, newY)) {
+                Intersection newIntersection = goban.getIntersection(newX, newY);
+                if (newIntersection.isEmpty()) {
+                    emptyNeighbors.add(newIntersection);
+                }
+            }
+        }
+
+        return emptyNeighbors;
     }
 }

@@ -5,23 +5,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 public class IntersectionTest extends TestCase {
 
+    private Goban goban;
     private Intersection intersection;
 
     @Before
     public void setUp() throws Exception {
-        intersection = new Intersection();
+        goban = new Goban(3,3);
+        intersection = goban.getIntersection(1,1);
     }
 
     @Test
     public void testGetState() throws Exception {
-        assertEquals(Intersection.EMPTY, intersection.getState());
+        assertNull(intersection.getStoneChain());
     }
 
     @Test
     public void testIsEmpty() throws Exception {
-        assertEquals(true, intersection.isEmpty());
+        assertTrue(intersection.isEmpty());
     }
 }
