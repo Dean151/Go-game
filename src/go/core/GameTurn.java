@@ -62,7 +62,7 @@ public class GameTurn {
     /**
      * Overriding the equals function, first check against hash codes of the goban states for speed,
      * Then if the hashCodes are the same makes a deep comparison between the goban states.
-     * @param obj
+     * @param obj The object to be compared to this
      * @return boolean stating if the two GameTurns end the same goban state
      */
     @Override
