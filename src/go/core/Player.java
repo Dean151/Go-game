@@ -13,6 +13,14 @@ public class Player {
     }
 
     /**
+     * identifier getter
+     * @return identifier
+     */
+    public int getIdentifier() {
+        return identifier;
+    }
+
+    /**
      * capturedStones getter
      * @return capturedStones
      */
