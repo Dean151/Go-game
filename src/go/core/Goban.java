@@ -79,24 +79,24 @@ public class Goban {
         Set<StoneChain> adjStoneChains = intersection.getAdjacentStoneChains();
         StoneChain newStoneChain = new StoneChain(intersection, player);
         for (StoneChain stoneChain : adjStoneChains) {
-            if (stoneChain.owner == player) {
+            if (stoneChain.getOwner() == player) {
                 newStoneChain.add(stoneChain, intersection);
             } else {
                 stoneChain.removeLiberty(intersection);
-                if (stoneChain.liberties.size() == 0) {
+                if (stoneChain.getLiberties().size() == 0) {
                     stoneChain.die();
                 }
             }
         }
 
         // Preventing suicide
-        if (newStoneChain.liberties.size() == 0) {
+        if (newStoneChain.getLiberties().size() == 0) {
             return false;
         }
 
 
 
-        for (Intersection stone : newStoneChain.stones) {
+        for (Intersection stone : newStoneChain.getStones()) {
             stone.setStoneChain(newStoneChain);
         }
         return true;

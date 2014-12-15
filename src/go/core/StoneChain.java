@@ -10,9 +10,22 @@ import java.util.Set;
  * Created by Thomas on 12/4/2014.
  */
 public class StoneChain {
-    Set<Intersection> stones;
-    Set<Intersection> liberties;
-    Player owner;
+    private Set<Intersection> stones;
+    private Set<Intersection> liberties;
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public Set<Intersection> getLiberties() {
+        return liberties;
+    }
+
+    public Set<Intersection> getStones() {
+        return stones;
+    }
+
+    private Player owner;
 
     public StoneChain(Set<Intersection> stones, Set<Intersection> liberties, Player owner) {
         this.stones = stones;
