@@ -13,9 +13,9 @@ public class Goban {
         this.height = height;
         intersections = new Intersection[width][height];
 
-        for(int i=0; i<this.width; i++) {
-            for (int j=0; j<this.height; j++) {
-                intersections[i][j] = new Intersection();
+        for(int x=0; x<this.width; x++) {
+            for (int y=0; y<this.height; y++) {
+                intersections[x][y] = new Intersection();
             }
         }
     }
