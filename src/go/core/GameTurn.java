@@ -18,9 +18,12 @@ public class GameTurn {
      */
     public GameTurn(int width, int height) {
         gobanState = new int[width][height];
+
         // Move is virtual, x and y are set to -1
         x = -1;
         y = -1;
+
+        // Using Java Tools to make a pertinent hash on the goban state
         hashCode = Arrays.deepHashCode(gobanState);
     }
 
@@ -36,17 +39,20 @@ public class GameTurn {
      */
     public GameTurn(GameTurn prev, int X, int Y, Player player , Set<Intersection> freedIntersections ) {
         gobanState = prev.gobanState.clone();
-
         x = X;
         y = Y;
+
+        // Applying the played stone change, if is not a pass move
         if ( x > 0 && y > 0 ) {
             gobanState[x][y] = player.getIdentifier();
         }
 
+        // Setting all the freed intersections to 0
         for(Intersection freedIntersection : freedIntersections) {
             gobanState[freedIntersection.getX()][freedIntersection.getY()] = 0;
         }
 
+        // Using Java Tools to make a pertinent hash on the goban state
         hashCode = Arrays.deepHashCode(gobanState);
     }
 
@@ -64,8 +70,6 @@ public class GameTurn {
         GameTurn castedObj = (GameTurn) obj;
 
         if(hashCode != castedObj.hashCode) return false;
-        if(Arrays.deepEquals(this.gobanState,castedObj.gobanState)) return true ;
-
-        return false ;
+        return Arrays.deepEquals(this.gobanState,castedObj.gobanState) ;
     }
 }
