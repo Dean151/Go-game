@@ -43,4 +43,38 @@ public class Goban {
             return false;
         }
     }
+
+    /**
+     * Check if (x,y) has freedoms
+     * @param x x coord
+     * @param y y coord
+     * @return true if the position has freedom, false otherwise
+     */
+    public boolean hasFreedom(int x, int y) {
+        return freedomNumber(x, y)==0;
+    }
+
+    /**
+     * check the number of freedom for (x,y)
+     * @param x x coord
+     * @param y y coord
+     * @return the number of freedom of this intersection
+     */
+    public int freedomNumber(int x, int y) {
+        int freedomNumber = 0;
+
+        int[] dx = {-1,0,1,0};
+        int[] dy = {0,-1,0,1};
+
+        for (int i = 0; i < 3; i++) {
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+
+            if (isEmpty(newX, newY)) {
+                freedomNumber++;
+            }
+        }
+
+        return freedomNumber;
+    }
 }
