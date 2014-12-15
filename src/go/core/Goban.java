@@ -1,5 +1,7 @@
 package go.core;
 
+import java.util.Set;
+
 /**
  * Created by Thomas on 12/4/2014.
  */
@@ -59,25 +61,44 @@ public class Goban {
     }
 
     /**
-     * check if intersection is a valid move for the player
+     * check if intersection is a valid move for the player and record the move if valid
      * @param intersection position where the player want to play
      * @param player
      * @return true if the move is valid, false otherwise
      */
-    public boolean isValidMove(Intersection intersection, Player player) {
-
-        // TODO check if the move is valid
+    public boolean play(Intersection intersection, Player player) {
 
         // Should be in goban
         if (!isInGoban(intersection)) return false;
 
-        // Should prevent play over another stone
+        // Preventing playing over another stone
         if (intersection.getStoneChain() != null) return false;
 
-        // Should prevent suicide
+        // TODO avoid ko
 
-        // Should avoid ko
+        Set<StoneChain> adjStoneChains = intersection.getAdjacentStoneChains();
+        StoneChain newStoneChain = new StoneChain(intersection, player);
+        for (StoneChain stoneChain : adjStoneChains) {
+            if (stoneChain.owner == player) {
+                newStoneChain.add(stoneChain, intersection);
+            } else {
+                stoneChain.removeLiberty(intersection);
+                if (stoneChain.liberties.size() == 0) {
+                    stoneChain.die();
+                }
+            }
+        }
 
+        // Preventing suicide
+        if (newStoneChain.liberties.size() == 0) {
+            return false;
+        }
+
+
+
+        for (Intersection stone : newStoneChain.stones) {
+            stone.setStoneChain(newStoneChain);
+        }
         return true;
     }
 }

@@ -38,8 +38,8 @@ public class GobanTest extends TestCase {
     public void testIsValidMove() throws Exception {
         Intersection intersection = new Intersection(goban, 1, 1);
         Player player = new Player(1);
-        assertTrue(goban.isValidMove(intersection, player));
+        assertTrue(goban.play(intersection, player));
         intersection = new Intersection(goban, 1, 3);
-        assertFalse(goban.isValidMove(intersection, player));
+        assertFalse(goban.play(intersection, player));
     }
 }
