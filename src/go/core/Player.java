@@ -7,8 +7,15 @@ public class Player {
     private int identifier;
     private int capturedStones; // Counts the stones captured by the enemy
 
-    public Player(int id) {
-        this.identifier = id;
+    public Player(int identifier) {
+        this.identifier = identifier;
         this.capturedStones = 0;
+    }
+
+    /**
+     * Method to make the player play
+     */
+    public void play() {
+        // TODO play method
     }
 }
