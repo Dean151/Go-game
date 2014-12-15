@@ -10,6 +10,7 @@ public class GameTurn {
     private int[][] gobanState;
     private int x, y;
     private int hashCode;
+    private int countCapturedStones;
 
     /**
      * Constructor for the first virtual gameTurn, which gives the correct size for the array representing the goban
@@ -18,6 +19,7 @@ public class GameTurn {
      */
     public GameTurn(int width, int height) {
         gobanState = new int[width][height];
+        countCapturedStones = 0;
 
         // Move is virtual, x and y are set to -1
         x = -1;
@@ -29,7 +31,7 @@ public class GameTurn {
 
     /**
      * Constructor which uses the previous GameTurn to be able to record the new state based on the previous one,
-     * And applying the potential modifications:  adding the played stone, and removing eaten stones
+     * And applying the potential modifications:  adding the played stone, and removing and counting captured stones.
      * Cam also make a passing move by setting the coordinates of the played stone to (-1,-1)
      * @param prev The previous GameTurn
      * @param X The x coordinate of the played stone, this game turn, -1 if the player passes
@@ -47,10 +49,11 @@ public class GameTurn {
             gobanState[x][y] = player.getIdentifier();
         }
 
-        // Setting all the freed intersections to 0
+        // Setting all the freed intersections to 0, and counting the number of captured stones
         for(Intersection freedIntersection : freedIntersections) {
             gobanState[freedIntersection.getX()][freedIntersection.getY()] = 0;
         }
+        countCapturedStones = freedIntersections.size();
 
         // Using Java Tools to make a pertinent hash on the goban state
         hashCode = Arrays.deepHashCode(gobanState);
