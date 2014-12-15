@@ -53,6 +53,4 @@ public class Goban {
 
         return false;
     }
-
-    public
 }
