@@ -60,6 +60,46 @@ public class GameTurn {
     }
 
     /**
+     *
+     * @return the State of the goban after a game turn, matrix of 0, 1 and 2
+     */
+    public int[][] getGobanState() {
+        return gobanState;
+    }
+
+    /**
+     *
+     * @return the X coordinate of the played move in the game turn, -1 if pass or initialization move
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     *
+     * @return the Y coordinate of the played move in the game turn, -1 if pass or initialization move
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     *
+     * @return a hashCode of the state of the goban after the game turn
+     */
+    public int getHashCode() {
+        return hashCode;
+    }
+
+    /**
+     *
+     * @return the number of captured stones this given game turn, between 0 and N²-1 where N is the size of the board.
+     */
+    public int getCountCapturedStones() {
+        return countCapturedStones;
+    }
+
+    /**
      * Overriding the equals function, first check against hash codes of the goban states for speed,
      * Then if the hashCodes are the same makes a deep comparison between the goban states.
      * @param obj The object to be compared to this
