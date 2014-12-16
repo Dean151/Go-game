@@ -39,7 +39,7 @@ public class GameTurn {
      * @param player The player making the given game turn
      * @param freedIntersections A set of Intersections which may have been freed, due to being captured
      */
-    public GameTurn(GameTurn prev, int X, int Y, Player player , Set<Intersection> freedIntersections ) {
+    private GameTurn(GameTurn prev, int X, int Y, Player player , Set<Intersection> freedIntersections ) {
         gobanState = prev.gobanState.clone();
         x = X;
         y = Y;
@@ -57,6 +57,17 @@ public class GameTurn {
 
         // Using Java Tools to make a pertinent hash on the goban state
         hashCode = Arrays.deepHashCode(gobanState);
+    }
+
+    /**
+     * Wrapper for the private constructor used to build a new game turn based on a previous one
+     * @param X The x coordinate of the played stone, this game turn, -1 if the player passes
+     * @param Y The y coordinate of the played stone, this game turn, -1 if the player passes
+     * @param player The player making the given game turn
+     * @param freedIntersections A set of Intersections which may have been freed, due to being captured
+     */
+    public GameTurn toNext(int X, int Y, Player player , Set<Intersection> freedIntersections) {
+        return new GameTurn(this,X,Y,player,freedIntersections);
     }
 
     /**
