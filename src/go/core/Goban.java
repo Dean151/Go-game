@@ -113,4 +113,50 @@ public class Goban {
     public boolean play(Intersection intersection, Player player) {
         return play(intersection,player,true);
     }
+
+    /**
+     *
+     * removes the stones from the goban
+     */
+    public void freeIntersections() {
+        for(Intersection[] intersectionColumn : intersections) {
+            for(Intersection intersection : intersectionColumn) {
+                intersection.setStoneChain(null);
+            }
+        }
+    }
+
+    /**
+     * Takes a game turn, and fills the goban using the information stored in the Game turn
+     * @param gameTurn the passed GameTurn
+     * @param one Player one, needed to "play" the stones on the goban, identifier should be 1
+     * @param two Player two, needed to "play" the stones on the goban, identifier should be 2
+     * @throws Exception
+     */
+    public void takeGameTurn(GameTurn gameTurn,Player one, Player two) throws Exception {
+        this.freeIntersections();
+        if(gameTurn == null | one == null | two == null) throw new Exception("Parameteres should not be null.");
+        if(one.getIdentifier() != 1 | two.getIdentifier() != 2) throw new Exception("Incorrect Players entered.");
+        if(gameTurn.getGobanState().length != width | gameTurn.getGobanState()[0].length != height ) throw new Exception("Incompatible board dimensions between goban and given GameTurn");
+
+        int[][] gobanState = gameTurn.getGobanState();
+        for (int i = 0; i < width ; i++) {
+            for (int j = 0; j < height ; j++) {
+                switch (gobanState[i][j]) {
+                    case 2:
+                        play(getIntersection(i,j),two,false);
+                        break;
+                    case 1:
+                        play(getIntersection(i,j),one,false);
+                        break;
+                    case 0:
+                        //DO NOTHING
+                        break;
+                    default:
+                        throw new Exception("Unexpected intersection state encountered in the GameTurn");
+                }
+            }
+        }
+
+    }
 }
