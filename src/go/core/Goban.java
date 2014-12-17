@@ -63,10 +63,11 @@ public class Goban {
     /**
      * check if intersection is a valid move for the player and record the move if valid
      * @param intersection position where the player want to play
-     * @param player
+     * @param player the player playing this move
+     * @param koCheck flag to enable or disable ko checking
      * @return true if the move is valid, false otherwise
      */
-    public boolean play(Intersection intersection, Player player) {
+    public boolean play(Intersection intersection, Player player, boolean koCheck) {
 
         // Should be in goban
         if (!isInGoban(intersection)) return false;
@@ -100,5 +101,16 @@ public class Goban {
             stone.setStoneChain(newStoneChain);
         }
         return true;
+    }
+
+    /**
+     * check if intersection is a valid move for the player and record the move if valid
+     * always handles ko
+     * @param intersection position where the player plays
+     * @param player player playing this move
+     * @return true if move is valid, false otherwise
+     */
+    public boolean play(Intersection intersection, Player player) {
+        return play(intersection,player,true);
     }
 }
