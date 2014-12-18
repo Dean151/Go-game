@@ -36,8 +36,12 @@ public class GameRecord {
         tail.push(head.pop());
     }
 
-    public Iterable<GameTurn> getPlayedGameTurns() {
+    public Iterable<GameTurn> getTurns() {
         return tail;
+    }
+
+    public GameTurn getLastTurn() {
+        return tail.peek();
     }
 
     public boolean save(String filepath) throws Exception {
