@@ -106,8 +106,9 @@ public class GameRecord {
         return true;
     }
 
-    public boolean load(String filepath) {
+    public static GameRecord load(String filepath) {
         BufferedReader reader = null;
+        GameRecord record = null;
         try {
             //TODO maybe implement as real Json parser
             reader = new BufferedReader(new FileReader(filepath));
@@ -153,17 +154,15 @@ public class GameRecord {
                 i++;
             }
 
-            GameRecord virtual = goban.getGameRecord();
+            record = goban.getGameRecord();
             for (int j = i; j > precedingCount ; j--) {
-                virtual.undo();
+                record.undo();
             }
 
-            this.preceding = virtual.preceding;
-            this.following = virtual.following;
-
         } catch (Exception ex) {
-            return false;
+            //TODO handle ex
         }
-        return true;
+        
+        return record;
     }
 }
