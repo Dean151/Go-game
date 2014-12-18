@@ -7,43 +7,44 @@ import java.util.Stack;
  * Created by Thomas on 12/4/2014.
  */
 public class GameRecord {
-    private Stack<GameTurn> tail;
-    private Stack<GameTurn> head;
+    private Stack<GameTurn> preceding;
+    private Stack<GameTurn> following;
 
     public GameRecord(int width, int height) {
-        tail = new Stack<GameTurn>();
-        head = new Stack<GameTurn>();
+        preceding = new Stack<GameTurn>();
+        following = new Stack<GameTurn>();
         GameTurn first = new GameTurn(width,height);
         apply(first);
     }
 
     public GameRecord(GameRecord record) {
-        this(record.head, record.tail);
+        this(record.following, record.preceding);
     }
 
-    private GameRecord(Stack<GameTurn> tail , Stack<GameTurn> head) {
-        this.tail = tail;
-        this.head = head;
+    private GameRecord(Stack<GameTurn> preceding, Stack<GameTurn> following) {
+        this.preceding = preceding;
+        this.following = following;
     }
 
     public void apply(GameTurn turn) {
-        tail.push(turn);
+        preceding.push(turn);
+        following.clear();
     }
 
     public void undo() throws EmptyStackException {
-        head.push(tail.pop());
+        following.push(preceding.pop());
     }
 
     public void redo() throws EmptyStackException {
-        tail.push(head.pop());
+        preceding.push(following.pop());
     }
 
     public Iterable<GameTurn> getTurns() {
-        return tail;
+        return preceding;
     }
 
     public GameTurn getLastTurn() {
-        return tail.peek();
+        return preceding.peek();
     }
 
     public boolean save(String filepath) throws Exception {
