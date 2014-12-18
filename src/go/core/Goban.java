@@ -64,18 +64,16 @@ public class Goban {
      * check if intersection is a valid move for the player and record the move if valid
      * @param intersection position where the player want to play
      * @param player the player playing this move
-     * @param koCheck flag to enable or disable ko checking
+     * @param handleKo flag to enable or disable ko checking
      * @return true if the move is valid, false otherwise
      */
-    public boolean play(Intersection intersection, Player player, boolean koCheck) {
+    public boolean play(Intersection intersection, Player player, boolean handleKo) {
 
         // Should be in goban
         if (!isInGoban(intersection)) return false;
 
         // Preventing playing over another stone
         if (intersection.getStoneChain() != null) return false;
-
-        // TODO avoid ko
 
         Set<StoneChain> adjStoneChains = intersection.getAdjacentStoneChains();
         StoneChain newStoneChain = new StoneChain(intersection, player);
@@ -90,12 +88,14 @@ public class Goban {
             }
         }
 
+        if (handleKo) {
+            // TODO avoid ko
+        }
+
         // Preventing suicide
         if (newStoneChain.getLiberties().size() == 0) {
             return false;
         }
-
-
 
         for (Intersection stone : newStoneChain.getStones()) {
             stone.setStoneChain(newStoneChain);
