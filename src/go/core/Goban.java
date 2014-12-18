@@ -1,5 +1,6 @@
 package go.core;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -69,11 +70,22 @@ public class Goban {
      */
     public boolean play(Intersection intersection, Player player, boolean handleKo) {
 
+        boolean ko = false;
+        GameTurn currentTurn = null;
+
         // Should be in goban
         if (!isInGoban(intersection)) return false;
 
         // Preventing playing over another stone
         if (intersection.getStoneChain() != null) return false;
+
+        Set<Intersection> capturedStones = null;
+        Set<StoneChain> capturedStoneChains = null;
+
+        if (handleKo) {
+            capturedStones = new HashSet<Intersection>();
+            capturedStoneChains = new HashSet<StoneChain>();
+        }
 
         Set<StoneChain> adjStoneChains = intersection.getAdjacentStoneChains();
         StoneChain newStoneChain = new StoneChain(intersection, player);
@@ -83,22 +95,46 @@ public class Goban {
             } else {
                 stoneChain.removeLiberty(intersection);
                 if (stoneChain.getLiberties().size() == 0) {
+                    if(handleKo) {
+                        capturedStones.addAll(stoneChain.getStones());
+                        capturedStoneChains.add(new StoneChain(stoneChain));
+                    }
                     stoneChain.die();
                 }
             }
         }
 
         if (handleKo) {
-            // TODO avoid ko
+            currentTurn = gameRecord.getLastTurn().toNext(intersection.getX(),intersection.getY(),player,capturedStones);
+            for (GameTurn turn : gameRecord.getTurns()) {
+                if (turn.equals(currentTurn)) {
+                    ko = true;
+                    break;
+                }
+            }
+            if (ko) {
+                for (StoneChain chain : capturedStoneChains) {
+                    for (Intersection stone : chain.getStones()) {
+                        stone.setStoneChain(chain);
+                    }
+                }
+            }
         }
 
-        // Preventing suicide
-        if (newStoneChain.getLiberties().size() == 0) {
+        // Preventing suicide or ko and re-adding liberty
+        if (newStoneChain.getLiberties().size() == 0 | ko) {
+            for (StoneChain chain : intersection.getAdjacentStoneChains()) {
+                chain.getLiberties().add(intersection);
+            }
             return false;
         }
 
+        // Move is valid, applying changes
         for (Intersection stone : newStoneChain.getStones()) {
             stone.setStoneChain(newStoneChain);
+        }
+        if (handleKo) {
+            gameRecord.apply(currentTurn);
         }
         return true;
     }
