@@ -23,7 +23,7 @@ public class Goban {
             }
         }
 
-        gameRecord = new GameRecord();
+        gameRecord = new GameRecord(width,height);
     }
 
     /**

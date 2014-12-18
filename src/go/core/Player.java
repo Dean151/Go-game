@@ -50,7 +50,7 @@ public class Player {
     public boolean play(Goban goban, int x, int y) {
         if (x == -1 && y == -1) {
             GameRecord record = goban.getGameRecord();
-            record.apply(record.getLastTurn().toNext(-1, -1, this, Collections.<Intersection>emptySet()));
+            record.apply(record.getLastTurn().toNext(-1, -1, this.getIdentifier(), Collections.<Intersection>emptySet()));
             return true;
         } else {
             return goban.play(goban.getIntersection(x,y),this);
