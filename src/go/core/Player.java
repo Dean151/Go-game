@@ -1,5 +1,7 @@
 package go.core;
 
+import java.util.Collections;
+
 /**
  * Created by Thomas on 12/4/2014.
  */
@@ -45,7 +47,13 @@ public class Player {
     /**
      * Method to make the player play
      */
-    public void play() {
-        // TODO play method
+    public boolean play(Goban goban, int x, int y) {
+        if (x == -1 && y == -1) {
+            GameRecord record = goban.getGameRecord();
+            record.apply(record.getLastTurn().toNext(-1, -1, this, Collections.<Intersection>emptySet()));
+            return true;
+        } else {
+            return goban.play(goban.getIntersection(x,y),this);
+        }
     }
 }
