@@ -105,7 +105,8 @@ public class GameTurn {
      *
      * @return a hashCode of the state of the goban after the game turn
      */
-    public int getHashCode() {
+    @Override
+    public int hashCode() {
         return hashCode;
     }
 
