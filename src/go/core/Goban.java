@@ -111,7 +111,7 @@ public class Goban {
         }
 
         if (handleKo) {
-            currentTurn = gameRecord.getLastTurn().toNext(intersection.getX(),intersection.getY(),player,capturedStones);
+            currentTurn = gameRecord.getLastTurn().toNext(intersection.getX(),intersection.getY(),player.getIdentifier(),capturedStones);
             for (GameTurn turn : gameRecord.getTurns()) {
                 if (turn.equals(currentTurn)) {
                     ko = true;

@@ -11,16 +11,11 @@ import java.util.Set;
 
 public class GameTurnTest extends TestCase {
 
-    private Player one;
-    private Player two;
     private Set<Intersection> emptySet;
-
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        one = new Player(1);
-        two = new Player(2);
         emptySet = new HashSet<Intersection>();
     }
 
@@ -38,18 +33,18 @@ public class GameTurnTest extends TestCase {
 
     @Test
     public void testTwoSequenceSameStateShouldBeEqual() throws Exception {
-        GameTurn A = new GameTurn(9,9).toNext(1,1,one, emptySet)
-                .toNext(1, 2, two, emptySet)
-                .toNext(3, 3, one, emptySet)
-                .toNext(8, 7, two, emptySet)
-                .toNext(7, 7, one, emptySet)
-                .toNext(5, 2, two, emptySet);
-        GameTurn B = new GameTurn(9,9).toNext(3,3,one, emptySet)
-                .toNext(5, 2, two, emptySet)
-                .toNext(1, 1, one, emptySet)
-                .toNext(1, 2, two, emptySet)
-                .toNext(7, 7, one, emptySet)
-                .toNext(8, 7, two, emptySet);
+        GameTurn A = new GameTurn(9,9).toNext(1,1,1, emptySet)
+                .toNext(1, 2, 2, emptySet)
+                .toNext(3, 3, 1, emptySet)
+                .toNext(8, 7, 2, emptySet)
+                .toNext(7, 7, 1, emptySet)
+                .toNext(5, 2, 2, emptySet);
+        GameTurn B = new GameTurn(9,9).toNext(3,3,1, emptySet)
+                .toNext(5, 2, 2, emptySet)
+                .toNext(1, 1, 1, emptySet)
+                .toNext(1, 2, 2, emptySet)
+                .toNext(7, 7, 1, emptySet)
+                .toNext(8, 7, 2, emptySet);
 
         assertEquals(A, B);
     }
@@ -61,8 +56,8 @@ public class GameTurnTest extends TestCase {
         List<GameTurn> list = new ArrayList<GameTurn>();
         for (int i = 0; i < 1000; i++) {
             for (int j = 0; j < 1000; j++) {
-                A = A.toNext(i%19,j%19,one, emptySet);
-                A = A.toNext((i+8)%19,(j+8)%19,two, emptySet);
+                A = A.toNext(i%19,j%19,1, emptySet);
+                A = A.toNext((i+8)%19,(j+8)%19,2, emptySet);
             }
         }
         long end = System.currentTimeMillis();
@@ -72,17 +67,17 @@ public class GameTurnTest extends TestCase {
 
     @Test
     public void testCapture() throws Exception {
-        GameTurn expected = new GameTurn(9,9).toNext(5,7,one, emptySet);
-        GameTurn toBeTaken = new GameTurn(9,9).toNext(5,5,one, emptySet)
-                .toNext(5,6,one, emptySet)
-                .toNext(5,7,one, emptySet);
+        GameTurn expected = new GameTurn(9,9).toNext(5,7,1, emptySet);
+        GameTurn toBeTaken = new GameTurn(9,9).toNext(5,5,1, emptySet)
+                .toNext(5,6,1, emptySet)
+                .toNext(5,7,1, emptySet);
 
         Set<Intersection> takenStones = new HashSet<Intersection>();
 
         takenStones.add(new Intersection(null,5,5));
         takenStones.add(new Intersection(null,5,6));
 
-        toBeTaken = toBeTaken.toNext(-1,-1,one,takenStones);
+        toBeTaken = toBeTaken.toNext(-1,-1,1,takenStones);
 
         assertEquals(expected,toBeTaken);
     }
