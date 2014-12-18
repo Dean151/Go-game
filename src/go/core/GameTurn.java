@@ -40,12 +40,19 @@ public class GameTurn {
      * @param freedIntersections A set of Intersections which may have been freed, due to being captured
      */
     private GameTurn(GameTurn prev, int X, int Y, int playerId , Set<Intersection> freedIntersections ) {
-        gobanState = prev.gobanState.clone();
+        int width = prev.gobanState.length;
+        int height = prev.gobanState[0].length;
+        gobanState = new int[width][height];
+        for (int i = 0; i < width ; i++) {
+            for (int j = 0; j < height ; j++) {
+                gobanState[i][j] = prev.gobanState[i][j];
+            }
+        }
         x = X;
         y = Y;
 
         // Applying the played stone change, if is not a pass move
-        if ( x > 0 && y > 0 ) {
+        if ( x >= 0 && y >= 0 ) {
             gobanState[x][y] = playerId;
         }
 
