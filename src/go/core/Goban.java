@@ -62,6 +62,12 @@ public class Goban {
     }
 
     /**
+     * Game record getter
+     * @return game record of the goban
+     */
+    public GameRecord getGameRecord() { return gameRecord ; }
+
+    /**
      * check if intersection is a valid move for the player and record the move if valid
      * @param intersection position where the player want to play
      * @param player the player playing this move
