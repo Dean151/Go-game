@@ -162,7 +162,32 @@ public class GameRecord {
         } catch (Exception ex) {
             //TODO handle ex
         }
-        
+
         return record;
+    }
+
+    /**
+     * Equals function
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj
+     * argument; {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null | obj.getClass() != this.getClass()) return false;
+
+        GameRecord castedObj = (GameRecord) obj;
+
+        if (preceding.size() != castedObj.preceding.size() |following.size() != following.size()) return false;
+
+        for (int i = 0; i < preceding.size(); i++) {
+            if (!preceding.get(i).equals(castedObj.preceding.get(i))) return false;
+        }
+        for (int i = 0; i < preceding.size(); i++) {
+            if (!following.get(i).equals(castedObj.following.get(i))) return false;
+        }
+
+        return true;
     }
 }
