@@ -70,6 +70,7 @@ public class GameRecord {
             writer.write("  \"width\": " + preceding.peek().getGobanState().length + ",");
             writer.newLine();
             writer.write("  \"height\": " + preceding.peek().getGobanState()[0].length + ",");
+            writer.newLine();
 
             //Insanely Java Iterates the stack bottom to top
 
@@ -77,32 +78,39 @@ public class GameRecord {
             writer.newLine();
 
             for (GameTurn turn : preceding) {
-                writer.write("            [ " + turn.getX() + " , " + turn.getY() + " ]");
+                writer.write("            [ " + turn.getX() + " , " + turn.getY() + " ],");
                 writer.newLine();
             }
+            writer.write("            null");
+            writer.newLine();
             writer.write("         ],");
             writer.newLine();
 
             Stack<GameTurn> followForWrite = new Stack<GameTurn>();
-            while (following.isEmpty() == false) {
-                followForWrite.push(following.pop());
+            for (int i = following.size() - 1 ; i >= 0 ; i--) {
+                followForWrite.push(following.get(i));
             }
 
             writer.write("  \"following\": [");
             writer.newLine();
             for (GameTurn turn : followForWrite) {
-                writer.write("            [ " + turn.getX() + " , " + turn.getY() + " ]");
+                writer.write("            [ " + turn.getX() + " , " + turn.getY() + " ],");
                 writer.newLine();
             }
+            writer.write("            null");
+            writer.newLine();
             writer.write("         ]");
             writer.newLine();
 
             writer.write("}");
             writer.newLine();
 
+            writer.close();
+
         } catch (Exception ex) {
             return false;
         }
+
         return true;
     }
 
@@ -112,7 +120,7 @@ public class GameRecord {
         try {
             //TODO maybe implement as real Json parser
             reader = new BufferedReader(new FileReader(filepath));
-            String delim = "\\s*[\\[\\]\\{\\},:]\\s*|\\s+";
+            String delim = "\\s*[\\[\\]\\{\\},:]\\s*|\\s+|\\s*null\\s*";
 
             reader.readLine();
 
@@ -128,6 +136,7 @@ public class GameRecord {
             String[] line;
 
             reader.readLine(); //Skipping first virtual move;
+            reader.readLine();
 
             int i = 0;
             int precedingCount = 0;
@@ -140,6 +149,9 @@ public class GameRecord {
                     } else {
                         precedingCompleted = true;
                         precedingCount = i;
+                        reader.readLine();
+                        reader.readLine();
+                        continue;
                     }
                 }
 
@@ -147,12 +159,14 @@ public class GameRecord {
                 y = Integer.parseInt(line[2]);
 
                 if (i%2 == 0) {
-                    one.play(goban,x,y);
+                    one.play(goban, x, y);
                 } else {
                     two.play(goban,x,y);
                 }
                 i++;
             }
+
+            reader.close();
 
             record = goban.getGameRecord();
             for (int j = i; j > precedingCount ; j--) {
@@ -164,5 +178,30 @@ public class GameRecord {
         }
         
         return record;
+    }
+
+    /**
+     * Equals function
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj
+     * argument; {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null | obj.getClass() != this.getClass()) return false;
+
+        GameRecord castedObj = (GameRecord) obj;
+
+        if (preceding.size() != castedObj.preceding.size() |following.size() != following.size()) return false;
+
+        for (int i = 0; i < preceding.size(); i++) {
+            if (!preceding.get(i).equals(castedObj.preceding.get(i))) return false;
+        }
+        for (int i = 0; i < following.size(); i++) {
+            if (!following.get(i).equals(castedObj.following.get(i))) return false;
+        }
+
+        return true;
     }
 }
