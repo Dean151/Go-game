@@ -33,7 +33,7 @@ public class GameTurnTest extends TestCase {
 
         assertEquals(nine1,nine2);
         assertEquals(nineteen1,nineteen2);
-        assertFalse(nineteen1==nine1);
+        assertFalse(nineteen1.equals(nine1));
     }
 
     @Test
