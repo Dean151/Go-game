@@ -17,6 +17,7 @@ public class GameRecordTest extends TestCase {
 
     @Before
     public void setUp() throws Exception {
+        super.setUp();
         record1 = new GameRecord(9,9);
         record2 = new GameRecord(9,9);
         GameTurn current1 = null;
