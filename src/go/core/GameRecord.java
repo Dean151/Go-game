@@ -10,9 +10,11 @@ public class GameRecord {
     private Stack<GameTurn> tail;
     private Stack<GameTurn> head;
 
-    public GameRecord() {
+    public GameRecord(int width, int height) {
         tail = new Stack<GameTurn>();
         head = new Stack<GameTurn>();
+        GameTurn first = new GameTurn(width,height);
+        apply(first);
     }
 
     public GameRecord(GameRecord record) {
