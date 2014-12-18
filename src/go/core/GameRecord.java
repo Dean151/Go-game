@@ -31,6 +31,14 @@ public class GameRecord {
         following.clear();
     }
 
+    public boolean hasPreceding() {
+        return preceding.size() > 1;
+    }
+
+    public boolean hasFollowing() {
+        return following.size() > 0;
+    }
+
     public void undo() throws EmptyStackException {
         following.push(preceding.pop());
     }
