@@ -114,6 +114,7 @@ public class Goban {
             }
             if (ko) {
                 for (StoneChain chain : capturedStoneChains) {
+                    chain.getOwner().removeCapturedStones(chain.getStones().size());
                     for (Intersection stone : chain.getStones()) {
                         stone.setStoneChain(chain);
                     }

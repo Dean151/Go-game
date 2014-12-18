@@ -37,6 +37,12 @@ public class Player {
     }
 
     /**
+     * remove nb from capturedStones
+     * @param nb number of stones to remove from captured stones
+     */
+    public void removeCapturedStones(int nb) { capturedStones -= nb; }
+
+    /**
      * Method to make the player play
      */
     public void play() {
