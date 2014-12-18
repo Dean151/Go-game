@@ -176,7 +176,7 @@ public class GameRecord {
         } catch (Exception ex) {
             //TODO handle ex
         }
-        
+
         return record;
     }
 
