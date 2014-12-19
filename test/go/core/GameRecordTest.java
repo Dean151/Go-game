@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.EmptyStackException;
 
 public class GameRecordTest {
 
@@ -59,4 +60,47 @@ public class GameRecordTest {
         assertEquals(record1,record2);
     }
 
+    @Test
+    public void testHasPrecedingAndFollowing() throws Exception {
+        assertTrue(record1.hasFollowing());
+        assertTrue(record1.hasPreceding());
+        record1.apply(record1.getLastTurn().toNext(5,2,1,Collections.<Intersection>emptySet()));
+        assertFalse(record1.hasFollowing());
+        assertTrue(record1.hasPreceding());
+
+        assertFalse(record0.hasPreceding());
+        assertFalse(record0.hasFollowing());
+        record0.apply(record0.getLastTurn().toNext(1, 1, 1, Collections.<Intersection>emptySet()));
+        assertTrue(record0.hasPreceding());
+        record0.undo();
+        assertFalse(record0.hasPreceding());
+        assertTrue(record0.hasFollowing());
+
+        assertFalse(record3.hasFollowing());
+        record3.undo();
+        assertTrue(record3.hasFollowing());
+        record3.redo();
+        assertFalse(record3.hasFollowing());
+    }
+
+    @Test
+    public void UndoRedoIsCoherent() throws Exception {
+        record2.undo();
+        record2.redo();
+        assertEquals(record1,record2);
+    }
+
+    @Test (expected = EmptyStackException.class)
+    public void noMoreUndo() throws Exception {
+        for (int i = 0; i < 99 ; i++) {
+            record1.undo();
+        }
+    }
+
+    @Test (expected = EmptyStackException.class)
+    public void noMoreRedo() throws Exception {
+        for (int i = 0; i < 99 ; i++) {
+            record1.redo();
+        }
+    }
 }
