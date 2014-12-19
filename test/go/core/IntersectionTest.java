@@ -1,13 +1,10 @@
 package go.core;
 
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertNull;
 
-public class IntersectionTest extends TestCase {
+public class IntersectionTest {
 
     private Goban goban;
     private Intersection intersection;

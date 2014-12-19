@@ -1,26 +1,25 @@
 package go.core;
 
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GameTurnTest extends TestCase {
+public class GameTurnTest {
 
     private Set<Intersection> emptySet;
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         emptySet = new HashSet<Intersection>();
     }
 
     @Test
-    public void testEmptyStatesEquality() throws Exception {
+    public void EmptyStatesEquality() throws Exception {
         GameTurn nine1 = new GameTurn(9,9);
         GameTurn nine2 = new GameTurn(9,9);
         GameTurn nineteen1 = new GameTurn(19,19);
@@ -32,7 +31,7 @@ public class GameTurnTest extends TestCase {
     }
 
     @Test
-    public void testTwoSequenceSameStateShouldBeEqual() throws Exception {
+    public void twoSequenceSameStateShouldBeEqual() throws Exception {
         GameTurn A = new GameTurn(9,9).toNext(1,1,1, emptySet)
                 .toNext(1, 2, 2, emptySet)
                 .toNext(3, 3, 1, emptySet)
@@ -49,9 +48,8 @@ public class GameTurnTest extends TestCase {
         assertEquals(A, B);
     }
 
-    @Test(timeout=3000)
-    public void testToNextIsFast() throws Exception {
-        long start = System.currentTimeMillis(); //Timeout option not working, bypass  for now
+    @Test(timeout=5000)
+    public void toNextIsFast() throws Exception {
         GameTurn A = new GameTurn(19,19);
         List<GameTurn> list = new ArrayList<GameTurn>();
         for (int i = 0; i < 1000; i++) {
@@ -60,9 +58,6 @@ public class GameTurnTest extends TestCase {
                 A = A.toNext((i+8)%19,(j+8)%19,2, emptySet);
             }
         }
-        long end = System.currentTimeMillis();
-        long delta = end - start;
-        assertTrue("One million creation of game turns should take less than 5 seconds, took: "+delta+" milliseconds", delta < 5000 );
     }
 
     @Test

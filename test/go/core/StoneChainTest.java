@@ -1,16 +1,12 @@
 package go.core;
 
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-public class StoneChainTest extends TestCase {
+public class StoneChainTest {
 
     private Goban goban;
     private Player one, two;
