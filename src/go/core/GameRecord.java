@@ -44,7 +44,11 @@ public class GameRecord {
     }
 
     public void undo() throws EmptyStackException {
-        following.push(preceding.pop());
+        if (preceding.size() > 1) {
+            following.push(preceding.pop());
+        } else {
+            throw new EmptyStackException();
+        }
     }
 
     public void redo() throws EmptyStackException {
