@@ -106,6 +106,7 @@ public class Goban {
 
         Set<StoneChain> adjStoneChains = intersection.getAdjacentStoneChains();
         StoneChain newStoneChain = new StoneChain(intersection, player);
+        intersection.setStoneChain(newStoneChain);
         for (StoneChain stoneChain : adjStoneChains) {
             if (stoneChain.getOwner() == player) {
                 newStoneChain.add(stoneChain, intersection);
@@ -140,10 +141,11 @@ public class Goban {
         }
 
         // Preventing suicide or ko and re-adding liberty
-        if (newStoneChain.getLiberties().size() == 0 | ko) {
+        if (newStoneChain.getLiberties().size() == 0 || ko) {
             for (StoneChain chain : intersection.getAdjacentStoneChains()) {
                 chain.getLiberties().add(intersection);
             }
+            intersection.setStoneChain(null);
             return false;
         }
 
