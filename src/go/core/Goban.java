@@ -72,7 +72,7 @@ public class Goban {
 
     /**
      * Lets a given player pass
-     * @param player
+     * @param player the player that is passing is turn
      */
     public void pass(Player player) {
         gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), Collections.<Intersection>emptySet()));
@@ -194,14 +194,14 @@ public class Goban {
         if(gameTurn.getGobanState().length != width || gameTurn.getGobanState()[0].length != height ) throw new Exception("Incompatible board dimensions between goban and given GameTurn");
 
         int[][] gobanState = gameTurn.getGobanState();
-        for (int i = 0; i < width ; i++) {
-            for (int j = 0; j < height ; j++) {
-                switch (gobanState[i][j]) {
+        for (int x = 0; x < width ; x++) {
+            for (int y = 0; y < height ; y++) {
+                switch (gobanState[x][y]) {
                     case 2:
-                        play(getIntersection(i,j),two,false);
+                        play(getIntersection(x,y),two,false);
                         break;
                     case 1:
-                        play(getIntersection(i,j),one,false);
+                        play(getIntersection(x,y),one,false);
                         break;
                     case 0:
                         //DO NOTHING
@@ -216,14 +216,14 @@ public class Goban {
 
     /**
      * toString
-     * @return String representation
+     * @return String representation of a goban
      */
     @Override
     public String toString() {
         String board = "";
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                Intersection cross =intersections[i][j];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Intersection cross =intersections[x][y];
                 if (cross.getStoneChain() == null) {
                     board += "0 ";
                 } else {
