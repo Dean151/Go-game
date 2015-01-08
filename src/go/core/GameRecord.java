@@ -199,7 +199,7 @@ public class GameRecord {
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;
-        if(obj == null | obj.getClass() != this.getClass()) return false;
+        if(obj == null || obj.getClass() != this.getClass()) return false;
 
         GameRecord castedObj = (GameRecord) obj;
 
