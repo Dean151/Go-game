@@ -1,5 +1,6 @@
 package go.core;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -68,6 +69,14 @@ public class Goban {
      * @return game record of the goban
      */
     public GameRecord getGameRecord() { return gameRecord ; }
+
+    /**
+     * Lets a given player pass
+     * @param player
+     */
+    public void pass(Player player) {
+        gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), Collections.<Intersection>emptySet()));
+    }
 
     /**
      * check if intersection is a valid move for the player and record the move if valid
