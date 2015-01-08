@@ -72,4 +72,17 @@ public class StoneChainTest {
             assertFalse(stone.getStoneChain()==chain1);
         }
     }
+
+    @Test
+    public void testDeepConstructor() throws Exception {
+        StoneChain chain3 = new StoneChain(chain1);
+        assertEquals(chain3.getLiberties(), chain1.getLiberties());
+        assertEquals(chain3.getOwner(), chain1.getOwner());
+        assertEquals(chain3.getStones(), chain1.getStones());
+    }
+
+    @Test
+    public void testGetOwner() throws Exception {
+        assertEquals(one, chain1.getOwner());
+    }
 }
