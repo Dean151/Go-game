@@ -81,4 +81,18 @@ public class GobanTest {
         fromTurn.takeGameTurn(turn,one,two);
         assertEquals(goban9.toString(),fromTurn.toString());
     }
+
+    @Test
+    public void testPass() throws Exception {
+        goban9.pass(one);
+        int x = goban9.getGameRecord().getLastTurn().getX();
+        int y = goban9.getGameRecord().getLastTurn().getY();
+        GameTurn state = goban9.getGameRecord().getLastTurn();
+        goban9.getGameRecord().undo();
+        GameTurn prevState = goban9.getGameRecord().getLastTurn();
+        assertEquals(-1,x);
+        assertEquals(-1,y);
+        assertEquals(prevState, state);
+        assertFalse(prevState.toString()==state.toString());
+    }
 }
