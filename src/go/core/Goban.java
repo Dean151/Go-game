@@ -204,4 +204,25 @@ public class Goban {
         }
 
     }
+
+    /**
+     * toString
+     * @return String representation
+     */
+    @Override
+    public String toString() {
+        String board = "";
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Intersection cross =intersections[i][j];
+                if (cross.getStoneChain() == null) {
+                    board += "0 ";
+                } else {
+                    board += cross.getStoneChain().getOwner().getIdentifier()+ " ";
+                }
+            }
+            board += "\n";
+        }
+        return board;
+    }
 }
