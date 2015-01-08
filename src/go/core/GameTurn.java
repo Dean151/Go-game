@@ -24,9 +24,7 @@ public class GameTurn {
         countCapturedStones = source.countCapturedStones;
         gobanState = new int[width][height];
         for (int i = 0; i < width ; i++) {
-            for (int j = 0; j < height ; j++) {
-                gobanState[i][j] = source.gobanState[i][j];
-            }
+            gobanState[i] = source.gobanState[i].clone();
         }
     }
 
