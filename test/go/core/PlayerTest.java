@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
-    Player player;
+    private Player player;
 
     @Before
     public void setUp() throws Exception {

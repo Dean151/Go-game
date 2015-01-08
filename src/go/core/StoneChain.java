@@ -9,10 +9,10 @@ import java.util.Set;
  * Created by Thomas on 12/4/2014.
  */
 public class StoneChain {
-    private Set<Intersection> stones;
-    private Set<Intersection> liberties;
+    private final Set<Intersection> stones;
+    private final Set<Intersection> liberties;
 
-    private Player owner;
+    private final Player owner;
 
     public StoneChain(Set<Intersection> stones, Set<Intersection> liberties, Player owner) {
         this.stones = stones;
@@ -58,10 +58,9 @@ public class StoneChain {
     }
 
     /**
-     * Creates a new StoneChain by joining two stoneChains
+     * Adds a second StoneChain to the current StoneChain taking into account the stone that was played
      * @param stoneChain the second StoneChain
      * @param playedStone the stone played this turn
-     * @return a new StoneChain created by fusing both StoneChains
      */
     public void add(StoneChain stoneChain, Intersection playedStone) {
         // Fuse stone sets

@@ -21,8 +21,8 @@ public class GameRecordTest {
         record1 = new GameRecord(9,9);
         record2 = new GameRecord(9,9);
         record3 = new GameRecord(9,9);
-        GameTurn current1 = null;
-        GameTurn current2 = null;
+        GameTurn current1;
+        GameTurn current2;
         for (int i = 0; i < 9 ; i++) {
             current1 = record1.getLastTurn().toNext(i,i,(i)%2+1, Collections.<Intersection>emptySet());
             record1.apply(current1);

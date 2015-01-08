@@ -6,12 +6,11 @@ import static org.junit.Assert.*;
 
 public class IntersectionTest {
 
-    private Goban goban;
     private Intersection intersection;
 
     @Before
     public void setUp() throws Exception {
-        goban = new Goban(3,3);
+        Goban goban = new Goban(3,3);
         intersection = goban.getIntersection(1,1);
     }
 

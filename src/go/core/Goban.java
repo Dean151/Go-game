@@ -9,10 +9,10 @@ import java.util.Set;
  * Created by Thomas on 12/4/2014.
  */
 public class Goban {
-    private int width;
-    private int height;
-    private Intersection[][] intersections;
-    private GameRecord gameRecord;
+    private final int width;
+    private final int height;
+    private final Intersection[][] intersections;
+    private final GameRecord gameRecord;
 
     public Goban(int width, int height) {
         this.width = width;
@@ -32,7 +32,7 @@ public class Goban {
      * Check if (x,y) is inside the Goban
      * @param x x coord
      * @param y y coord
-     * @return boolean true if in Goban , false otherwise
+     * @return boolean true if in Goban, false otherwise
      */
     public boolean isInGoban(int x, int y) {
         return (x >= 0 && x < width && y >= 0 && y < height);
@@ -41,7 +41,7 @@ public class Goban {
     /**
      * Check if intersection is inside the goban
      * @param intersection intersection to check
-     * @return
+     * @return boolean true if in Goban, false otherwise
      */
     public boolean isInGoban(Intersection intersection) {
         int x = intersection.getX();
@@ -53,7 +53,7 @@ public class Goban {
      * Intersection getter at (x,y)
      * @param x x coord
      * @param y y coord
-     * @return
+     * @return the Intersection
      */
     public Intersection getIntersection(int x, int y) {
         if (isInGoban(x, y)) {
