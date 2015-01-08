@@ -103,4 +103,10 @@ public class GameRecordTest {
             record1.redo();
         }
     }
+
+    @Test
+    public void copyWorks() throws Exception {
+        GameRecord copy = new GameRecord(record1);
+        assertEquals(record1,copy);
+    }
 }
