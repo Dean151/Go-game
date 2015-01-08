@@ -8,6 +8,9 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 /**
+ * GameRecord is a class containing all the moves of a game.
+ * The record has two stacks to track previous moves, and undone moves to implement a basic
+ * Game history which can be replayed
  * Created by Thomas on 12/4/2014.
  */
 public class GameRecord {

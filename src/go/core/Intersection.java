@@ -3,6 +3,8 @@ package go.core;
 import java.util.*;
 
 /**
+ * Intersection is class describing where stones may be placed
+ * it is to be used by Goban
  * Created by Thomas on 12/4/2014.
  */
 

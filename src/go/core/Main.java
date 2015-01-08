@@ -1,6 +1,7 @@
 package go.core;
 
 /**
+ * A main running class
  * Created by thomas on 05/12/14.
  */
 public class Main {

@@ -3,6 +3,7 @@ package go.core;
 import java.util.Collections;
 
 /**
+ * Player is a class describing the players which may play the game
  * Created by Thomas on 12/4/2014.
  */
 public class Player {

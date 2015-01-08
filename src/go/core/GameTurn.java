@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Set;
 
 /**
+ * GameTurn is a class listing all the important information of a given game turn
+ * it is to be used by the GameRecord
  * Created by Thomas on 12/4/2014.
  */
 public class GameTurn {

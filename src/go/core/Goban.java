@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Goban is a class containing the board of the game, this abstract board also handles the basic rules
+ * of the game
  * Created by Thomas on 12/4/2014.
  */
 public class Goban {
