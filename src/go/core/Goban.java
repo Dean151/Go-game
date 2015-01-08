@@ -178,9 +178,9 @@ public class Goban {
      */
     public void takeGameTurn(GameTurn gameTurn,Player one, Player two) throws Exception {
         this.freeIntersections();
-        if(gameTurn == null | one == null | two == null) throw new Exception("Parameteres should not be null.");
-        if(one.getIdentifier() != 1 | two.getIdentifier() != 2) throw new Exception("Incorrect Players entered.");
-        if(gameTurn.getGobanState().length != width | gameTurn.getGobanState()[0].length != height ) throw new Exception("Incompatible board dimensions between goban and given GameTurn");
+        if(gameTurn == null || one == null || two == null) throw new Exception("Parameteres should not be null.");
+        if(one.getIdentifier() != 1 || two.getIdentifier() != 2) throw new Exception("Incorrect Players entered.");
+        if(gameTurn.getGobanState().length != width || gameTurn.getGobanState()[0].length != height ) throw new Exception("Incompatible board dimensions between goban and given GameTurn");
 
         int[][] gobanState = gameTurn.getGobanState();
         for (int i = 0; i < width ; i++) {

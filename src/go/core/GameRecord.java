@@ -22,12 +22,18 @@ public class GameRecord {
     }
 
     public GameRecord(GameRecord record) {
-        this(record.following, record.preceding);
+        this(record.preceding, record.following);
     }
 
     private GameRecord(Stack<GameTurn> preceding, Stack<GameTurn> following) {
-        this.preceding = preceding;
-        this.following = following;
+        this.preceding = new Stack<GameTurn>();
+        this.following = new Stack<GameTurn>();
+        for (GameTurn turn : preceding) {
+            this.preceding.add(turn);
+        }
+        for (GameTurn turn : following) {
+            this.following.add(turn);
+        }
     }
 
     public void apply(GameTurn turn) {

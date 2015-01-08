@@ -13,6 +13,24 @@ public class GameTurn {
     private final int countCapturedStones;
 
     /**
+     * Copy Constructor
+     */
+    public GameTurn(GameTurn source) {
+        int width = source.gobanState.length;
+        int height = source.gobanState[0].length;
+        x = source.x;
+        y = source.y;
+        hashCode = source.hashCode;
+        countCapturedStones = source.countCapturedStones;
+        gobanState = new int[width][height];
+        for (int i = 0; i < width ; i++) {
+            for (int j = 0; j < height ; j++) {
+                gobanState[i][j] = source.gobanState[i][j];
+            }
+        }
+    }
+
+    /**
      * Constructor for the first virtual gameTurn, which gives the correct size for the array representing the goban
      * @param width width of the corresponding goban
      * @param height height of the corresponding goban;

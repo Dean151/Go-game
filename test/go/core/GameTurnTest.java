@@ -74,4 +74,15 @@ public class GameTurnTest {
         assertEquals(expected,toBeTaken);
     }
 
+    @Test
+    public void copyWorks() throws Exception {
+        GameTurn A = new GameTurn(9,9).toNext(1,1,1, emptySet)
+                .toNext(1, 2, 2, emptySet)
+                .toNext(3, 3, 1, emptySet)
+                .toNext(8, 7, 2, emptySet)
+                .toNext(7, 7, 1, emptySet)
+                .toNext(5, 2, 2, emptySet);
+        GameTurn copy = new GameTurn(A);
+        assertEquals(A,copy);
+    }
 }
