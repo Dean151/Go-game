@@ -11,8 +11,8 @@ import java.util.Stack;
  * Created by Thomas on 12/4/2014.
  */
 public class GameRecord {
-    private Stack<GameTurn> preceding;
-    private Stack<GameTurn> following;
+    private final Stack<GameTurn> preceding;
+    private final Stack<GameTurn> following;
 
     public GameRecord(int width, int height) {
         preceding = new Stack<GameTurn>();
@@ -64,7 +64,7 @@ public class GameRecord {
     }
 
     public boolean save(String filepath) {
-        BufferedWriter writer = null;
+        BufferedWriter writer;
         try {
             // BufferedWriter Creation
             writer = new BufferedWriter(new FileWriter(filepath));
@@ -119,7 +119,7 @@ public class GameRecord {
     }
 
     public static GameRecord load(String filepath) {
-        BufferedReader reader = null;
+        BufferedReader reader;
         GameRecord record = null;
         try {
             //TODO maybe implement as real Json parser
@@ -193,7 +193,7 @@ public class GameRecord {
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;
-        if(obj == null | obj.getClass() != this.getClass()) return false;
+        if(obj == null || obj.getClass() != this.getClass()) return false;
 
         GameRecord castedObj = (GameRecord) obj;
 

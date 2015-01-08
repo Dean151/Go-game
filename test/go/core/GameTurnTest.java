@@ -4,9 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class GameTurnTest {
@@ -51,7 +49,6 @@ public class GameTurnTest {
     @Test(timeout=5000)
     public void toNextIsFast() throws Exception {
         GameTurn A = new GameTurn(19,19);
-        List<GameTurn> list = new ArrayList<GameTurn>();
         for (int i = 0; i < 1000; i++) {
             for (int j = 0; j < 1000; j++) {
                 A = A.toNext(i%19,j%19,1, emptySet);

@@ -7,8 +7,8 @@ import java.util.*;
  */
 
 public class Intersection {
-    private Goban goban;
-    private int x,y;
+    private final Goban goban;
+    private final int x,y;
     private StoneChain stoneChain;
 
     public Intersection(Goban goban, int x, int y) {

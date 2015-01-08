@@ -7,10 +7,10 @@ import java.util.Set;
  * Created by Thomas on 12/4/2014.
  */
 public class GameTurn {
-    private int[][] gobanState;
-    private int x, y;
-    private int hashCode;
-    private int countCapturedStones;
+    private final int[][] gobanState;
+    private final int x, y;
+    private final int hashCode;
+    private final int countCapturedStones;
 
     /**
      * Constructor for the first virtual gameTurn, which gives the correct size for the array representing the goban
@@ -44,9 +44,7 @@ public class GameTurn {
         int height = prev.gobanState[0].length;
         gobanState = new int[width][height];
         for (int i = 0; i < width ; i++) {
-            for (int j = 0; j < height ; j++) {
-                gobanState[i][j] = prev.gobanState[i][j];
-            }
+            gobanState[i] = prev.gobanState[i].clone();
         }
         x = X;
         y = Y;
@@ -131,7 +129,6 @@ public class GameTurn {
 
         GameTurn castedObj = (GameTurn) obj;
 
-        if(hashCode != castedObj.hashCode) return false;
-        return Arrays.deepEquals(this.gobanState,castedObj.gobanState) ;
+        return hashCode == castedObj.hashCode && Arrays.deepEquals(this.gobanState, castedObj.gobanState);
     }
 }
