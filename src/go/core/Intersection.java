@@ -70,7 +70,7 @@ public class Intersection {
         int[] dx = {-1,0,1,0}, dy = {0,-1,0,1};
         assert dx.length == dy.length : "dx and dy should have the same length";
 
-        for (int i = 0; i < dx.length - 1; i++) {
+        for (int i = 0; i < dx.length ; i++) {
             int newX = x + dx[i];
             int newY = y + dy[i];
 
