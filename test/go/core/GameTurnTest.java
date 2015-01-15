@@ -46,7 +46,7 @@ public class GameTurnTest {
         assertEquals(A, B);
     }
 
-    @Test(timeout=5000)
+    @Test(timeout=10000)
     public void toNextIsFast() throws Exception {
         GameTurn A = new GameTurn(19,19);
         for (int i = 0; i < 1000; i++) {
