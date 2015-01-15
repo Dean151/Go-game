@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  */
 public class GUI extends JFrame {
     private static final int TOKEN_INITIAL_SIZE = 35;
-    private static final int MENU_SIZE = 60;
+    private static final int MENU_SIZE = 40;
 
     // Initialing sprites
     private ImageIcon grid_ul = new ImageIcon(new ImageIcon("sprites/ul.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
