@@ -20,3 +20,5 @@ hs_err_pid*
 
 # External Libraries (fetched with Ant)
 lib/
+working/
+release/
