@@ -1,47 +1,71 @@
 package go.gui;
 
+import go.core.Goban;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 
 /**
  * Created by thomas on 15/01/15.
  */
 public class GUI extends JFrame {
-    protected int height;
-    protected int width;
+    private static final int TOKEN_SIZE = 40;
+    private static final int MENU_SIZE = 60;
+
+    private Goban goban;
+
+    private int height;
+    private int width;
 
     // Game Menu
-    protected JMenuBar jMenuBar;
-    protected JMenu jMenuGame;
-    protected JMenuItem jGameNew;
-    protected JMenuItem jGameOpen;
-    protected JMenuItem jGameSave;
-    protected JMenuItem jGameExit;
+    private JMenuBar jMenuBar;
+    private JMenu jMenuGame;
+    private JMenuItem jGameNew;
+    private JMenuItem jGameOpen;
+    private JMenuItem jGameSave;
+    private JMenuItem jGameExit;
 
     // Edit menu
-    protected JMenu jMenuEdit;
-    protected JMenuItem jEditUndo;
-    protected JMenuItem jEditRedo;
+    private JMenu jMenuEdit;
+    private JMenuItem jEditUndo;
+    private JMenuItem jEditRedo;
 
     // About Menu
-    protected JMenu jMenuAbout;
-    protected JMenuItem jAboutInfo;
+    private JMenu jMenuAbout;
+    private JMenuItem jAboutInfo;
 
-    public GUI() {
-        this.width = 320;
-        this.height = 240;
+    /**
+     *
+     * @param goban goban that correspond to the actual game
+     */
+    public GUI(Goban goban) {
+        this.goban = goban;
 
+        this.height = TOKEN_SIZE * goban.getHeight() + MENU_SIZE;
+        this.width = TOKEN_SIZE * goban.getWidth();
+
+        // Creating menus
         this.initMenu();
-        // Ajout du menu a la JFrame
 
+        // Adding menus to jFrame
         setJMenuBar(jMenuBar);
+
+        // creating window
         this.initWindow();
+
+        // printing the goban on screen
+        this.reloadGoban();
+
         pack();
     }
 
+    /**
+     * Init the window
+     */
     private void initWindow() {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Java Go game");
@@ -50,6 +74,9 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Init the menus
+     */
     protected void initMenu() {
         // JMenuBar
         jMenuBar = new JMenuBar();
@@ -59,6 +86,13 @@ public class GUI extends JFrame {
 
         // New Game
         jGameNew = new JMenuItem("New");
+        jGameNew.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // TODO request goban size to user and set the handicap
+                // TODO create new game
+            }
+        });
 
         // Open
         jGameOpen = new JMenuItem("Open");
@@ -118,7 +152,7 @@ public class GUI extends JFrame {
 
         // Undo
         jEditUndo = new JMenuItem("Undo");
-        jEditRedo.setEnabled(false);
+        jEditUndo.setEnabled(false);
         jEditUndo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -166,5 +200,9 @@ public class GUI extends JFrame {
         jMenuBar.add(jMenuGame);
         jMenuBar.add(jMenuEdit);
         jMenuBar.add(jMenuAbout);
+    }
+
+    private void reloadGoban() {
+        // TODO draw goban in window
     }
 }
