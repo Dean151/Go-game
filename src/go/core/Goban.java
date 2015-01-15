@@ -14,11 +14,31 @@ import java.util.Set;
  * Created by Thomas on 12/4/2014.
  */
 public class Goban {
+    /**
+     * The width of the goban in number of intersections.
+     */
     private final int width;
+
+    /**
+     * The height of the goban in number of intersections.
+     */
     private final int height;
+
+    /**
+     * An table of containing all the intersections of the goban.
+     */
     private final Intersection[][] intersections;
+
+    /**
+     * A record of the turns of a game played on the goban.
+     */
     private final GameRecord gameRecord;
 
+    /**
+     * Constructor for a Goban with dimensions width x height.
+     * @param width
+     * @param height
+     */
     public Goban(int width, int height) {
         this.width = width;
         this.height = height;
@@ -34,10 +54,11 @@ public class Goban {
     }
 
     /**
-     * Check if (x,y) is inside the Goban
-     * @param x x coord
-     * @param y y coord
-     * @return boolean true if in Goban, false otherwise
+     * Check if the coordinate couple (x,y) is inside the Goban.
+     * @param x x coordinate.
+     * @param y y coordinate.
+     * @return {@code true} if it is,
+     * {@code false} otherwise.
      */
     public boolean isInGoban(int x, int y) {
         return (x >= 0 && x < width && y >= 0 && y < height);
@@ -46,7 +67,8 @@ public class Goban {
     /**
      * Check if intersection is inside the goban
      * @param intersection intersection to check
-     * @return boolean true if in Goban, false otherwise
+     * @return {@code true} if it is,
+     * {@code false} otherwise.
      */
     public boolean isInGoban(Intersection intersection) {
         int x = intersection.getX();
@@ -55,10 +77,10 @@ public class Goban {
     }
 
     /**
-     * Intersection getter at (x,y)
-     * @param x x coord
-     * @param y y coord
-     * @return the Intersection
+     * Intersection getter for the coordinate couple (x,y).
+     * @param x x coordinate.
+     * @param y y coordinate.
+     * @return the Intersection.
      */
     public Intersection getIntersection(int x, int y) {
         if (isInGoban(x, y)) {
@@ -69,25 +91,26 @@ public class Goban {
     }
 
     /**
-     * Game record getter
-     * @return game record of the goban
+     *
+     * @return game record of the goban.
      */
     public GameRecord getGameRecord() { return gameRecord ; }
 
     /**
-     * Lets a given player pass
-     * @param player the player that is passing is turn
+     * Lets a given player pass.
+     * @param player the player that is passing is turn.
      */
     public void pass(Player player) {
         gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), Collections.<Intersection>emptySet()));
     }
 
     /**
-     * check if intersection is a valid move for the player and record the move if valid
+     * Check if intersection is a valid move for the player and record the move if valid.
      * @param intersection position where the player want to play
      * @param player the player playing this move
      * @param handleKo flag to enable or disable ko checking
-     * @return true if the move is valid, false otherwise
+     * @return {@code true} if it is,the move is valid,
+     * {@code false} otherwise.
      */
     public boolean play(Intersection intersection, Player player, boolean handleKo) {
 
@@ -164,23 +187,25 @@ public class Goban {
     }
 
     /**
-     * check if intersection is a valid move for the player and record the move if valid
-     * always handles ko
-     * @param intersection position where the player plays
-     * @param player player playing this move
-     * @return true if move is valid, false otherwise
+     * Check if intersection is a valid move for the player and record the move if valid.
+     * Always handles ko.
+     * @param intersection position where the player plays.
+     * @param player player playing this move.
+     * @return {@code true} if it the move is valid,
+     * {@code false} otherwise.
      */
     public boolean play(Intersection intersection, Player player) {
         return play(intersection,player,true);
     }
 
     /**
-     * check if intersection is a valid move for the player and record the move if valid
-     * always handles ko
-     * @param x x coord position where the player plays
-     * @param y y coord position where the player plays
-     * @param player player playing this move
-     * @return true if move is valid, false otherwise
+     * Check if an (x,y) couple is a valid move for the player and record the move if valid.
+     * Always handles ko.
+     * @param x x coordinate of the position where the player plays.
+     * @param y y coordinate of the position where the player plays.
+     * @param player player playing this move.
+     * @return {@code true} if it the move is valid,
+     * {@code false} otherwise.
      */
     public boolean play(int x, int y, Player player) throws OutOfGobanException {
         Intersection intersection = getIntersection(x, y);
@@ -192,7 +217,7 @@ public class Goban {
 
     /**
      *
-     * removes the stones from the goban
+     * Removes all the stones from the goban
      */
     public void freeIntersections() {
         for(Intersection[] intersectionColumn : intersections) {
@@ -203,10 +228,10 @@ public class Goban {
     }
 
     /**
-     * Takes a game turn, and fills the goban using the information stored in the Game turn
-     * @param gameTurn the passed GameTurn
-     * @param one Player one, needed to "play" the stones on the goban, identifier should be 1
-     * @param two Player two, needed to "play" the stones on the goban, identifier should be 2
+     * Takes a game turn, and fills the goban using the information stored in the Game turn.
+     * @param gameTurn the passed GameTurn.
+     * @param one Player one, needed to "play" the stones on the goban, identifier should be 1.
+     * @param two Player two, needed to "play" the stones on the goban, identifier should be 2.
      * @throws InvalidParameterException | InvalidGameTurnEncounteredException
      */
     public void takeGameTurn(GameTurn gameTurn,Player one, Player two) throws InvalidGameTurnEncounteredException, InvalidParameterException {
@@ -241,8 +266,8 @@ public class Goban {
     }
 
     /**
-     * toString
-     * @return String representation of a goban
+     *
+     * @return String representation of a goban.
      */
     @Override
     public String toString() {

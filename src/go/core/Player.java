@@ -7,16 +7,27 @@ import java.util.Collections;
  * Created by Thomas on 12/4/2014.
  */
 public class Player {
+    /**
+     * An identifier for discrimination in goban states.
+     */
     private final int identifier;
-    private int capturedStones; // Counts the stones captured by the enemy
 
+    /**
+     * Counts the stones captured by the enemy.
+     */
+    private int capturedStones;
+
+    /**
+     * Constructs a player with a given identifier.
+     * @param identifier
+     */
     public Player(int identifier) {
         this.identifier = identifier;
         this.capturedStones = 0;
     }
 
     /**
-     * identifier getter
+     *
      * @return identifier
      */
     public int getIdentifier() {
@@ -24,7 +35,7 @@ public class Player {
     }
 
     /**
-     * capturedStones getter
+     *
      * @return capturedStones
      */
     public int getCapturedStones() {
@@ -32,21 +43,26 @@ public class Player {
     }
 
     /**
-     * add nb to capturedStones
-     * @param nb number of stones to add in captured stones
+     * Adds nb to capturedStones.
+     * @param nb number of stones to add in captured stones.
      */
     public void addCapturedStones(int nb) {
         capturedStones += nb;
     }
 
     /**
-     * remove nb from capturedStones
-     * @param nb number of stones to remove from captured stones
+     * Removes nb from capturedStones.
+     * @param nb number of stones to remove from captured stones.
      */
     public void removeCapturedStones(int nb) { capturedStones -= nb; }
 
     /**
-     * Method to make the player play
+     * Method to make a player play.
+     * @param goban is the goban on which the player plays.
+     * @param x the x coordinate of the move.
+     * @param y the y coordinate of the move.
+     * @return {@code true} if move is valid,
+     * {@code false} otherwise.
      */
     public boolean play(Goban goban, int x, int y) {
         if (x == -1 && y == -1) {
