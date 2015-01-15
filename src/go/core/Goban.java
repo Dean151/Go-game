@@ -1,5 +1,9 @@
 package go.core;
 
+import go.core.exceptions.InvalidGameTurnEncounteredException;
+import go.core.exceptions.OutOfGobanException;
+
+import java.security.InvalidParameterException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -178,10 +182,10 @@ public class Goban {
      * @param player player playing this move
      * @return true if move is valid, false otherwise
      */
-    public boolean play(int x, int y, Player player) throws Exception {
+    public boolean play(int x, int y, Player player) throws OutOfGobanException {
         Intersection intersection = getIntersection(x, y);
         if (intersection == null) {
-            throw new Exception("Intersection is out of range");
+            throw new OutOfGobanException("Intersection is out of range: x=" + x + " y=" + y);
         }
         return play(intersection, player);
     }
@@ -203,20 +207,20 @@ public class Goban {
      * @param gameTurn the passed GameTurn
      * @param one Player one, needed to "play" the stones on the goban, identifier should be 1
      * @param two Player two, needed to "play" the stones on the goban, identifier should be 2
-     * @throws Exception
+     * @throws InvalidParameterException | InvalidGameTurnEncounteredException
      */
-    public void takeGameTurn(GameTurn gameTurn,Player one, Player two) throws Exception {
+    public void takeGameTurn(GameTurn gameTurn,Player one, Player two) throws InvalidGameTurnEncounteredException, InvalidParameterException {
         this.freeIntersections();
-        if(gameTurn == null || one == null || two == null) throw new Exception("Parameteres should not be null.");
-        if(one.getIdentifier() != 1 || two.getIdentifier() != 2) throw new Exception("Incorrect Players entered.");
-        if(gameTurn.getGobanState().length != width || gameTurn.getGobanState()[0].length != height ) throw new Exception("Incompatible board dimensions between goban and given GameTurn");
+        if(gameTurn == null || one == null || two == null) throw new InvalidParameterException("None of the Parameters should not be null.");
+        if(one.getIdentifier() != 1 || two.getIdentifier() != 2) throw new InvalidParameterException("Incorrect Players entered. One should have an id == 1 and two an id == 2, here one.id = "+one.getIdentifier()+" and two.id = "+two.getIdentifier());
+        if(gameTurn.getGobanState().length != width || gameTurn.getGobanState()[0].length != height ) throw new InvalidGameTurnEncounteredException("Incompatible board dimensions between Goban and given GameTurn");
 
         int[][] gobanState = gameTurn.getGobanState();
         for (int x = 0; x < width ; x++) {
             for (int y = 0; y < height ; y++) {
                 Intersection intersection = getIntersection(x, y);
                 if (intersection == null) {
-                    throw new Exception("Intersection is out of Goban");
+                    throw new InvalidGameTurnEncounteredException("Unexpected board dimension mismatch", new OutOfGobanException("Intersection is out of range: x=" + x + " y=" + y));
                 }
                 switch (gobanState[x][y]) {
                     case 2:
@@ -229,7 +233,7 @@ public class Goban {
                         //DO NOTHING
                         break;
                     default:
-                        throw new Exception("Unexpected intersection state encountered in the GameTurn");
+                        throw new InvalidGameTurnEncounteredException("Unexpected intersection state encountered: "+gobanState[x][y]);
                 }
             }
         }

@@ -95,4 +95,18 @@ public class GobanTest {
         assertEquals(prevState, state);
         assertFalse(prevState.toString()==state.toString());
     }
+
+    @Test
+    public void testPlayEquivalent() throws Exception {
+        Goban gobanTest = new Goban(9, 9);
+        gobanTest.play(5,5,one);
+        gobanTest.play(5,6,two);
+        gobanTest.play(6,6,one);
+        gobanTest.play(6,7,two);
+        gobanTest.play(4,6,one);
+        gobanTest.play(4,7,two);
+        gobanTest.play(0,0,one);
+        gobanTest.play(5,8,two);
+        assertEquals(goban9.toString(),gobanTest.toString());
+    }
 }
