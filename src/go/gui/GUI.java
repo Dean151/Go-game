@@ -13,7 +13,7 @@ import java.beans.PropertyChangeListener;
  * Created by thomas on 15/01/15.
  */
 public class GUI extends JFrame {
-    private static final int TOKEN_SIZE = 40;
+    private static final int TOKEN_SIZE = 35;
     private static final int MENU_SIZE = 60;
 
     private Goban goban;
