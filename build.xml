@@ -1,24 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="testAnt" default="build" basedir=".">
-    <target name="getJars" description="Get Jar dependencies">
-        <property name="lib.location" location="lib"/>
-        <mkdir dir="${lib.location}"/>
-        <get src="http://central.maven.org/maven2/junit/junit/4.4/junit-4.4.jar" dest="${lib.location}" skipexisting="true"/>
+
+    <property name="build.sysclasspath" value="ignore"/>
+
+    <property file="build/build.properties"/>
+
+    <target name="clean" description="Empty working directory and release directory">
+        <mkdir dir="${workingDirectory}"/>
+        <mkdir dir="${releaseDirectory}"/>
+
+        <delete includeEmptyDirs="true">
+            <fileset dir="${workingDirectory}">
+                <include name="*/**"/>
+            </fileset>
+            <fileset dir="${releaseDirectory}">
+                <include name="*/**"/>
+            </fileset>
+        </delete>
     </target>
 
-    <target name="checkDependencies"
-            description="Check if dependencies are satisfied">
-        <property name="src.location" location="src"/>
-        <property name="out.location" location="release"/>
-        <echo message="Source directory is ${src.location}"/>
-        <condition property="src.available">
-            <available file="${src.location}" type="dir"/>
-        </condition>
+    <target name="getJars" description="Get Jar dependencies">
+        <mkdir dir="${libDirectory}"/>
+        <get src="${junit.src}" dest="${libDirectory}" skipexisting="true"/>
     </target>
-    <target name="build" description="Build the application"
-            depends="checkDependencies" if="src.available">
-        <echo message="Building application..."/>
-        <javac srcdir="${src.location}" destdir="${out.location}"/>
-        <echo message="Done!"/>
+
+    <target name="compile" depends="clean, getJars">
+        <mkdir dir="${workingDirectory}/build"/>
+        <javac srcdir="${sourceDir}" destdir="${workingDirectory}/build"/>
+        <mkdir dir="${workingDirectory}/jar"/>
+        <jar basedir="${workingDirectory}/build" destfile="${workingDirectory}/jar/goGame.jar"/>
+
+        <mkdir dir="${workingDirectory}/tests"/>
+        <javac srcdir="${testDir}" destdir="${workingDirectory}/tests">
+            <classpath>
+                <path location="${workingDirectory}/jar/goGame.jar"/>
+            </classpath>
+            <classpath>
+                <path location="${libDirectory}/${junit.jar}"/>
+            </classpath>
+        </javac>
+        <jar basedir="${workingDirectory}/tests" destfile="${workingDirectory}/jar/test.jar"/>
+    </target>
+
+    <target name="test" depends="compile">
+        <junit haltonfailure="yes" haltonerror="yes">
+            <classpath>
+                <path location="${workingDirectory}/jar/test.jar"/>
+                <path location="${workingDirectory}/jar/goGame.jar"/>
+                <path location="${libDirectory}/${junit.jar}"/>
+            </classpath>
+
+            <formatter type="plain"/>
+
+            <test name="go.core.AllTests" outfile="${workingDirectory}/testResult">
+                <formatter type="xml"/>
+            </test>
+        </junit>
+    </target>
+
+    <target name="javadoc" depends="clean">
+        <mkdir dir="${releaseDirectory}/javadoc"/>
+        <javadoc packagenames="go.*"
+                 sourcepath="src:test"
+                 defaultexcludes="yes"
+                 excludepackagenames="org.junit.*"
+                 destdir="${releaseDirectory}/javadoc"
+                 author="true"
+                 version="true"
+                 use="true"
+                 classpath="${libDirectory}/${junit.jar}"
+                 windowtitle="Test API">
+
+            <doctitle><![CDATA[<h1>Test</h1>]]></doctitle>
+            <bottom><![CDATA[<i>Copyright &#169; 2000 Dummy Corp. All Rights Reserved.</i>]]></bottom>
+            <tag name="todo" scope="all" description="To do:"/>
+            <group title="Group 1 Packages" packages="com.dummy.test.a*"/>
+            <group title="Group 2 Packages" packages="com.dummy.test.b*:com.dummy.test.c*"/>
+            <link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
+            <link href="http://docs.oracle.com/javase/7/docs/api/"/>
+        </javadoc>
+    </target>
+
+    <target name="build" description="Build the application" depends="test, javadoc">
+        <mkdir dir="${releaseDirectory}/jar"/>
+        <copy todir="${releaseDirectory}/jar">
+            <fileset dir="${workingDirectory}/jar"/>
+        </copy>
     </target>
 </project>

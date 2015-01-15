@@ -1,5 +1,7 @@
 package go.core;
 
+import go.gui.GUI;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +17,10 @@ public class Main {
         Player P1 = new Player(1);
         Player P2 = new Player(2);
 
-        Goban goban = new Goban(9,9);
+        Goban goban = new Goban(19,19);
+        GUI gui = new GUI(goban);
+
+
         // Should have a loop that can switch player
         // Should handle handicap at the beginning of the party
         boolean onesTurn = true;

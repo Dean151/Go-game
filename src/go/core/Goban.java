@@ -53,6 +53,14 @@ public class Goban {
         gameRecord = new GameRecord(width,height);
     }
 
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     /**
      * Check if the coordinate couple (x,y) is inside the Goban.
      * @param x x coordinate.
