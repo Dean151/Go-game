@@ -229,8 +229,10 @@ public class GUI extends JFrame {
         // TODO math law for spot detection
         int gobanWidth = goban.getWidth();
         int gobanHeight = goban.getHeight();
+        int offset = 3;
+        if (gobanWidth == 9) offset = 2;
 
-        return (x == 3 || x == (gobanWidth-1)/2 || x == gobanWidth-4) && (y == 3 || y == (gobanHeight-1)/2 || y == gobanHeight-4);
+        return (x == offset || x == (gobanWidth-1)/2 || x == gobanWidth-offset-1) && (y == offset || y == (gobanHeight-1)/2 || y == gobanHeight-offset-1);
     }
 
 
