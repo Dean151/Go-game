@@ -227,7 +227,10 @@ public class GUI extends JFrame {
      */
     private boolean shouldBeSpot(int x, int y) {
         // TODO math law for spot detection
-        return false;
+        int gobanWidth = goban.getWidth();
+        int gobanHeight = goban.getHeight();
+
+        return (x == 3 || x == (gobanWidth-1)/2 || x == gobanWidth-4) && (y == 3 || y == (gobanHeight-1)/2 || y == gobanHeight-4);
     }
 
 
@@ -244,13 +247,13 @@ public class GUI extends JFrame {
         jIntersections = new JButton[gobanWidth][gobanHeight];
 
         // Creating the buttons
-        for(int x=0;x<gobanHeight;x++) {
-            for(int y=0;y<gobanWidth;y++) {
+        for(int x=0;x<gobanWidth;x++) {
+            for(int y=0;y<gobanHeight;y++) {
                 // creating button at [x,y]
-                if (x == gobanHeight - 1) {
+                if (x == gobanWidth - 1) {
                     if (y == 0) {
                         jIntersections[x][y] = new JButton(grid_ul);
-                    } else if (y == gobanWidth - 1) {
+                    } else if (y == gobanHeight - 1) {
                         jIntersections[x][y] = new JButton(grid_ur);
                     } else {
                         jIntersections[x][y] = new JButton(grid_u);
@@ -258,7 +261,7 @@ public class GUI extends JFrame {
                 } else if (x == 0) {
                     if (y == 0) {
                         jIntersections[x][y] = new JButton(grid_bl);
-                    } else if (y == gobanWidth - 1) {
+                    } else if (y == gobanHeight - 1) {
                         jIntersections[x][y] = new JButton(grid_br);
                     } else {
                         jIntersections[x][y] = new JButton(grid_b);
@@ -266,7 +269,7 @@ public class GUI extends JFrame {
                 } else {
                     if (y == 0) {
                         jIntersections[x][y] = new JButton(grid_l);
-                    } else if (y == gobanWidth - 1) {
+                    } else if (y == gobanHeight - 1) {
                         jIntersections[x][y] = new JButton(grid_r);
                     } else {
                         if (shouldBeSpot(x,y)) {
