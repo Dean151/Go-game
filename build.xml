@@ -2,70 +2,73 @@
 <project name="testAnt" default="build" basedir=".">
 
     <property name="build.sysclasspath" value="ignore"/>
-    <target name="clean">
-        <mkdir dir="working"/>
-        <mkdir dir="release"/>
+
+    <property file="build/build.properties"/>
+
+    <target name="clean" description="Empty working directory and release directory">
+        <mkdir dir="${workingDirectory}"/>
+        <mkdir dir="${releaseDirectory}"/>
+
         <delete includeEmptyDirs="true">
-            <fileset dir="release">
+            <fileset dir="${workingDirectory}">
                 <include name="*/**"/>
             </fileset>
-            <fileset dir="working">
+            <fileset dir="${releaseDirectory}">
                 <include name="*/**"/>
             </fileset>
         </delete>
     </target>
 
     <target name="getJars" description="Get Jar dependencies">
-        <property name="lib.location" location="lib"/>
-        <mkdir dir="${lib.location}"/>
-        <get src="http://central.maven.org/maven2/junit/junit/4.4/junit-4.4.jar" dest="${lib.location}" skipexisting="true"/>
+        <mkdir dir="${libDirectory}"/>
+        <get src="${junit.src}" dest="${libDirectory}" skipexisting="true"/>
     </target>
 
     <target name="compile" depends="clean, getJars">
-        <mkdir dir="working/build"/>
-        <javac srcdir="src" destdir="working/build"/>
-        <mkdir dir="working/jar"/>
-        <jar basedir="working/build" destfile="working/jar/goGame.jar"/>
-        <mkdir dir="working/tests"/>
+        <mkdir dir="${workingDirectory}/build"/>
+        <javac srcdir="${sourceDir}" destdir="${workingDirectory}/build"/>
+        <mkdir dir="${workingDirectory}/jar"/>
+        <jar basedir="${workingDirectory}/build" destfile="${workingDirectory}/jar/goGame.jar"/>
 
-        <javac srcdir="test" destdir="working/tests">
+        <mkdir dir="${workingDirectory}/tests"/>
+        <javac srcdir="${testDir}" destdir="${workingDirectory}/tests">
             <classpath>
-                <path location="working/jar/goGame.jar"/>
+                <path location="${workingDirectory}/jar/goGame.jar"/>
             </classpath>
             <classpath>
-                <path location="lib/junit-4.4.jar"/>
+                <path location="${libDirectory}/${junit.jar}"/>
             </classpath>
         </javac>
-        <jar basedir="working/tests" destfile="working/jar/test.jar"/>
+        <jar basedir="${workingDirectory}/tests" destfile="${workingDirectory}/jar/test.jar"/>
     </target>
 
     <target name="test" depends="compile">
         <junit haltonfailure="yes" haltonerror="yes">
             <classpath>
-                <path location="working/jar/test.jar"/>
-                <path location="working/jar/goGame.jar"/>
-                <path location="lib/junit-4.4.jar"/>
+                <path location="${workingDirectory}/jar/test.jar"/>
+                <path location="${workingDirectory}/jar/goGame.jar"/>
+                <path location="${libDirectory}/${junit.jar}"/>
             </classpath>
 
             <formatter type="plain"/>
 
-            <test name="go.core.AllTests" outfile="working/testResult">
+            <test name="go.core.AllTests" outfile="${workingDirectory}/testResult">
                 <formatter type="xml"/>
             </test>
         </junit>
     </target>
 
     <target name="javadoc" depends="clean">
-        <mkdir dir="release/javadoc"/>
+        <mkdir dir="${releaseDirectory}/javadoc"/>
         <javadoc packagenames="go.*"
                  sourcepath="src:test"
                  defaultexcludes="yes"
                  excludepackagenames="org.junit.*"
-                 destdir="release/javadoc"
+                 destdir="${releaseDirectory}/javadoc"
                  author="true"
                  version="true"
                  use="true"
-                 classpath="lib/junit-4.4.jar"
+                 classpath="${libDirectory}/${junit.jar}"
                  windowtitle="Test API">
 
             <doctitle><![CDATA[<h1>Test</h1>]]></doctitle>
@@ -79,6 +82,9 @@
     </target>
 
     <target name="build" description="Build the application" depends="test, javadoc">
-        <copydir src="working/jar" dest="release/jar"/>
+        <mkdir dir="${releaseDirectory}/jar"/>
+        <copy todir="${releaseDirectory}/jar">
+            <fileset dir="${workingDirectory}/jar"/>
+        </copy>
     </target>
 </project>
