@@ -42,10 +42,14 @@ public class Main {
                         System.out.println("Please enter integer coordinates!");
                     }
                     if (x >= 0) {
-                        if (onesTurn) {
-                            flag = goban.play(goban.getIntersection(x,y),P1);
-                        } else {
-                            flag = goban.play(goban.getIntersection(x,y),P2);
+                        try {
+                            if (onesTurn) {
+                                flag = goban.play(goban.getIntersection(x, y), P1);
+                            } else {
+                                flag = goban.play(goban.getIntersection(x, y), P2);
+                            }
+                        } catch (Exception ex) {
+                            System.out.println("Coordinates entered are out of Goban, try again");
                         }
                     } else if (x > -500) {
                         if (onesTurn) {
