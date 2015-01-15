@@ -171,6 +171,22 @@ public class Goban {
     }
 
     /**
+     * check if intersection is a valid move for the player and record the move if valid
+     * always handles ko
+     * @param x x coord position where the player plays
+     * @param y y coord position where the player plays
+     * @param player player playing this move
+     * @return true if move is valid, false otherwise
+     */
+    public boolean play(int x, int y, Player player) throws Exception {
+        Intersection intersection = getIntersection(x, y);
+        if (intersection == null) {
+            throw new Exception("Intersection is out of range");
+        }
+        return play(intersection, player);
+    }
+
+    /**
      *
      * removes the stones from the goban
      */
@@ -198,6 +214,10 @@ public class Goban {
         int[][] gobanState = gameTurn.getGobanState();
         for (int x = 0; x < width ; x++) {
             for (int y = 0; y < height ; y++) {
+                Intersection intersection = getIntersection(x, y);
+                if (intersection == null) {
+                    throw new Exception("Intersection is out of Goban");
+                }
                 switch (gobanState[x][y]) {
                     case 2:
                         play(getIntersection(x,y),two,false);
