@@ -14,9 +14,23 @@ import java.util.Stack;
  * Created by Thomas on 12/4/2014.
  */
 public class GameRecord {
+    /**
+     * Stacks all the preceding moves, when a new move is made ir is applied from the head of the stack.
+     */
     private final Stack<GameTurn> preceding;
+
+    /**
+     * Stacks all the following moves, needed to implement a basic undo()-redo().
+     * Undone moves are popped from preceding and pushed into following.
+     * Redone moves are popped from following and pushed into preceding.
+     */
     private final Stack<GameTurn> following;
 
+    /**
+     * Constructs a new game record of dimensions width x height.
+     * @param width
+     * @param height
+     */
     public GameRecord(int width, int height) {
         preceding = new Stack<GameTurn>();
         following = new Stack<GameTurn>();
@@ -24,10 +38,20 @@ public class GameRecord {
         apply(first);
     }
 
+    /**
+     * Constructs a deep copy of a given record.
+     * @param record the record to be copied.
+     */
     public GameRecord(GameRecord record) {
         this(record.preceding, record.following);
     }
 
+    /**
+     * Constructs a GameRecord by copying stacks of GameTurns to fill the preceding
+     * and following attributes.
+     * @param preceding
+     * @param following
+     */
     private GameRecord(Stack<GameTurn> preceding, Stack<GameTurn> following) {
         this.preceding = new Stack<GameTurn>();
         this.following = new Stack<GameTurn>();
@@ -39,19 +63,39 @@ public class GameRecord {
         }
     }
 
+    /**
+     * Adds a GameTurn to the preceding stack and clears the following stack.
+     * redo() can no longer be called after an apply().
+     * @param turn the GameTurn to be added.
+     */
     public void apply(GameTurn turn) {
         preceding.push(turn);
         following.clear();
     }
 
+    /**
+     * Checks if the GameRecord has preceding moves.
+     * @return {@code true} if it does,
+     * {@code false} otherwise.
+     */
     public boolean hasPreceding() {
         return preceding.size() > 1;
     }
 
+    /**
+     * Checks if the GameRecord has following moves,
+     * if it can call redo().
+     * @return {@code true} if it does,
+     * {@code false} otherwise.
+     */
     public boolean hasFollowing() {
         return following.size() > 0;
     }
 
+    /**
+     * Puts a GameTurn from the preceding stack to the following stack.
+     * @throws EmptyStackException if the preceding stack is empty.
+     */
     public void undo() throws EmptyStackException {
         if (preceding.size() > 1) {
             following.push(preceding.pop());
@@ -60,18 +104,36 @@ public class GameRecord {
         }
     }
 
+    /**
+     * Puts a GameTurn from the following stack to the preceding stack.
+     * @throws EmptyStackException if the following stack is empty.
+     */
     public void redo() throws EmptyStackException {
         preceding.push(following.pop());
     }
 
+    /**
+     * Gets the turns in preceding as an iterable.
+     * @return this.preceding as an iterable.
+     */
     public Iterable<GameTurn> getTurns() {
         return preceding;
     }
 
+    /**
+     * Returns in the head of preceding stack by peeking.
+     * @return the last turn in the GameRecord.
+     */
     public GameTurn getLastTurn() {
         return preceding.peek();
     }
 
+    /**
+     * Saves the GameRecord as a JSON object.
+     * @param filepath the path where to save.
+     * @return {@code true} if the save was successful,
+     * {@code false} otherwise.
+     */
     public boolean save(String filepath) {
         BufferedWriter writer;
         try {
@@ -127,6 +189,11 @@ public class GameRecord {
         return true;
     }
 
+    /**
+     * Loads a GameRecord from a JSON object file.
+     * @param filepath the path to the file to be read.
+     * @return the loaded GameRecord.
+     */
     public static GameRecord load(String filepath) {
         BufferedReader reader;
         GameRecord record = null;

@@ -9,10 +9,27 @@ import java.util.*;
  */
 
 public class Intersection {
+    /**
+     * The goban to which the intersection belongs.
+     */
     private final Goban goban;
+
+    /**
+     * The coordinates of the intersection on a goban.
+     */
     private final int x,y;
+
+    /**
+     * The chain to which the intersection belongs if applicable.
+     */
     private StoneChain stoneChain;
 
+    /**
+     * Constructs an Intersection to a corresponding goban, with given (x,y) coordinates.
+     * @param goban
+     * @param x
+     * @param y
+     */
     public Intersection(Goban goban, int x, int y) {
         this.goban = goban;
         this.x = x;
@@ -21,7 +38,7 @@ public class Intersection {
     }
 
     /**
-     * x getter
+     *
      * @return x
      */
     public int getX() {
@@ -29,7 +46,7 @@ public class Intersection {
     }
 
     /**
-     * y getter
+     *
      * @return y
      */
     public int getY() {
@@ -37,7 +54,7 @@ public class Intersection {
     }
 
     /**
-     * stoneChain getter
+     *
      * @return stoneChain
      */
     public StoneChain getStoneChain() {
@@ -45,7 +62,7 @@ public class Intersection {
     }
 
     /**
-     * stoneChain setter
+     *
      * @param stoneChain can be null
      */
     public void setStoneChain(StoneChain stoneChain) {
@@ -53,8 +70,9 @@ public class Intersection {
     }
 
     /**
-     * get to know if the intersection is empty or not
-     * @return true if empty, false otherwise
+     * Checks if the intersection is empty or not
+     * @return {@code true} if empty,
+     * {@code false} otherwise.
      */
     public boolean isEmpty() {
         return stoneChain == null;
@@ -62,7 +80,7 @@ public class Intersection {
 
     /**
      * Adjacent Stone Chains getter
-     * @return List of adjacents stone chains
+     * @return List of adjacent stone chains
      */
     public Set<StoneChain> getAdjacentStoneChains() {
         Set<StoneChain> adjacentStoneChains = new HashSet<StoneChain>();
