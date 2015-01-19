@@ -68,6 +68,7 @@ public class Main {
             }
             onesTurn = !onesTurn;
             System.out.println(goban);
+            gui.drawGoban();
         }
     }
 }

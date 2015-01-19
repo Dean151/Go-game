@@ -1,6 +1,7 @@
 package go.gui;
 
 import go.core.Goban;
+import go.core.StoneChain;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -75,7 +76,7 @@ public class GUI extends JFrame {
         this.initWindow();
 
         // printing the goban on screen
-        this.loadGoban();
+        this.drawGoban();
 
         pack();
     }
@@ -238,7 +239,9 @@ public class GUI extends JFrame {
     /**
      * Load Goban
      */
-    private void loadGoban() {
+    public void drawGoban() {
+        getContentPane().removeAll();
+
         // Central layout is a grid
         int gobanWidth = goban.getWidth();
         int gobanHeight = goban.getHeight();
@@ -251,32 +254,42 @@ public class GUI extends JFrame {
         for(int x=0;x<gobanWidth;x++) {
             for(int y=0;y<gobanHeight;y++) {
                 // creating button at [x,y]
-                if (x == gobanWidth - 1) {
-                    if (y == 0) {
-                        jIntersections[x][y] = new JButton(grid_ul);
-                    } else if (y == gobanHeight - 1) {
-                        jIntersections[x][y] = new JButton(grid_ur);
+
+                StoneChain chain = goban.getIntersection(x, y).getStoneChain();
+                if (chain != null) {
+                    if (chain.getOwner().getIdentifier() == 1) {
+                        jIntersections[x][y] = new JButton(grid_p1);
                     } else {
-                        jIntersections[x][y] = new JButton(grid_u);
-                    }
-                } else if (x == 0) {
-                    if (y == 0) {
-                        jIntersections[x][y] = new JButton(grid_bl);
-                    } else if (y == gobanHeight - 1) {
-                        jIntersections[x][y] = new JButton(grid_br);
-                    } else {
-                        jIntersections[x][y] = new JButton(grid_b);
+                        jIntersections[x][y] = new JButton(grid_p2);
                     }
                 } else {
-                    if (y == 0) {
-                        jIntersections[x][y] = new JButton(grid_l);
-                    } else if (y == gobanHeight - 1) {
-                        jIntersections[x][y] = new JButton(grid_r);
-                    } else {
-                        if (shouldBeSpot(x,y)) {
-                            jIntersections[x][y] = new JButton(grid_spot);
+                    if (x == gobanWidth - 1) {
+                        if (y == 0) {
+                            jIntersections[x][y] = new JButton(grid_ul);
+                        } else if (y == gobanHeight - 1) {
+                            jIntersections[x][y] = new JButton(grid_ur);
                         } else {
-                            jIntersections[x][y] = new JButton(grid_c);
+                            jIntersections[x][y] = new JButton(grid_u);
+                        }
+                    } else if (x == 0) {
+                        if (y == 0) {
+                            jIntersections[x][y] = new JButton(grid_bl);
+                        } else if (y == gobanHeight - 1) {
+                            jIntersections[x][y] = new JButton(grid_br);
+                        } else {
+                            jIntersections[x][y] = new JButton(grid_b);
+                        }
+                    } else {
+                        if (y == 0) {
+                            jIntersections[x][y] = new JButton(grid_l);
+                        } else if (y == gobanHeight - 1) {
+                            jIntersections[x][y] = new JButton(grid_r);
+                        } else {
+                            if (shouldBeSpot(x, y)) {
+                                jIntersections[x][y] = new JButton(grid_spot);
+                            } else {
+                                jIntersections[x][y] = new JButton(grid_c);
+                            }
                         }
                     }
                 }
