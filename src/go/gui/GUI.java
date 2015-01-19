@@ -226,7 +226,6 @@ public class GUI extends JFrame {
      * @return true if the intersection is marked
      */
     private boolean shouldBeSpot(int x, int y) {
-        // TODO math law for spot detection
         int gobanWidth = goban.getWidth();
         int gobanHeight = goban.getHeight();
         int offset = 3;
