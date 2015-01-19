@@ -274,6 +274,47 @@ public class Goban {
     }
 
     /**
+     * Undo method for goban
+     * @param one player one
+     * @param two player two
+     * @return {@code true} if undo is successful, {@code false} otherwise
+     */
+    public boolean undo (Player one, Player two) {
+        if (gameRecord.hasPreceding()) {
+            gameRecord.undo();
+            try {
+                takeGameTurn(gameRecord.getLastTurn(),one,two);
+            } catch (InvalidGameTurnEncounteredException ex) {
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Redo method for goban
+     * @param one player one
+     * @param two player two
+     * @return {@code true} if undo is successful, {@code false} otherwise
+     */
+    public boolean redo(Player one, Player two) {
+        if (gameRecord.hasFollowing()) {
+            gameRecord.redo();
+            try {
+                takeGameTurn(gameRecord.getLastTurn(),one,two);
+            } catch (InvalidGameTurnEncounteredException ex) {
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      *
      * @return String representation of a goban.
      */

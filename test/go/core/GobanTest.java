@@ -109,4 +109,11 @@ public class GobanTest {
         gobanTest.play(5,8,two);
         assertEquals(goban9.toString(),gobanTest.toString());
     }
+
+    @Test
+    public void testUndoRedo() throws Exception {
+        assertFalse(goban9.redo(one,two));
+        assertTrue(goban9.undo(one,two));
+        assertTrue(goban9.redo(one,two));
+    }
 }
