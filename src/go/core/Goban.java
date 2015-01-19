@@ -35,6 +35,11 @@ public class Goban {
     private final GameRecord gameRecord;
 
     /**
+     * Holds the set of the last captured stones, for the GUI
+     */
+    private Set<Intersection> lastCaptured;
+
+    /**
      * Constructor for a Goban with dimensions width x height.
      * @param width
      * @param height
@@ -43,6 +48,7 @@ public class Goban {
         this.width = width;
         this.height = height;
         intersections = new Intersection[width][height];
+        lastCaptured = new HashSet<Intersection>();
 
         for(int x=0; x<this.width; x++) {
             for (int y=0; y<this.height; y++) {
@@ -103,6 +109,14 @@ public class Goban {
      * @return game record of the goban.
      */
     public GameRecord getGameRecord() { return gameRecord ; }
+
+    /**
+     *
+     * @return the set of last captured stones for the GUI
+     */
+    public Set<Intersection> getLastCaptured() {
+        return lastCaptured;
+    }
 
     /**
      * Lets a given player pass.
@@ -191,6 +205,8 @@ public class Goban {
         if (handleKo) {
             gameRecord.apply(currentTurn);
         }
+
+        lastCaptured = capturedStones;
         return true;
     }
 
