@@ -108,6 +108,7 @@ public class GUI extends JFrame {
 
         // New Game
         jGameNew = new JMenuItem("New");
+        jGameNew.setAccelerator(KeyStroke.getKeyStroke("control N"));
         jGameNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -118,6 +119,7 @@ public class GUI extends JFrame {
 
         // Open
         jGameOpen = new JMenuItem("Open");
+        jGameOpen.setAccelerator(KeyStroke.getKeyStroke("control O"));
         jGameOpen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -141,6 +143,7 @@ public class GUI extends JFrame {
 
         // Save
         jGameSave = new JMenuItem("Save");
+        jGameSave.setAccelerator(KeyStroke.getKeyStroke("control S"));
         jGameSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -161,6 +164,7 @@ public class GUI extends JFrame {
 
         // Exit
         jGameExit = new JMenuItem("Exit");
+        jGameExit.setAccelerator(KeyStroke.getKeyStroke("control Q"));
         jGameExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -174,11 +178,13 @@ public class GUI extends JFrame {
 
         // Undo
         jEditUndo = new JMenuItem("Undo");
+        jEditUndo.setAccelerator(KeyStroke.getKeyStroke("control Z"));
         jEditUndo.setEnabled(false);
         jEditUndo.addActionListener(new UndoRedo(this, true));
 
         // Redo
         jEditRedo = new JMenuItem("Redo");
+        jEditRedo.setAccelerator(KeyStroke.getKeyStroke("control shift Z"));
         jEditRedo.setEnabled(false);
         jEditRedo.addActionListener(new UndoRedo(this, false));
 
