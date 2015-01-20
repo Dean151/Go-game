@@ -3,6 +3,8 @@ package go.core;
 import java.util.Arrays;
 import java.util.Set;
 
+// TODO GameTurn should record move of handicap left, and what is the next player that should play
+
 /**
  * GameTurn is a class listing all the important information of a given game turn
  * it is to be used by the GameRecord
