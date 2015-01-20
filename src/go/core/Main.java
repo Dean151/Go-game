@@ -14,13 +14,13 @@ public class Main {
 
     // Main code goes here
     public static void main(String[] args) {
-        Player P1 = new Player(1);
-        Player P2 = new Player(2);
+        //Player P1 = new Player(1);
+        //Player P2 = new Player(2);
 
         Goban goban = new Goban(19,19);
         GUI gui = new GUI(goban);
 
-
+        /*
         // Should have a loop that can switch player
         // Should handle handicap at the beginning of the party
         boolean onesTurn = true;
@@ -70,5 +70,6 @@ public class Main {
             System.out.println(goban);
             gui.drawGoban();
         }
+        */
     }
 }

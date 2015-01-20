@@ -39,6 +39,10 @@ public class Goban {
      */
     private Set<Intersection> lastCaptured;
 
+    private Player P1;
+    private Player P2;
+    private Player actualPlayer;
+
     /**
      * Constructor for a Goban with dimensions width x height.
      * @param width
@@ -50,13 +54,18 @@ public class Goban {
         intersections = new Intersection[width][height];
         lastCaptured = new HashSet<Intersection>();
 
-        for(int x=0; x<this.width; x++) {
-            for (int y=0; y<this.height; y++) {
+        // Initializing players
+        P1 = new Player(1);
+        P2 = new Player(2);
+        actualPlayer = P1;
+
+        for (int x = 0; x < this.width; x++) {
+            for (int y = 0; y < this.height; y++) {
                 intersections[x][y] = new Intersection(this, x, y);
             }
         }
 
-        gameRecord = new GameRecord(width,height);
+        gameRecord = new GameRecord(width, height);
     }
 
     public int getHeight() {
@@ -328,6 +337,16 @@ public class Goban {
         } else {
             return false;
         }
+    }
+
+    public Player getPlayer() {
+        return actualPlayer;
+    }
+
+    public boolean nextPlayer() {
+        // TODO should change the player, or not if we have handicap at a start of game
+        // TODO return true if player have changed, false if handicap
+        return false;
     }
 
     /**
