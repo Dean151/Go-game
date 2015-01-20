@@ -81,6 +81,10 @@ public class GUI extends JFrame {
         pack();
     }
 
+    public Goban getGoban() {
+        return goban;
+    }
+
     /**
      * Init the window
      */
@@ -301,6 +305,9 @@ public class GUI extends JFrame {
                 jIntersections[x][y].setMaximumSize(new java.awt.Dimension(100, 100));
                 jIntersections[x][y].setMinimumSize(new java.awt.Dimension(10, 10));
                 jIntersections[x][y].setPreferredSize(new java.awt.Dimension(TOKEN_INITIAL_SIZE, TOKEN_INITIAL_SIZE));
+
+                // Adding action
+                jIntersections[x][y].addActionListener(new PlayMove(this, x, y, goban.getPlayer()));
 
                 // Adding button
                 jGoban.add(jIntersections[x][y],x,y);
