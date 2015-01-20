@@ -14,26 +14,26 @@ public class PlayMove implements ActionListener {
     private int y;
 
     private GUI gui;
-    private Player player;
 
-    public PlayMove(GUI gui, int x, int y, Player player) {
+    public PlayMove(GUI gui, int x, int y) {
         super();
 
         this.gui = gui;
-        this.player = player;
         this.x = x;
         this.y = y;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO play a move
-        System.out.println(player+" should play to ["+x+"-"+y+"]");
+        Player player = gui.getGoban().getPlayer();
+
+        System.out.println(player+" want to play in ["+x+"-"+y+"]");
 
         try {
             if (gui.getGoban().play(x, y, player)) {
-                System.out.println("Move played");
+                System.out.println("Move applied");
                 gui.getGoban().nextPlayer();
+                // TODO place the black or white tile on [x,y]
             }
         } catch (Exception ex) {
 

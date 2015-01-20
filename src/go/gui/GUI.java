@@ -307,7 +307,7 @@ public class GUI extends JFrame {
                 jIntersections[x][y].setPreferredSize(new java.awt.Dimension(TOKEN_INITIAL_SIZE, TOKEN_INITIAL_SIZE));
 
                 // Adding action
-                jIntersections[x][y].addActionListener(new PlayMove(this, x, y, goban.getPlayer()));
+                jIntersections[x][y].addActionListener(new PlayMove(this, x, y));
 
                 // Adding button
                 jGoban.add(jIntersections[x][y],x,y);
