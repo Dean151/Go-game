@@ -43,6 +43,8 @@ public class Goban {
     private Player P2;
     private Player actualPlayer;
 
+    private int handicap;
+
     /**
      * Constructor for a Goban with dimensions width x height.
      * @param width
@@ -58,6 +60,7 @@ public class Goban {
         P1 = new Player(1);
         P2 = new Player(2);
         actualPlayer = P1;
+        handicap = 0;
 
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
@@ -344,9 +347,20 @@ public class Goban {
     }
 
     public boolean nextPlayer() {
-        // TODO should change the player, or not if we have handicap at a start of game
-        // TODO return true if player have changed, false if handicap
-        return false;
+        if (handicap > 0) {
+            handicap--;
+            return false;
+        } else {
+
+            if (actualPlayer == P1) {
+                actualPlayer = P2;
+                System.out.println("Changing player for P2");
+            } else {
+                actualPlayer = P1;
+                System.out.println("Changing player for P1");
+            }
+            return true;
+        }
     }
 
     /**
