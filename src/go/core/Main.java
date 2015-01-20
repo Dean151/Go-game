@@ -14,7 +14,17 @@ public class Main {
 
     // Main code goes here
     public static void main(String[] args) {
-        Goban goban = new Goban(19,19);
+        newGame(19, 0);
+    }
+
+    /**
+     * New game
+     * @param size size of goban
+     * @param handicap number of handicap
+     */
+    public static void newGame(int size, int handicap) {
+        // TODO handle handicap
+        Goban goban = new Goban(size,size);
         GUI gui = new GUI(goban);
     }
 }

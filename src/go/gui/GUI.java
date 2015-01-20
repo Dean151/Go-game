@@ -1,6 +1,7 @@
 package go.gui;
 
 import go.core.Goban;
+import go.core.Main;
 import go.core.StoneChain;
 
 import javax.swing.*;
@@ -112,8 +113,24 @@ public class GUI extends JFrame {
         jGameNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                // TODO request goban size to user and set the handicap
-                // TODO create new game
+                String[] gobanSizeChoises = {"9x9", "13x13", "19x19"};
+                String[] handicapChoises = new String[10];
+                for (int i = 0; i < handicapChoises.length; i++) {
+                    handicapChoises[i] = Integer.toString(i);
+                }
+
+                String gobanSizeString = (String) JOptionPane.showInputDialog(null, "Choose the size of Goban", "New Game", JOptionPane.QUESTION_MESSAGE, null, gobanSizeChoises, gobanSizeChoises[2]);
+                String handicapString = (String) JOptionPane.showInputDialog(null, "Choose the handicap for P1 (0 to 9)", "New Game", JOptionPane.QUESTION_MESSAGE, null, handicapChoises, handicapChoises[0]);
+
+                try {
+                    int gobanSize = Integer.parseInt(gobanSizeString.split("x")[0]);
+                    int handicap = Integer.parseInt(handicapString);
+                    Main.newGame(gobanSize, handicap);
+                    GUI.this.setVisible(false);
+                    GUI.this.dispose();
+                } catch (Exception ex) {
+
+                }
             }
         });
 
@@ -235,7 +252,7 @@ public class GUI extends JFrame {
         int gobanWidth = goban.getWidth();
         int gobanHeight = goban.getHeight();
         int offset = 3;
-        if (gobanWidth == 9) offset = 2;
+        if (gobanWidth < 10) offset = 2;
 
         return (x == offset || x == (gobanWidth-1)/2 || x == gobanWidth-offset-1) && (y == offset || y == (gobanHeight-1)/2 || y == gobanHeight-offset-1);
     }
