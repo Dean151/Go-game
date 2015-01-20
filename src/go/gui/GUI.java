@@ -175,25 +175,12 @@ public class GUI extends JFrame {
         // Undo
         jEditUndo = new JMenuItem("Undo");
         jEditUndo.setEnabled(false);
-        jEditUndo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO undo last action
-                // TODO activate redo button
-                // TODO desactivate undo button if no action left to undo
-            }
-        });
+        jEditUndo.addActionListener(new UndoRedo(this, true));
 
         // Redo
         jEditRedo = new JMenuItem("Redo");
         jEditRedo.setEnabled(false);
-        jEditRedo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO redo last action
-                // TODO desactivate redo button if no action left to redo
-            }
-        });
+        jEditRedo.addActionListener(new UndoRedo(this, false));
 
         // About menu
         jMenuAbout = new JMenu("About");
@@ -222,6 +209,14 @@ public class GUI extends JFrame {
         jMenuBar.add(jMenuGame);
         jMenuBar.add(jMenuEdit);
         jMenuBar.add(jMenuAbout);
+    }
+
+    public void setUndoEnabled(boolean state) {
+        jEditUndo.setEnabled(state);
+    }
+
+    public void setRedoEnabled(boolean state) {
+        jEditRedo.setEnabled(state);
     }
 
     /**

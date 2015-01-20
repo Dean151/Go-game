@@ -34,6 +34,10 @@ public class PlayMove implements ActionListener {
                 System.out.println("Move applied");
                 gui.getGoban().nextPlayer();
                 gui.updateGoban();
+
+                // Enabling undo, disabling redo
+                gui.setUndoEnabled(true);
+                gui.setRedoEnabled(false);
             }
         } catch (Exception ex) {
 
