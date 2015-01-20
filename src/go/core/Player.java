@@ -73,4 +73,9 @@ public class Player {
             return goban.play(goban.getIntersection(x,y),this);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Player "+identifier;
+    }
 }
