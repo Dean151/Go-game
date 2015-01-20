@@ -27,4 +27,12 @@ public class Main {
         Goban goban = new Goban(size,size);
         GUI gui = new GUI(goban);
     }
+
+    public static void loadGame() {
+        // TODO load game
+    }
+
+    public static void saveGame() {
+        // TODO save game
+    }
 }
