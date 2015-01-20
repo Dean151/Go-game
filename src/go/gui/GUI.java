@@ -27,8 +27,8 @@ public class GUI extends JFrame {
     private ImageIcon grid_bl = new ImageIcon(new ImageIcon("sprites/bl.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     private ImageIcon grid_b = new ImageIcon(new ImageIcon("sprites/b.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     private ImageIcon grid_br = new ImageIcon(new ImageIcon("sprites/br.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    private ImageIcon grid_p1 = new ImageIcon(new ImageIcon("sprites/p1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    private ImageIcon grid_p2 = new ImageIcon(new ImageIcon("sprites/p2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    private ImageIcon grid_p1 = new ImageIcon(new ImageIcon("sprites/p1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
+    private ImageIcon grid_p2 = new ImageIcon(new ImageIcon("sprites/p2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
 
     private Goban goban;
 
@@ -239,16 +239,49 @@ public class GUI extends JFrame {
         return (x == offset || x == (gobanWidth-1)/2 || x == gobanWidth-offset-1) && (y == offset || y == (gobanHeight-1)/2 || y == gobanHeight-offset-1);
     }
 
+    private ImageIcon getGridIcon(int x, int y) {
+        int gobanWidth = goban.getWidth();
+        int gobanHeight = goban.getHeight();
+
+        if (x == gobanWidth - 1) {
+            if (y == 0) {
+                return grid_ul;
+            } else if (y == gobanHeight - 1) {
+                return grid_ur;
+            } else {
+                return grid_u;
+            }
+        } else if (x == 0) {
+            if (y == 0) {
+                return grid_bl;
+            } else if (y == gobanHeight - 1) {
+                return grid_br;
+            } else {
+                return grid_b;
+            }
+        } else {
+            if (y == 0) {
+                return grid_l;
+            } else if (y == gobanHeight - 1) {
+                return grid_r;
+            } else {
+                if (shouldBeSpot(x, y)) {
+                    return grid_spot;
+                } else {
+                    return grid_c;
+                }
+            }
+        }
+    }
 
     /**
-     * Load Goban
+     * Draw Goban
      */
     public void drawGoban() {
-        getContentPane().removeAll();
-
         // Central layout is a grid
         int gobanWidth = goban.getWidth();
         int gobanHeight = goban.getHeight();
+
         jGoban = new JPanel(new GridLayout(gobanWidth,gobanHeight));
 
         // Creating the board
@@ -267,35 +300,7 @@ public class GUI extends JFrame {
                         jIntersections[x][y] = new JButton(grid_p2);
                     }
                 } else {
-                    if (x == gobanWidth - 1) {
-                        if (y == 0) {
-                            jIntersections[x][y] = new JButton(grid_ul);
-                        } else if (y == gobanHeight - 1) {
-                            jIntersections[x][y] = new JButton(grid_ur);
-                        } else {
-                            jIntersections[x][y] = new JButton(grid_u);
-                        }
-                    } else if (x == 0) {
-                        if (y == 0) {
-                            jIntersections[x][y] = new JButton(grid_bl);
-                        } else if (y == gobanHeight - 1) {
-                            jIntersections[x][y] = new JButton(grid_br);
-                        } else {
-                            jIntersections[x][y] = new JButton(grid_b);
-                        }
-                    } else {
-                        if (y == 0) {
-                            jIntersections[x][y] = new JButton(grid_l);
-                        } else if (y == gobanHeight - 1) {
-                            jIntersections[x][y] = new JButton(grid_r);
-                        } else {
-                            if (shouldBeSpot(x, y)) {
-                                jIntersections[x][y] = new JButton(grid_spot);
-                            } else {
-                                jIntersections[x][y] = new JButton(grid_c);
-                            }
-                        }
-                    }
+                    jIntersections[x][y] = new JButton(getGridIcon(x, y));
                 }
 
                 jIntersections[x][y].setEnabled(true);
@@ -315,5 +320,24 @@ public class GUI extends JFrame {
         }
         // Adding goban in Main content panel
         getContentPane().add(jGoban, BorderLayout.CENTER);
+    }
+
+    /**
+     * Update goban
+     */
+    public void updateGoban() {
+        int gobanWidth = goban.getWidth();
+        int gobanHeight = goban.getHeight();
+        for(int x=0;x<gobanWidth;x++) {
+            for (int y = 0; y < gobanHeight; y++) {
+                StoneChain sc = goban.getIntersection(x,y).getStoneChain();
+                if (sc != null) {
+                    if (sc.getOwner().getIdentifier() == 1) jIntersections[x][y].setIcon(grid_p1);
+                    else jIntersections[x][y].setIcon(grid_p2);
+                } else {
+                    jIntersections[x][y].setIcon(getGridIcon(x,y));
+                }
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ public class PlayMove implements ActionListener {
             if (gui.getGoban().play(x, y, player)) {
                 System.out.println("Move applied");
                 gui.getGoban().nextPlayer();
-                // TODO place the black or white tile on [x,y]
+                gui.updateGoban();
             }
         } catch (Exception ex) {
 
