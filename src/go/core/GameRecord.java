@@ -96,9 +96,10 @@ public class GameRecord {
      * Puts a GameTurn from the preceding stack to the following stack.
      * @throws EmptyStackException if the preceding stack is empty.
      */
-    public void undo() throws EmptyStackException {
+    public int undo() throws EmptyStackException {
         if (preceding.size() > 1) {
             following.push(preceding.pop());
+            return preceding.size();
         } else {
             throw new EmptyStackException();
         }
@@ -108,8 +109,9 @@ public class GameRecord {
      * Puts a GameTurn from the following stack to the preceding stack.
      * @throws EmptyStackException if the following stack is empty.
      */
-    public void redo() throws EmptyStackException {
+    public int redo() throws EmptyStackException {
         preceding.push(following.pop());
+        return following.size();
     }
 
     /**

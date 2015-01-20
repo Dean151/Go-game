@@ -303,45 +303,45 @@ public class Goban {
 
     /**
      * Undo method for goban
-     * @param one player one
-     * @param two player two
-     * @return {@code true} if undo is successful, {@code false} otherwise
+     * @return  >=0 if undo is successful, -1 otherwise
      */
-    public boolean undo (Player one, Player two) {
+    public int undo () {
         if (gameRecord.hasPreceding()) {
-            gameRecord.undo();
+            int nbr = gameRecord.undo();
             try {
-                takeGameTurn(gameRecord.getLastTurn(),one,two);
+                takeGameTurn(gameRecord.getLastTurn(),P1,P2);
+                return nbr;
             } catch (InvalidGameTurnEncounteredException ex) {
-                return false;
+                return -1;
             }
-            return true;
         } else {
-            return false;
+            return -1;
         }
 
     }
 
     /**
      * Redo method for goban
-     * @param one player one
-     * @param two player two
-     * @return {@code true} if undo is successful, {@code false} otherwise
+     * @return >=0 if undo is successful, -1 otherwise
      */
-    public boolean redo(Player one, Player two) {
+    public int redo() {
         if (gameRecord.hasFollowing()) {
-            gameRecord.redo();
+            int nbr = gameRecord.redo();
             try {
-                takeGameTurn(gameRecord.getLastTurn(),one,two);
+                takeGameTurn(gameRecord.getLastTurn(),P1,P2);
+                return nbr;
             } catch (InvalidGameTurnEncounteredException ex) {
-                return false;
+                return -1;
             }
-            return true;
         } else {
-            return false;
+            return -1;
         }
     }
 
+    /**
+     * Get the player that is playing now
+     * @return Player that is going to play
+     */
     public Player getPlayer() {
         return actualPlayer;
     }
