@@ -361,10 +361,11 @@ public class Goban {
      */
     public boolean undo () {
         if (gameRecord.hasPreceding()) {
+            GameTurn current = getGameRecord().getLastTurn();
             gameRecord.undo();
             try {
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
-                actualPlayer.removeCapturedStones(gameRecord.getLastTurn().getCountCapturedStones());
+                actualPlayer.removeCapturedStones(current.getCountCapturedStones());
                 precedentPlayer();
                 return true;
             } catch (InvalidGameTurnEncounteredException ex) {
