@@ -3,6 +3,7 @@ package go.gui;
 import go.core.Goban;
 import go.core.Main;
 import go.core.StoneChain;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -175,6 +176,9 @@ public class GUI extends JFrame {
                     saveFile.setAcceptAllFileFilterUsed(false);
                     if (saveFile.showSaveDialog(GUI.this) == JFileChooser.APPROVE_OPTION) {
                         String file = saveFile.getSelectedFile().getCanonicalPath();
+                        //Putting the correct extension
+                        file = file.replaceAll("\\.save?$","");
+                        file = file + ".save";
 
                         if (!GUI.this.getGoban().getGameRecord().save(file)) {
                             // there were a problem saving the game
