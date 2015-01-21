@@ -161,6 +161,7 @@ public class Goban {
      */
     public void pass(Player player) {
         gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), handicap, Collections.<Intersection>emptySet()));
+        nextPlayer(false);
     }
 
     /**
