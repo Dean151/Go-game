@@ -120,7 +120,7 @@ public class GUI extends JFrame {
                 }
 
                 String gobanSizeString = (String) JOptionPane.showInputDialog(null, "Choose the size of Goban", "New Game", JOptionPane.QUESTION_MESSAGE, null, gobanSizeChoises, gobanSizeChoises[2]);
-                String handicapString = (String) JOptionPane.showInputDialog(null, "Choose the number of initial black stones (1 to 9)", "New Game", JOptionPane.QUESTION_MESSAGE, null, handicapChoises, handicapChoises[0]);
+                String handicapString = (String) JOptionPane.showInputDialog(null, "Choose the number of initial black stones before black can play (0 to 8)", "New Game", JOptionPane.QUESTION_MESSAGE, null, handicapChoises, handicapChoises[0]);
 
                 try {
                     int gobanSize = Integer.parseInt(gobanSizeString.split("x")[0]);

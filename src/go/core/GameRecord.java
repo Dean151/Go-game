@@ -89,6 +89,8 @@ public class GameRecord {
         return preceding.size() > 1;
     }
 
+    public int nbrPreceding() { return preceding.size() - 1; }
+
     /**
      * Checks if the GameRecord has following moves,
      * if it can call redo().

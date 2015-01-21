@@ -43,6 +43,7 @@ public class Goban {
     private Player P2;
     private Player actualPlayer;
 
+    private final int initialHandicap;
     private int handicap;
 
     /**
@@ -53,7 +54,7 @@ public class Goban {
     public Goban(int width, int height) {
         this.width = width;
         this.height = height;
-        this.handicap = 0;
+        this.initialHandicap = 0;
 
         intersections = new Intersection[width][height];
 
@@ -65,7 +66,7 @@ public class Goban {
     public Goban(int width, int height, int handicap) {
         this.width = width;
         this.height = height;
-        this.handicap = handicap;
+        this.initialHandicap = handicap;
 
         intersections = new Intersection[width][height];
 
@@ -87,6 +88,8 @@ public class Goban {
                 intersections[x][y] = new Intersection(this, x, y);
             }
         }
+
+        handicap = 0;
     }
 
     public int getHeight() {
@@ -135,7 +138,7 @@ public class Goban {
     }
 
     public int getHandicap() {
-        return handicap;
+        return initialHandicap;
     }
 
     /**
@@ -206,7 +209,7 @@ public class Goban {
         }
 
         if (handleKo) {
-            currentTurn = gameRecord.getLastTurn().toNext(intersection.getX(),intersection.getY(),player.getIdentifier(), handicap,capturedStones);
+            currentTurn = gameRecord.getLastTurn().toNext(intersection.getX(),intersection.getY(),player.getIdentifier(),getHandicap(),capturedStones);
             for (GameTurn turn : gameRecord.getTurns()) {
                 if (turn.equals(currentTurn)) {
                     ko = true;
@@ -331,6 +334,7 @@ public class Goban {
         if (gameRecord.hasPreceding()) {
             int nbr = gameRecord.undo();
             try {
+                precedentPlayer();
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
                 return nbr;
             } catch (InvalidGameTurnEncounteredException ex) {
@@ -350,6 +354,7 @@ public class Goban {
         if (gameRecord.hasFollowing()) {
             int nbr = gameRecord.redo();
             try {
+                nextPlayer();
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
                 return nbr;
             } catch (InvalidGameTurnEncounteredException ex) {
@@ -369,7 +374,18 @@ public class Goban {
     }
 
     public boolean nextPlayer() {
-        if (handicap > 0) {
+        return changePlayer(false);
+    }
+
+    public boolean precedentPlayer() {
+        return changePlayer(true);
+    }
+
+    public boolean changePlayer(boolean undo) {
+        if (handicap < initialHandicap && !undo) {
+            handicap++;
+            return false;
+        } else if (undo && this.gameRecord.nbrPreceding() < initialHandicap ) {
             handicap--;
             return false;
         } else {
