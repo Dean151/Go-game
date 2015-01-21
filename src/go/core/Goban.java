@@ -32,7 +32,7 @@ public class Goban {
     /**
      * A record of the turns of a game played on the goban.
      */
-    private final GameRecord gameRecord;
+    private GameRecord gameRecord;
 
     /**
      * Holds the set of the last captured stones, for the GUI
@@ -64,15 +64,8 @@ public class Goban {
     }
 
     public Goban(int width, int height, int handicap) {
-        this.width = width;
-        this.height = height;
-        this.initialHandicap = handicap;
-
-        intersections = new Intersection[width][height];
-
-        initGoban();
-
-        gameRecord = new GameRecord(width, height, handicap);
+        this(width,height);
+        this.gameRecord = new GameRecord(width, height, handicap);
     }
 
     private void initGoban() {
