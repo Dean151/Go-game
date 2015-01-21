@@ -48,7 +48,7 @@ public class PassMove implements ActionListener {
 
             JOptionPane.showMessageDialog(gui,
                     "The number of stones taken from " + odd + " is " + oddCount +"\n" +
-                    "The number of stones taken from " + odd + " is " + oddCount +"\n" ,
+                    "The number of stones taken from " + even + " is " + evenCount +"\n" ,
                     "Game is finished",
                     JOptionPane.PLAIN_MESSAGE);
 
