@@ -10,11 +10,23 @@ import java.awt.event.ActionListener;
  * Created by thomas on 20/01/15.
  */
 public class PlayMove implements ActionListener {
-    private int x;
-    private int y;
+    /**
+     * The (x,y) coordinates of the played move
+     */
+    private int x,y;
 
+    /**
+     * The GUI on which this action is applied
+     *
+     */
     private GUI gui;
 
+    /**
+     * Constructor
+     * @param gui
+     * @param x
+     * @param y
+     */
     public PlayMove(GUI gui, int x, int y) {
         super();
 
@@ -23,6 +35,11 @@ public class PlayMove implements ActionListener {
         this.y = y;
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Player player = gui.getGoban().getPlayer();

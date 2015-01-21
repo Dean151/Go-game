@@ -63,6 +63,12 @@ public class Goban {
         gameRecord = new GameRecord(width, height, handicap);
     }
 
+    /**
+     * Constructor with handicap
+     * @param width
+     * @param height
+     * @param handicap
+     */
     public Goban(int width, int height, int handicap) {
         this(width,height);
         this.gameRecord = new GameRecord(width, height, handicap);
