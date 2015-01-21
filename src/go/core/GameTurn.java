@@ -3,8 +3,6 @@ package go.core;
 import java.util.Arrays;
 import java.util.Set;
 
-// TODO GameTurn should record move of handicap left, and what is the next player that should play
-
 /**
  * GameTurn is a class listing all the important information of a given game turn
  * it is to be used by the GameRecord
@@ -31,12 +29,15 @@ public class GameTurn {
      */
     private final int countCapturedStones;
 
+    private final int handicap;
+
     /**
      * Copy Constructor
      */
     public GameTurn(GameTurn source) {
         int width = source.gobanState.length;
         int height = source.gobanState[0].length;
+        this.handicap = source.handicap;
         x = source.x;
         y = source.y;
         hashCode = source.hashCode;
@@ -55,6 +56,20 @@ public class GameTurn {
     public GameTurn(int width, int height) {
         gobanState = new int[width][height];
         countCapturedStones = 0;
+        this.handicap = 0;
+
+        // Move is virtual, x and y are set to -1
+        x = -1;
+        y = -1;
+
+        // Using Java Tools to make a pertinent hash on the goban state
+        hashCode = Arrays.deepHashCode(gobanState);
+    }
+
+    public GameTurn(int width, int height, int handicap) {
+        gobanState = new int[width][height];
+        countCapturedStones = 0;
+        this.handicap = handicap;
 
         // Move is virtual, x and y are set to -1
         x = -1;
@@ -74,9 +89,11 @@ public class GameTurn {
      * @param playerId The id of the player making the given game turn.
      * @param freedIntersections A set of Intersections which may have been freed, due to being captured.
      */
-    private GameTurn(GameTurn prev, int X, int Y, int playerId , Set<Intersection> freedIntersections ) {
+    private GameTurn(GameTurn prev, int X, int Y, int playerId, int handicap, Set<Intersection> freedIntersections ) {
         int width = prev.gobanState.length;
         int height = prev.gobanState[0].length;
+        this.handicap = handicap;
+
         gobanState = new int[width][height];
         for (int i = 0; i < width ; i++) {
             gobanState[i] = prev.gobanState[i].clone();
@@ -106,8 +123,12 @@ public class GameTurn {
      * @param playerId The Id of the player making the given game turn.
      * @param freedIntersections A set of Intersections which may have been freed, due to being captured.
      */
-    public GameTurn toNext(int X, int Y, int playerId , Set<Intersection> freedIntersections) {
-        return new GameTurn(this,X,Y,playerId,freedIntersections);
+    public GameTurn toNext(int X, int Y, int playerId, Set<Intersection> freedIntersections) {
+        return toNext(X, Y, playerId, 0, freedIntersections);
+    }
+
+    public GameTurn toNext(int X, int Y, int playerId, int handicap, Set<Intersection> freedIntersections) {
+        return new GameTurn(this,X,Y,playerId, handicap, freedIntersections);
     }
 
     /**
@@ -132,6 +153,10 @@ public class GameTurn {
      */
     public int getY() {
         return y;
+    }
+
+    public int getHandicap() {
+        return handicap;
     }
 
     /**

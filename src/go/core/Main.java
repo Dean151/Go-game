@@ -23,8 +23,7 @@ public class Main {
      * @param handicap number of handicap
      */
     public static void newGame(int size, int handicap) {
-        // TODO handle handicap
-        Goban goban = new Goban(size,size);
+        Goban goban = new Goban(size,size, handicap);
         GUI gui = new GUI(goban);
     }
 

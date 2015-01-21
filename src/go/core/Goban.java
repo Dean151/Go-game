@@ -53,22 +53,40 @@ public class Goban {
     public Goban(int width, int height) {
         this.width = width;
         this.height = height;
+        this.handicap = 0;
+
         intersections = new Intersection[width][height];
+
+        initGoban();
+
+        gameRecord = new GameRecord(width, height, handicap);
+    }
+
+    public Goban(int width, int height, int handicap) {
+        this.width = width;
+        this.height = height;
+        this.handicap = handicap;
+
+        intersections = new Intersection[width][height];
+
+        initGoban();
+
+        gameRecord = new GameRecord(width, height, handicap);
+    }
+
+    private void initGoban() {
         lastCaptured = new HashSet<Intersection>();
 
         // Initializing players
         P1 = new Player(1);
         P2 = new Player(2);
         actualPlayer = P1;
-        handicap = 0;
 
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
                 intersections[x][y] = new Intersection(this, x, y);
             }
         }
-
-        gameRecord = new GameRecord(width, height);
     }
 
     public int getHeight() {
@@ -116,6 +134,10 @@ public class Goban {
         }
     }
 
+    public int getHandicap() {
+        return handicap;
+    }
+
     /**
      *
      * @return game record of the goban.
@@ -135,7 +157,7 @@ public class Goban {
      * @param player the player that is passing is turn.
      */
     public void pass(Player player) {
-        gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), Collections.<Intersection>emptySet()));
+        gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), handicap, Collections.<Intersection>emptySet()));
     }
 
     /**
@@ -184,7 +206,7 @@ public class Goban {
         }
 
         if (handleKo) {
-            currentTurn = gameRecord.getLastTurn().toNext(intersection.getX(),intersection.getY(),player.getIdentifier(),capturedStones);
+            currentTurn = gameRecord.getLastTurn().toNext(intersection.getX(),intersection.getY(),player.getIdentifier(), handicap,capturedStones);
             for (GameTurn turn : gameRecord.getTurns()) {
                 if (turn.equals(currentTurn)) {
                     ko = true;
@@ -351,7 +373,6 @@ public class Goban {
             handicap--;
             return false;
         } else {
-
             if (actualPlayer == P1) {
                 actualPlayer = P2;
                 System.out.println("Changing player for P2");

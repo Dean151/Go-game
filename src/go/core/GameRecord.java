@@ -34,7 +34,14 @@ public class GameRecord {
     public GameRecord(int width, int height) {
         preceding = new Stack<GameTurn>();
         following = new Stack<GameTurn>();
-        GameTurn first = new GameTurn(width,height);
+        GameTurn first = new GameTurn(width, height);
+        apply(first);
+    }
+
+    public GameRecord(int width, int height, int handicap) {
+        preceding = new Stack<GameTurn>();
+        following = new Stack<GameTurn>();
+        GameTurn first = new GameTurn(width, height, handicap);
         apply(first);
     }
 
@@ -148,6 +155,8 @@ public class GameRecord {
             writer.newLine();
             writer.write("  \"height\": " + preceding.peek().getGobanState()[0].length + ",");
             writer.newLine();
+            writer.write("  \"handicap\": " + preceding.peek().getHandicap() + ",");
+            writer.newLine();
 
             //Insanely Java Iterates the stack bottom to top
 
@@ -208,11 +217,12 @@ public class GameRecord {
 
             int width  = Integer.parseInt(reader.readLine().split(delim)[2]);
             int height = Integer.parseInt(reader.readLine().split(delim)[2]);
+            int handicap = Integer.parseInt(reader.readLine().split(delim)[2]);
 
-            Goban goban = new Goban(width,height);
+            Goban goban = new Goban(width, height, handicap);
             Player one = new Player(1);
             Player two = new Player(2);
-
+            Player actualPlayer = one;
 
             int x,y;
             String[] line;
@@ -240,10 +250,16 @@ public class GameRecord {
                 x = Integer.parseInt(line[1]);
                 y = Integer.parseInt(line[2]);
 
-                if (i%2 == 0) {
-                    one.play(goban, x, y);
+                actualPlayer.play(goban, x, y);
+
+                if (handicap > 0) {
+                    handicap--;
                 } else {
-                    two.play(goban,x,y);
+                    if (actualPlayer == one) {
+                        actualPlayer = two;
+                    } else {
+                        actualPlayer = one;
+                    }
                 }
                 i++;
             }
