@@ -120,7 +120,7 @@ public class GUI extends JFrame {
                 }
 
                 String gobanSizeString = (String) JOptionPane.showInputDialog(null, "Choose the size of Goban", "New Game", JOptionPane.QUESTION_MESSAGE, null, gobanSizeChoises, gobanSizeChoises[2]);
-                String handicapString = (String) JOptionPane.showInputDialog(null, "Choose the handicap for P1 (0 to 9)", "New Game", JOptionPane.QUESTION_MESSAGE, null, handicapChoises, handicapChoises[0]);
+                String handicapString = (String) JOptionPane.showInputDialog(null, "Choose the number of initial black stones (1 to 9)", "New Game", JOptionPane.QUESTION_MESSAGE, null, handicapChoises, handicapChoises[0]);
 
                 try {
                     int gobanSize = Integer.parseInt(gobanSizeString.split("x")[0]);
@@ -171,7 +171,13 @@ public class GUI extends JFrame {
                     if (saveFile.showSaveDialog(GUI.this) == JFileChooser.APPROVE_OPTION) {
                         String file = saveFile.getSelectedFile().getCanonicalPath();
 
-                        // TODO Save actual game
+                        if (!GUI.this.getGoban().getGameRecord().save(file)) {
+                            // there were a problem saving the game
+                            JOptionPane.showMessageDialog(GUI.this,
+                                    "The game could not be saved, try again.",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
