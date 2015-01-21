@@ -30,8 +30,4 @@ public class Main {
     public static void loadGame() {
         // TODO load game
     }
-
-    public static void saveGame() {
-        // TODO save game
-    }
 }
