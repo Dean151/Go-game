@@ -112,11 +112,8 @@ public class GobanTest {
 
     @Test
     public void testUndoRedo() throws Exception {
-        assertEquals(-1,goban9.redo());
-        assertEquals(8, goban9.undo());
-        assertEquals(0, goban9.redo());
-        assertEquals(8, goban9.undo());
-        assertEquals(7, goban9.undo());
-        assertEquals(1, goban9.redo());
+        assertFalse(goban9.redo());
+        assertTrue(goban9.undo());
+        assertTrue(goban9.redo());
     }
 }
