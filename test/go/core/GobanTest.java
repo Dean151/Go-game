@@ -1,9 +1,12 @@
 package go.core;
 
+import go.core.exceptions.InvalidGameTurnEncounteredException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.security.InvalidParameterException;
 import java.util.Collections;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -112,11 +115,106 @@ public class GobanTest {
 
     @Test
     public void testUndoRedo() throws Exception {
-        assertEquals(-1,goban9.redo());
-        assertEquals(8, goban9.undo());
-        assertEquals(0, goban9.redo());
-        assertEquals(8, goban9.undo());
-        assertEquals(7, goban9.undo());
-        assertEquals(1, goban9.redo());
+        assertFalse(goban9.redo());
+        assertTrue(goban9.undo());
+        assertTrue(goban9.redo());
+    }
+
+    @Test
+    public void testGetCapturedStones() throws Exception {
+        assertTrue(goban9.play(goban9.getIntersection(5,7),one));
+        Set<Intersection> set = goban9.getLastCaptured();
+        assertEquals(1,set.size());
+        assertTrue(set.contains(goban9.getIntersection(5, 6)));
+    }
+
+    @Test
+    public void nextPreviousPlayer() throws Exception {
+        Player even = goban9.getPlayer();
+        goban9.nextPlayer();
+        Player odd = goban9.getPlayer();
+        assertNotEquals(odd,even);
+        goban9.nextPlayer();
+        assertEquals(even,goban9.getPlayer());
+        goban9.nextPlayer();
+        goban9.nextPlayer();
+        assertEquals(even,goban9.getPlayer());
+        goban9.nextPlayer();
+        assertEquals(odd,goban9.getPlayer());
+        goban9.precedentPlayer();
+        assertEquals(even,goban9.getPlayer());
+    }
+
+    @Test
+    public void testChangePlayer() throws Exception {
+        Goban A = new Goban(9,9,4);
+        assertEquals(4,A.getHandicap());
+        GameRecord record = A.getGameRecord();
+
+        record.apply(null); assertFalse(A.changePlayer(false)); // first handicap stone player is not changed
+        record.undo();      assertFalse(A.changePlayer(true)); // undo , player is not changed
+        record.apply(null); assertFalse(A.changePlayer(false)); // 1
+        record.apply(null); assertFalse(A.changePlayer(false)); // 2
+        record.apply(null); assertFalse(A.changePlayer(false)); // 3
+        record.apply(null); assertFalse(A.changePlayer(false)); // 4
+        record.apply(null); assertTrue(A.changePlayer(false)); // 5
+        record.apply(null); assertTrue(A.changePlayer(true)); // 6
+        record.undo();      assertTrue(A.changePlayer(true)); // UNDO
+        record.undo();      assertTrue(A.changePlayer(true)); // UNDO
+        record.undo();      assertFalse(A.changePlayer(true)); // UNDO but with handicap stones again
+    }
+
+    @Test
+    public void badGameTurns() throws Exception {
+        GameTurn A = new GameTurn(15,15);
+        GameTurn B = null ;
+        GameTurn D = new GameTurn(9,9).toNext(2,2,3,Collections.<Intersection>emptySet());
+        try {
+            goban9.takeGameTurn(A,one,two);
+            fail("Exception not thrown");
+        } catch (InvalidGameTurnEncounteredException ex) {
+
+        }
+        try {
+            goban9.takeGameTurn(B,one,two);
+            fail("Exception not thrown");
+        } catch (InvalidParameterException ex) {
+
+        }
+        try {
+            goban9.takeGameTurn(D,one,two);
+            fail("Exception not thrown");
+        } catch (InvalidGameTurnEncounteredException ex) {
+
+        }
+    }
+
+    @Test
+    public void nullOutsideGoban() throws Exception {
+        assertNull(goban9.getIntersection(10,10));
+    }
+
+    @Test
+    public void getDimensions() throws Exception {
+        assertEquals(9,goban9.getWidth());
+        assertEquals(9,goban9.getHeight());
+    }
+
+    @Test
+    public void testPassCount() throws Exception {
+        assertEquals(0,goban9.getSuccessivePassCount());
+        goban9.pass(goban9.getPlayer());
+        goban9.pass(goban9.getPlayer());
+        assertEquals(2,goban9.getSuccessivePassCount());
+        goban9.play(1,1,goban9.getPlayer());
+        assertEquals(0,goban9.getSuccessivePassCount());
+
+        goban9.updatePassCount(true);
+        goban9.updatePassCount(true);
+        goban9.updatePassCount(true);
+        goban9.updatePassCount(true);
+        assertEquals(4,goban9.getSuccessivePassCount());
+        goban9.updatePassCount(false);
+        assertEquals(0,goban9.getSuccessivePassCount());
     }
 }

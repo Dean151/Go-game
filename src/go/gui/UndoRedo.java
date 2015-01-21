@@ -7,14 +7,33 @@ import java.awt.event.ActionListener;
  * Created by thomas on 20/01/15.
  */
 public class UndoRedo implements ActionListener {
+    /**
+     * {@code true} this is an undo, {@code false} this is a redo
+     *
+     */
     private boolean undo;
+
+    /**
+     * The GUI on which this action is applied
+     *
+     */
     private GUI gui;
 
+    /**
+     * Constructor
+     * @param gui
+     * @param undo
+     */
     public UndoRedo(GUI gui, boolean undo) {
         this.gui = gui;
         this.undo = undo;
     }
 
+    /**
+     * Invoked when an action occurs.
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (undo) {

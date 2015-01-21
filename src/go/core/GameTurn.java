@@ -155,6 +155,11 @@ public class GameTurn {
         return y;
     }
 
+
+    /**
+     *
+     * @return the handicap setting
+     */
     public int getHandicap() {
         return handicap;
     }

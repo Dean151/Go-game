@@ -39,12 +39,25 @@ public class Goban {
      */
     private Set<Intersection> lastCaptured;
 
-    private Player P1;
-    private Player P2;
-    private Player actualPlayer;
+    /**
+     * Used for handling player order
+     */
+    private Player P1, P2, actualPlayer;
 
+    /**
+     * Initial Handicap
+     */
     private final int initialHandicap;
+
+    /**
+     * Counts played handicap stones
+     */
     private int handicap;
+
+    /**
+     * Counts sucessive passes
+     */
+    private int successivePassCount;
 
     /**
      * Constructor for a Goban with dimensions width x height.
@@ -52,27 +65,23 @@ public class Goban {
      * @param height
      */
     public Goban(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.initialHandicap = 0;
-
-        intersections = new Intersection[width][height];
-
-        initGoban();
-
-        gameRecord = new GameRecord(width, height, handicap);
+        this(width,height,0);
     }
 
+    /**
+     * Constructor with handicap
+     * @param width
+     * @param height
+     * @param handicap
+     */
     public Goban(int width, int height, int handicap) {
         this.width = width;
         this.height = height;
         this.initialHandicap = handicap;
-
-        intersections = new Intersection[width][height];
-
+        this.successivePassCount = 0;
+        this.intersections = new Intersection[width][height];
+        this.gameRecord = new GameRecord(width, height, handicap);
         initGoban();
-
-        gameRecord = new GameRecord(width, height, handicap);
     }
 
     public Goban(GameRecord gr) {
@@ -103,6 +112,9 @@ public class Goban {
         }
     }
 
+    /**
+     * Goban initialisator for constructors
+     */
     private void initGoban() {
         lastCaptured = new HashSet<Intersection>();
 
@@ -184,11 +196,31 @@ public class Goban {
     }
 
     /**
+     *
+     * @return the successive pass count
+     */
+    public int getSuccessivePassCount() { return successivePassCount; }
+
+    /**
      * Lets a given player pass.
      * @param player the player that is passing is turn.
      */
     public void pass(Player player) {
         gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), handicap, Collections.<Intersection>emptySet()));
+        nextPlayer();
+        updatePassCount(true);
+    }
+
+    /**
+     * Updates the successive pass count
+     * @param pass {@code true} if pass, {@code false} otherwise
+     */
+    public void updatePassCount(boolean pass) {
+        if (pass) {
+            successivePassCount++;
+        } else {
+            successivePassCount = 0;
+        }
     }
 
     /**
@@ -272,6 +304,7 @@ public class Goban {
         }
 
         lastCaptured = capturedStones;
+        updatePassCount(false);
         return true;
     }
 
@@ -332,10 +365,6 @@ public class Goban {
         int[][] gobanState = gameTurn.getGobanState();
         for (int x = 0; x < width ; x++) {
             for (int y = 0; y < height ; y++) {
-                Intersection intersection = getIntersection(x, y);
-                if (intersection == null) {
-                    throw new InvalidGameTurnEncounteredException("Unexpected board dimension mismatch", new OutOfGobanException("Intersection is out of range: x=" + x + " y=" + y));
-                }
                 switch (gobanState[x][y]) {
                     case 2:
                         play(getIntersection(x,y),two,false);
@@ -362,8 +391,9 @@ public class Goban {
         if (gameRecord.hasPreceding()) {
             gameRecord.undo();
             try {
-                precedentPlayer();
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
+                actualPlayer.removeCapturedStones(gameRecord.getLastTurn().getCountCapturedStones());
+                precedentPlayer();
                 return true;
             } catch (InvalidGameTurnEncounteredException ex) {
                 return false;
@@ -382,8 +412,9 @@ public class Goban {
         if (gameRecord.hasFollowing()) {
             gameRecord.redo();
             try {
-                nextPlayer();
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
+                nextPlayer();
+                actualPlayer.addCapturedStones(gameRecord.getLastTurn().getCountCapturedStones());
                 return true;
             } catch (InvalidGameTurnEncounteredException ex) {
                 return false;
