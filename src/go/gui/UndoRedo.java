@@ -20,14 +20,16 @@ public class UndoRedo implements ActionListener {
         if (undo) {
             // Undo action
             gui.setRedoEnabled(true);
-            if (gui.getGoban().undo() == 1) {
+            gui.getGoban().undo();
+            if (!gui.getGoban().getGameRecord().hasPreceding()) {
                 gui.setUndoEnabled(false);
             }
         } else {
             // Redo action
             gui.setUndoEnabled(true);
-            if (gui.getGoban().redo() == 1) {
-                gui.setUndoEnabled(true);
+            gui.getGoban().redo();
+            if (!gui.getGoban().getGameRecord().hasFollowing()) {
+                gui.setRedoEnabled(false);
             }
         }
 

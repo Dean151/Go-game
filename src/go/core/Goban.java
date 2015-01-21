@@ -328,40 +328,40 @@ public class Goban {
 
     /**
      * Undo method for goban
-     * @return  >=0 if undo is successful, -1 otherwise
+     * @return true if successful, false otherwise
      */
-    public int undo () {
+    public boolean undo () {
         if (gameRecord.hasPreceding()) {
-            int nbr = gameRecord.undo();
+            gameRecord.undo();
             try {
                 precedentPlayer();
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
-                return nbr;
+                return true;
             } catch (InvalidGameTurnEncounteredException ex) {
-                return -1;
+                return false;
             }
         } else {
-            return -1;
+            return false;
         }
 
     }
 
     /**
      * Redo method for goban
-     * @return >=0 if undo is successful, -1 otherwise
+     * @return true if successful, false otherwise
      */
-    public int redo() {
+    public boolean redo() {
         if (gameRecord.hasFollowing()) {
-            int nbr = gameRecord.redo();
+            gameRecord.redo();
             try {
                 nextPlayer();
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
-                return nbr;
+                return true;
             } catch (InvalidGameTurnEncounteredException ex) {
-                return -1;
+                return false;
             }
         } else {
-            return -1;
+            return false;
         }
     }
 
