@@ -128,7 +128,7 @@ public class GUI extends JFrame {
                     int handicap = Integer.parseInt(handicapString);
                     Main.newGame(gobanSize, handicap);
                     GUI.this.setVisible(false);
-                    GUI.this.dispose();
+                    GUI.this.dispose();  // We close the actual window
                 } catch (Exception ex) {
 
                 }
@@ -144,13 +144,13 @@ public class GUI extends JFrame {
                 try {
                     JFileChooser openFile = new JFileChooser(".");
                     openFile.addChoosableFileFilter(new FileNameExtensionFilter(".save", "Go save game"));
-                    openFile.setAcceptAllFileFilterUsed(false);
+                    //openFile.setAcceptAllFileFilterUsed(false);
                     if (openFile.showOpenDialog(GUI.this) == JFileChooser.APPROVE_OPTION) {
                         String file = openFile.getSelectedFile().getCanonicalPath();
-                        System.out.println(file);
-                        dispose(); // We close the actual window
+                        GUI.this.setVisible(false);
+                        GUI.this.dispose(); // We close the actual window
 
-                        // TODO Open loaded game
+                        Main.loadGame(file);
                     }
 
                 } catch (Exception e) {

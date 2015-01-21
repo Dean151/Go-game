@@ -27,7 +27,9 @@ public class Main {
         GUI gui = new GUI(goban);
     }
 
-    public static void loadGame() {
-        // TODO load game
+    public static void loadGame(String filepath) {
+        GameRecord gr = GameRecord.load(filepath);
+        Goban goban = new Goban(gr);
+        GUI gui = new GUI(goban);
     }
 }
