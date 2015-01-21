@@ -75,6 +75,34 @@ public class Goban {
         gameRecord = new GameRecord(width, height, handicap);
     }
 
+    public Goban(GameRecord gr) {
+        this.gameRecord = gr;
+        this.width = gameRecord.getLastTurn().getGobanState().length;
+        this.height = gameRecord.getLastTurn().getGobanState()[0].length;
+        this.initialHandicap = gameRecord.getLastTurn().getHandicap();
+
+        intersections = new Intersection[width][height];
+        initGoban();
+
+        if (gameRecord.nbrPreceding() > initialHandicap ) {
+            if ((gameRecord.nbrPreceding() - initialHandicap)%2 == 1) {
+                actualPlayer = P2;
+            }
+            handicap = initialHandicap;
+        } else {
+            handicap = 1 + initialHandicap - gameRecord.nbrPreceding();
+        }
+
+        // FIXME spoted problem if you load a game with 1 handicap. If you save right after the player 1 put his first stone ...
+        // ... you should load a game where black play once before white, but this is white playing after loading
+
+        try {
+            takeGameTurn(this.gameRecord.getLastTurn(), P1, P2);
+        } catch (Exception ex) {
+
+        }
+    }
+
     private void initGoban() {
         lastCaptured = new HashSet<Intersection>();
 
