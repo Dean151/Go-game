@@ -32,19 +32,32 @@ public class Goban {
     /**
      * A record of the turns of a game played on the goban.
      */
-    private GameRecord gameRecord;
+    private final GameRecord gameRecord;
 
     /**
      * Holds the set of the last captured stones, for the GUI
      */
     private Set<Intersection> lastCaptured;
 
-    private Player P1;
-    private Player P2;
-    private Player actualPlayer;
+    /**
+     * Used for handling player order
+     */
+    private Player P1, P2, actualPlayer;
 
+    /**
+     * Initial Handicap
+     */
     private final int initialHandicap;
+
+    /**
+     * Counts played handicap stones
+     */
     private int handicap;
+
+    /**
+     * Counts sucessive passes
+     */
+    private int successivePassCount;
 
     /**
      * Constructor for a Goban with dimensions width x height.
@@ -52,15 +65,7 @@ public class Goban {
      * @param height
      */
     public Goban(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.initialHandicap = 0;
-
-        intersections = new Intersection[width][height];
-
-        initGoban();
-
-        gameRecord = new GameRecord(width, height, handicap);
+        this(width,height,0);
     }
 
     /**
@@ -70,10 +75,18 @@ public class Goban {
      * @param handicap
      */
     public Goban(int width, int height, int handicap) {
-        this(width,height);
+        this.width = width;
+        this.height = height;
+        this.initialHandicap = handicap;
+        this.successivePassCount = 0;
+        this.intersections = new Intersection[width][height];
         this.gameRecord = new GameRecord(width, height, handicap);
+        initGoban();
     }
 
+    /**
+     * Goban initialisator for constructors
+     */
     private void initGoban() {
         lastCaptured = new HashSet<Intersection>();
 
@@ -160,7 +173,7 @@ public class Goban {
      */
     public void pass(Player player) {
         gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), handicap, Collections.<Intersection>emptySet()));
-        nextPlayer(false);
+        nextPlayer();
     }
 
     /**
