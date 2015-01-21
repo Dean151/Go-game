@@ -48,6 +48,7 @@ public class GUI extends JFrame {
     private JMenu jMenuEdit;
     private JMenuItem jEditUndo;
     private JMenuItem jEditRedo;
+    private JMenuItem jEditPass;
 
     // About Menu
     private JMenu jMenuAbout;
@@ -211,6 +212,13 @@ public class GUI extends JFrame {
         jEditRedo.setEnabled(false);
         jEditRedo.addActionListener(new UndoRedo(this, false));
 
+        // Pass
+        jEditPass = new JMenuItem("Pass");
+        jEditPass.setAccelerator(KeyStroke.getKeyStroke("control P"));
+        jEditPass.setEnabled(true);
+        jEditPass.addActionListener(new PassMove(this));
+
+
         // About menu
         jMenuAbout = new JMenu("About");
         jAboutInfo = new JMenuItem("Informations");
@@ -230,6 +238,7 @@ public class GUI extends JFrame {
         // Adding items to edit menu
         jMenuEdit.add(jEditUndo);
         jMenuEdit.add(jEditRedo);
+        jMenuEdit.add(jEditPass);
 
         // Adding items to about menu
         jMenuAbout.add(jAboutInfo);
