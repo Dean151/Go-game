@@ -38,20 +38,18 @@ public class PassMove implements ActionListener {
         if (goban.getSuccessivePassCount() > 2 ) {
             Player odd = goban.getPlayer();
             int oddCount = odd.getCapturedStones();
-            String oddPlural = (oddCount != 1 ? "s" : "" );
 
             goban.nextPlayer();
 
             Player even = goban.getPlayer();
             int evenCount = even.getCapturedStones();
-            String evenPlural = (evenCount != 1 ? "s" : "" );
 
             goban.precedentPlayer();
 
             JOptionPane.showMessageDialog(gui,
-                    oddCount + " pierre" + oddPlural + " de " + odd + " ont été capturée" + oddPlural + "\n" +
-                    evenCount + " pierre" + evenPlural + " de " + even + " ont été capturée" + evenPlural + "\n" ,
-                    "Fin de partie",
+                    "The number of stones taken from " + odd + " is " + oddCount +"\n" +
+                    "The number of stones taken from " + odd + " is " + oddCount +"\n" ,
+                    "Game is finished",
                     JOptionPane.PLAIN_MESSAGE);
 
         }
