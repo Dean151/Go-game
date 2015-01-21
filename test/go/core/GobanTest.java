@@ -199,4 +199,22 @@ public class GobanTest {
         assertEquals(9,goban9.getWidth());
         assertEquals(9,goban9.getHeight());
     }
+
+    @Test
+    public void testPassCount() throws Exception {
+        assertEquals(0,goban9.getSuccessivePassCount());
+        goban9.pass(goban9.getPlayer());
+        goban9.pass(goban9.getPlayer());
+        assertEquals(2,goban9.getSuccessivePassCount());
+        goban9.play(1,1,goban9.getPlayer());
+        assertEquals(0,goban9.getSuccessivePassCount());
+
+        goban9.updatePassCount(true);
+        goban9.updatePassCount(true);
+        goban9.updatePassCount(true);
+        goban9.updatePassCount(true);
+        assertEquals(4,goban9.getSuccessivePassCount());
+        goban9.updatePassCount(false);
+        assertEquals(0,goban9.getSuccessivePassCount());
+    }
 }

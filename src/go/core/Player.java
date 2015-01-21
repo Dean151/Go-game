@@ -68,6 +68,7 @@ public class Player {
         if (x == -1 && y == -1) {
             GameRecord record = goban.getGameRecord();
             record.apply(record.getLastTurn().toNext(-1, -1, this.getIdentifier(), goban.getHandicap(), Collections.<Intersection>emptySet()));
+            goban.updatePassCount(true);
             return true;
         } else {
             return goban.play(goban.getIntersection(x,y),this);

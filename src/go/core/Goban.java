@@ -168,12 +168,31 @@ public class Goban {
     }
 
     /**
+     *
+     * @return the successive pass count
+     */
+    public int getSuccessivePassCount() { return successivePassCount; }
+
+    /**
      * Lets a given player pass.
      * @param player the player that is passing is turn.
      */
     public void pass(Player player) {
         gameRecord.apply(gameRecord.getLastTurn().toNext(-1,-1,player.getIdentifier(), handicap, Collections.<Intersection>emptySet()));
         nextPlayer();
+        updatePassCount(true);
+    }
+
+    /**
+     * Updates the successive pass count
+     * @param pass {@code true} if pass, {@code false} otherwise
+     */
+    public void updatePassCount(boolean pass) {
+        if (pass) {
+            successivePassCount++;
+        } else {
+            successivePassCount = 0;
+        }
     }
 
     /**
@@ -257,6 +276,7 @@ public class Goban {
         }
 
         lastCaptured = capturedStones;
+        updatePassCount(false);
         return true;
     }
 
