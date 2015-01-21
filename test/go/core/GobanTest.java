@@ -193,4 +193,10 @@ public class GobanTest {
     public void nullOutsideGoban() throws Exception {
         assertNull(goban9.getIntersection(10,10));
     }
+
+    @Test
+    public void getDimensions() throws Exception {
+        assertEquals(9,goban9.getWidth());
+        assertEquals(9,goban9.getHeight());
+    }
 }
