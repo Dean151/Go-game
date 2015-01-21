@@ -334,8 +334,9 @@ public class Goban {
         if (gameRecord.hasPreceding()) {
             gameRecord.undo();
             try {
-                precedentPlayer();
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
+                actualPlayer.removeCapturedStones(gameRecord.getLastTurn().getCountCapturedStones());
+                precedentPlayer();
                 return true;
             } catch (InvalidGameTurnEncounteredException ex) {
                 return false;
@@ -354,8 +355,9 @@ public class Goban {
         if (gameRecord.hasFollowing()) {
             gameRecord.redo();
             try {
-                nextPlayer();
                 takeGameTurn(gameRecord.getLastTurn(),P1,P2);
+                nextPlayer();
+                actualPlayer.addCapturedStones(gameRecord.getLastTurn().getCountCapturedStones());
                 return true;
             } catch (InvalidGameTurnEncounteredException ex) {
                 return false;
