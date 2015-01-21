@@ -304,10 +304,6 @@ public class Goban {
         int[][] gobanState = gameTurn.getGobanState();
         for (int x = 0; x < width ; x++) {
             for (int y = 0; y < height ; y++) {
-                Intersection intersection = getIntersection(x, y);
-                if (intersection == null) {
-                    throw new InvalidGameTurnEncounteredException("Unexpected board dimension mismatch", new OutOfGobanException("Intersection is out of range: x=" + x + " y=" + y));
-                }
                 switch (gobanState[x][y]) {
                     case 2:
                         play(getIntersection(x,y),two,false);
