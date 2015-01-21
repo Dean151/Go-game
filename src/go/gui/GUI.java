@@ -114,7 +114,7 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 String[] gobanSizeChoises = {"9x9", "13x13", "19x19"};
-                String[] handicapChoises = new String[10];
+                String[] handicapChoises = new String[9];
                 for (int i = 0; i < handicapChoises.length; i++) {
                     handicapChoises[i] = Integer.toString(i);
                 }
