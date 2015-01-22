@@ -108,7 +108,7 @@ public class Goban {
         try {
             takeGameTurn(this.gameRecord.getLastTurn(), P1, P2);
         } catch (Exception ex) {
-
+            // TODO support exception
         }
     }
 

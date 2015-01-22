@@ -34,10 +34,10 @@ public class HoverEffect extends MouseAdapter {
         if (goban.getIntersection(x,y).getStoneChain()==null) {
             switch (goban.getPlayer().getIdentifier()) {
                 case 1:
-                    intersection.setIcon(GUI.grid_p1_p);
+                    intersection.setIcon(GUI.grid_p1);
                     break;
                 case 2:
-                    intersection.setIcon(GUI.grid_p2_p);
+                    intersection.setIcon(GUI.grid_p2);
                     break;
             }
         } else {
