@@ -99,11 +99,8 @@ public class Goban {
             }
             handicap = initialHandicap;
         } else {
-            handicap = 1 + initialHandicap - gameRecord.nbrPreceding();
+            handicap = gameRecord.nbrPreceding();
         }
-
-        // FIXME spoted problem if you load a game with 1 handicap. If you save right after the player 1 put his first stone ...
-        // ... you should load a game where black play once before white, but this is white playing after loading
 
         try {
             takeGameTurn(this.gameRecord.getLastTurn(), P1, P2);
