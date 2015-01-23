@@ -2,6 +2,7 @@ package go.core;
 
 import go.core.exceptions.InvalidGameTurnEncounteredException;
 import go.core.exceptions.OutOfGobanException;
+import go.gui.PlayMove;
 
 import java.security.InvalidParameterException;
 import java.util.Collections;
@@ -428,6 +429,17 @@ public class Goban {
      */
     public Player getPlayer() {
         return actualPlayer;
+    }
+
+    public Player getPlayer(int p) {
+        switch (p) {
+            case 1:
+                return P1;
+            case 2:
+                return P2;
+            default:
+                return null;
+        }
     }
 
     public boolean nextPlayer() {

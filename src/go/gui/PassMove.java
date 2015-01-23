@@ -36,20 +36,15 @@ public class PassMove implements ActionListener {
         goban.pass(goban.getPlayer());
         System.out.println("Pass applied");
         if (goban.getSuccessivePassCount() > 2 ) {
-            Player odd = goban.getPlayer();
-            int oddCount = odd.getCapturedStones();
 
-            goban.nextPlayer();
-
-            Player even = goban.getPlayer();
-            int evenCount = even.getCapturedStones();
-
-            goban.precedentPlayer();
+            // Getting both players
+            Player odd = goban.getPlayer(1);
+            Player even = goban.getPlayer(2);
 
             JOptionPane.showMessageDialog(gui,
-                    "The number of stones taken from " + odd + " is " + oddCount +"\n" +
-                    "The number of stones taken from " + even + " is " + evenCount +"\n" ,
-                    "Game is finished",
+                    "The number of stones taken from " + odd + " is " + odd.getCapturedStones() +"\n" +
+                    "The number of stones taken from " + even + " is " + even.getCapturedStones() +"\n" ,
+                    "The game is over",
                     JOptionPane.PLAIN_MESSAGE);
 
         }
