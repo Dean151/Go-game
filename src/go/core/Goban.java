@@ -431,6 +431,11 @@ public class Goban {
         return actualPlayer;
     }
 
+    /**
+     * Get the player at the specified number
+     * @param p : identifier of the requested player
+     * @return the player if exist, null otherwise
+     */
     public Player getPlayer(int p) {
         switch (p) {
             case 1:
@@ -442,14 +447,27 @@ public class Goban {
         }
     }
 
+    /**
+     * Allow to the next player to play, usefull for move, pass or redo
+     * @return true if the player has changed
+     */
     public boolean nextPlayer() {
         return changePlayer(false);
     }
 
+    /**
+     * Allow the precedent player to play, usefull for undo
+     * @return true if the player has changed
+     */
     public boolean precedentPlayer() {
         return changePlayer(true);
     }
 
+    /**
+     * Change player
+     * @param undo true to make a precedent player to happen, false to make next player to happen
+     * @return true if the player has changed
+     */
     public boolean changePlayer(boolean undo) {
         if (handicap < initialHandicap && !undo) {
             handicap++;
