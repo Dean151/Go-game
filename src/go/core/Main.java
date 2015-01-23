@@ -27,6 +27,10 @@ public class Main {
         GUI gui = new GUI(goban);
     }
 
+    /**
+     * Loading game
+     * @param filepath the location of the file we want to load
+     */
     public static void loadGame(String filepath) {
         GameRecord gr = GameRecord.load(filepath);
         Goban goban = new Goban(gr);

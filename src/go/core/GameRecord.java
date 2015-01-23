@@ -26,6 +26,9 @@ public class GameRecord {
      */
     private final Stack<GameTurn> following;
 
+    /**
+     * Number of initial handicap : represent the number of stones that black will set on the Goban before playing
+     */
     private final int handicap;
 
     /**
@@ -34,11 +37,7 @@ public class GameRecord {
      * @param height
      */
     public GameRecord(int width, int height) {
-        preceding = new Stack<GameTurn>();
-        following = new Stack<GameTurn>();
-        GameTurn first = new GameTurn(width, height);
-        handicap = 0;
-        apply(first);
+        this(width, height, 0);
     }
 
     public GameRecord(int width, int height, int handicap) {
@@ -98,6 +97,10 @@ public class GameRecord {
         return preceding.size() > 1;
     }
 
+    /**
+     * Return the number of preceding states, ignoring the first one
+     * @return number of preceding states
+     */
     public int nbrPreceding() { return preceding.size() - 1; }
 
     /**
