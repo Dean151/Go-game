@@ -387,14 +387,18 @@ public class Goban {
      */
     public boolean undo () {
         if (gameRecord.hasPreceding()) {
-            GameTurn current = getGameRecord().getLastTurn();
+            GameTurn current = gameRecord.getLastTurn();
             gameRecord.undo();
+            GameTurn last = gameRecord.getLastTurn();
             try {
-                takeGameTurn(gameRecord.getLastTurn(),P1,P2);
+                takeGameTurn(last,P1,P2);
                 actualPlayer.removeCapturedStones(current.getCountCapturedStones());
                 precedentPlayer();
+                successivePassCount = last.getPassCount();
                 return true;
             } catch (InvalidGameTurnEncounteredException ex) {
+                successivePassCount = current.getPassCount();
+                gameRecord.redo();
                 return false;
             }
         } else {
@@ -409,13 +413,18 @@ public class Goban {
      */
     public boolean redo() {
         if (gameRecord.hasFollowing()) {
+            GameTurn current = gameRecord.getLastTurn();
             gameRecord.redo();
+            GameTurn next = gameRecord.getLastTurn();
             try {
-                takeGameTurn(gameRecord.getLastTurn(),P1,P2);
+                takeGameTurn(next,P1,P2);
                 nextPlayer();
                 actualPlayer.addCapturedStones(gameRecord.getLastTurn().getCountCapturedStones());
+                successivePassCount = next.getPassCount();
                 return true;
             } catch (InvalidGameTurnEncounteredException ex) {
+                successivePassCount = current.getPassCount();
+                gameRecord.undo();
                 return false;
             }
         } else {

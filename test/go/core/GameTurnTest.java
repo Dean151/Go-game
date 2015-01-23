@@ -86,4 +86,14 @@ public class GameTurnTest {
         assertEquals(A,copy);
     }
 
+    @Test
+    public void passCount() throws Exception {
+        GameTurn A = new GameTurn(9,9);
+
+        assertEquals(0,A.getPassCount());
+        A = A.toNext(-1,-1,1,emptySet).toNext(-1,-1,1,emptySet);
+        assertEquals(2,A.getPassCount());
+        A = A.toNext(5,5,1,emptySet);
+        assertEquals(0,A.getPassCount());
+    }
 }

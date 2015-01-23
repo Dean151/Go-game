@@ -30,6 +30,11 @@ public class GameTurn {
     private final int countCapturedStones;
 
     /**
+     * The pass count at the game turn level
+     */
+    private int passCount;
+
+    /**
      * Copy Constructor
      */
     public GameTurn(GameTurn source) {
@@ -39,6 +44,7 @@ public class GameTurn {
         y = source.y;
         hashCode = source.hashCode;
         countCapturedStones = source.countCapturedStones;
+        passCount = source.passCount;
         gobanState = new int[width][height];
         for (int i = 0; i < width ; i++) {
             gobanState[i] = source.gobanState[i].clone();
@@ -53,6 +59,7 @@ public class GameTurn {
     public GameTurn(int width, int height) {
         gobanState = new int[width][height];
         countCapturedStones = 0;
+        passCount = 0;
 
         // Move is virtual, x and y are set to -1
         x = -1;
@@ -86,13 +93,16 @@ public class GameTurn {
         // Applying the played stone change, if is not a pass move
         if ( x >= 0 && y >= 0 ) {
             gobanState[x][y] = playerId;
+            passCount = 0;
+        } else {
+            passCount = prev.passCount + 1;
         }
 
         // Setting all the freed intersections to 0, and counting the number of captured stones
         for(Intersection freedIntersection : freedIntersections) {
             gobanState[freedIntersection.getX()][freedIntersection.getY()] = 0;
         }
-        countCapturedStones = freedIntersections.size();
+        countCapturedStones = freedIntersections.size();;
 
         // Using Java Tools to make a pertinent hash on the goban state
         hashCode = Arrays.deepHashCode(gobanState);
@@ -136,6 +146,12 @@ public class GameTurn {
     public int getY() {
         return y;
     }
+
+    /**
+     *
+     * @return the pass count at given game turn.
+     */
+    public int getPassCount() { return passCount; }
 
     /**
      *
