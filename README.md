@@ -15,7 +15,7 @@ You can save and load games, and there is also a full handling of undo/redo.
 ![Go game image](http://dean.cafelembas.com/public/Jeux/GoGame.tiff)
 
 The game is fully functionnal, with all of the classical rules.
-You can set up 3 sizes of Goban : 9x9, 13x13 and 19x19, and choose how much handicap have against black.
+You can set up 3 sizes of Goban : 9x9, 13x13 and 19x19, and choose how much handicap white have against black.
 
 Ko rules, and captured stones rules are also handled.
 The game end when there is three consecutive pass move.
