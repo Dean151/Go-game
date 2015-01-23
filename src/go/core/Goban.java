@@ -88,7 +88,7 @@ public class Goban {
         this.gameRecord = gr;
         this.width = gameRecord.getLastTurn().getGobanState().length;
         this.height = gameRecord.getLastTurn().getGobanState()[0].length;
-        this.initialHandicap = gameRecord.getLastTurn().getHandicap();
+        this.initialHandicap = gameRecord.getHandicap();
 
         intersections = new Intersection[width][height];
         initGoban();

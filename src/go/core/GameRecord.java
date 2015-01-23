@@ -26,6 +26,8 @@ public class GameRecord {
      */
     private final Stack<GameTurn> following;
 
+    private final int handicap;
+
     /**
      * Constructs a new game record of dimensions width x height.
      * @param width
@@ -35,13 +37,15 @@ public class GameRecord {
         preceding = new Stack<GameTurn>();
         following = new Stack<GameTurn>();
         GameTurn first = new GameTurn(width, height);
+        handicap = 0;
         apply(first);
     }
 
     public GameRecord(int width, int height, int handicap) {
         preceding = new Stack<GameTurn>();
         following = new Stack<GameTurn>();
-        GameTurn first = new GameTurn(width, height, handicap);
+        GameTurn first = new GameTurn(width, height);
+        this.handicap = handicap;
         apply(first);
     }
 
@@ -50,7 +54,7 @@ public class GameRecord {
      * @param record the record to be copied.
      */
     public GameRecord(GameRecord record) {
-        this(record.preceding, record.following);
+        this(record.preceding, record.following, record.handicap);
     }
 
     /**
@@ -59,15 +63,20 @@ public class GameRecord {
      * @param preceding
      * @param following
      */
-    private GameRecord(Stack<GameTurn> preceding, Stack<GameTurn> following) {
+    private GameRecord(Stack<GameTurn> preceding, Stack<GameTurn> following, int handicap) {
         this.preceding = new Stack<GameTurn>();
         this.following = new Stack<GameTurn>();
+        this.handicap = handicap;
         for (GameTurn turn : preceding) {
             this.preceding.add(turn);
         }
         for (GameTurn turn : following) {
             this.following.add(turn);
         }
+    }
+
+    public int getHandicap() {
+        return handicap;
     }
 
     /**
@@ -155,7 +164,7 @@ public class GameRecord {
             writer.newLine();
             writer.write("  \"height\": " + preceding.peek().getGobanState()[0].length + ",");
             writer.newLine();
-            writer.write("  \"handicap\": " + preceding.peek().getHandicap() + ",");
+            writer.write("  \"handicap\": " + handicap + ",");
             writer.newLine();
 
             //Insanely Java Iterates the stack bottom to top

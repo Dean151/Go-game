@@ -29,15 +29,12 @@ public class GameTurn {
      */
     private final int countCapturedStones;
 
-    private final int handicap;
-
     /**
      * Copy Constructor
      */
     public GameTurn(GameTurn source) {
         int width = source.gobanState.length;
         int height = source.gobanState[0].length;
-        this.handicap = source.handicap;
         x = source.x;
         y = source.y;
         hashCode = source.hashCode;
@@ -56,20 +53,6 @@ public class GameTurn {
     public GameTurn(int width, int height) {
         gobanState = new int[width][height];
         countCapturedStones = 0;
-        this.handicap = 0;
-
-        // Move is virtual, x and y are set to -1
-        x = -1;
-        y = -1;
-
-        // Using Java Tools to make a pertinent hash on the goban state
-        hashCode = Arrays.deepHashCode(gobanState);
-    }
-
-    public GameTurn(int width, int height, int handicap) {
-        gobanState = new int[width][height];
-        countCapturedStones = 0;
-        this.handicap = handicap;
 
         // Move is virtual, x and y are set to -1
         x = -1;
@@ -92,7 +75,6 @@ public class GameTurn {
     private GameTurn(GameTurn prev, int X, int Y, int playerId, int handicap, Set<Intersection> freedIntersections ) {
         int width = prev.gobanState.length;
         int height = prev.gobanState[0].length;
-        this.handicap = handicap;
 
         gobanState = new int[width][height];
         for (int i = 0; i < width ; i++) {
@@ -153,15 +135,6 @@ public class GameTurn {
      */
     public int getY() {
         return y;
-    }
-
-
-    /**
-     *
-     * @return the handicap setting
-     */
-    public int getHandicap() {
-        return handicap;
     }
 
     /**

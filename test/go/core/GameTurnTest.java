@@ -86,10 +86,4 @@ public class GameTurnTest {
         assertEquals(A,copy);
     }
 
-    @Test
-    public void toNextWithHandicap() throws Exception {
-        GameTurn next = new GameTurn(9,9).toNext(1,1,1,5,emptySet);
-        assertEquals(5,next.getHandicap());
-    }
-
 }
