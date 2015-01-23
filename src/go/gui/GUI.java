@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
  */
 public class GUI extends JFrame {
     private static final int TOKEN_INITIAL_SIZE = 35;
-    private static final int MENU_SIZE = 40;
+    private static final int MENU_SIZE = 42;
 
     // Initialing sprites
     public static final ImageIcon grid_ul = new ImageIcon(new ImageIcon("sprites/ul.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
@@ -346,8 +346,6 @@ public class GUI extends JFrame {
                 jIntersections[x][y].setBorder(BorderFactory.createEmptyBorder());
                 jIntersections[x][y].setContentAreaFilled(false);
 
-                jIntersections[x][y].setMaximumSize(new java.awt.Dimension(100, 100));
-                jIntersections[x][y].setMinimumSize(new java.awt.Dimension(10, 10));
                 jIntersections[x][y].setPreferredSize(new java.awt.Dimension(TOKEN_INITIAL_SIZE, TOKEN_INITIAL_SIZE));
 
                 // Adding action
