@@ -69,14 +69,11 @@
                  version="true"
                  use="true"
                  classpath="${libDirectory}/${junit.jar}"
-                 windowtitle="Test API">
+                 windowtitle="Javadoc">
 
-            <doctitle><![CDATA[<h1>Test</h1>]]></doctitle>
-            <bottom><![CDATA[<i>Copyright &#169; 2000 Dummy Corp. All Rights Reserved.</i>]]></bottom>
+            <doctitle><![CDATA[<h1>Javadoc</h1>]]></doctitle>
+            <bottom><![CDATA[]]></bottom>
             <tag name="todo" scope="all" description="To do:"/>
-            <group title="Group 1 Packages" packages="com.dummy.test.a*"/>
-            <group title="Group 2 Packages" packages="com.dummy.test.b*:com.dummy.test.c*"/>
-            <link offline="true" href="http://docs.oracle.com/javase/7/docs/api/" packagelistLoc="C:\tmp"/>
             <link href="http://docs.oracle.com/javase/7/docs/api/"/>
         </javadoc>
     </target>
