@@ -47,6 +47,7 @@ public class PassMove implements ActionListener {
                     "The game is over",
                     JOptionPane.PLAIN_MESSAGE);
 
+            goban.undo();
         }
 
     }

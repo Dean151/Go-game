@@ -1,5 +1,9 @@
 package go.gui;
 
+import go.core.Goban;
+import go.core.Player;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -49,6 +53,21 @@ public class UndoRedo implements ActionListener {
             gui.getGoban().redo();
             if (!gui.getGoban().getGameRecord().hasFollowing()) {
                 gui.setRedoEnabled(false);
+            }
+            if (gui.getGoban().getSuccessivePassCount() > 2 ) {
+
+                // Getting both players
+                Player odd = gui.getGoban().getPlayer(1);
+                Player even = gui.getGoban().getPlayer(2);
+
+                JOptionPane.showMessageDialog(gui,
+                        "The number of stones taken from " + odd + " is " + odd.getCapturedStones() + "\n" +
+                                "The number of stones taken from " + even + " is " + even.getCapturedStones() + "\n",
+                        "The game is over",
+                        JOptionPane.PLAIN_MESSAGE);
+
+                gui.getGoban().undo();
+
             }
         }
 
