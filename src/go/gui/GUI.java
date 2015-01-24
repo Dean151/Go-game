@@ -318,7 +318,7 @@ public class GUI extends JFrame {
 
                 StoneChain chain = goban.getIntersection(x, y).getStoneChain();
                 if (chain != null) {
-                    jIntersections[x][y].setIcon(Sprite.getPlayerIcon(chain.getOwner().getIdentifier(), 0));
+                    jIntersections[x][y].setIcon(Sprite.getPlayerIcon(chain.getOwner().getIdentifier()));
                 } else {
                     jIntersections[x][y] = new JButton(Sprite.getGridIcon(goban, x, y, 0));
                 }
@@ -351,7 +351,7 @@ public class GUI extends JFrame {
             for (int y = 0; y < gobanHeight; y++) {
                 StoneChain sc = goban.getIntersection(x,y).getStoneChain();
                 if (sc != null) {
-                    jIntersections[x][y].setIcon(Sprite.getPlayerIcon(sc.getOwner().getIdentifier(), 0));
+                    jIntersections[x][y].setIcon(Sprite.getPlayerIcon(sc.getOwner().getIdentifier()));
                 } else {
                     jIntersections[x][y].setIcon(Sprite.getGridIcon(goban, x, y, 0));
                 }
@@ -375,13 +375,13 @@ public class GUI extends JFrame {
         for(StoneChain lchain : scorer.getDeadStones()) {
             owner = lchain.getOwner().getIdentifier();
             for(Intersection cross : lchain.getStones()) {
-                jIntersections[cross.getX()][cross.getY()].setIcon(Sprite.getPlayerIcon(owner, 3-owner));
+                jIntersections[cross.getX()][cross.getY()].setIcon(Sprite.getPlayerIcon(owner, 3-owner, goban, cross.getX(), cross.getY()));
             }
         }
         for(StoneChain lchain : scorer.getAliveStones()) {
             owner = lchain.getOwner().getIdentifier();
             for(Intersection cross : lchain.getStones()) {
-                jIntersections[cross.getX()][cross.getY()].setIcon(Sprite.getPlayerIcon(owner, 0));
+                jIntersections[cross.getX()][cross.getY()].setIcon(Sprite.getPlayerIcon(owner));
             }
         }
     }

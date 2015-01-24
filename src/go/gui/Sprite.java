@@ -37,7 +37,7 @@ public class Sprite {
     private static final ImageIcon mp1 = new ImageIcon(new ImageIcon("sprites/mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     private static final ImageIcon mp2 = new ImageIcon(new ImageIcon("sprites/mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
 
-    // Images that need initialisation
+    // Images that are frequently used need initialisation
     public static final ImageIcon grid_p1 = merge(new ArrayList<ImageIcon>(Arrays.asList(background, p1)));
     public static final ImageIcon grid_p2 = merge(new ArrayList<ImageIcon>(Arrays.asList(background, p2)));
     public static final ImageIcon grid_p1_c = merge(new ArrayList<ImageIcon>(Arrays.asList(background, p1, wrong)), new ArrayList<Float>(Arrays.asList(new Float(1.0), new Float(1.0), new Float(0.4))));
@@ -175,16 +175,29 @@ public class Sprite {
         }
     }
 
-    public static ImageIcon getPlayerIcon(int player, int owner) {
+    public static ImageIcon getPlayerIcon(int player) {
         switch (player) {
             case 1:
-                if (owner == 2) return merge(new ArrayList<ImageIcon>(Arrays.asList(background, p1, mp2)));
-                else return grid_p1;
+                return grid_p1;
             case 2:
-                if (owner == 1) return merge(new ArrayList<ImageIcon>(Arrays.asList(background, p2, mp1)));
-                else return grid_p2;
+                return grid_p2;
             default:
                 return null;
+        }
+    }
+
+    public static ImageIcon getPlayerIcon(int player, int owner, Goban goban, int x, int y) {
+        if (player != owner) {
+            switch (player) {
+                case 1:
+                    return merge(new ArrayList<ImageIcon>(Arrays.asList(getGridIcon(goban, x, y), p1, mp2)), new ArrayList<Float>(Arrays.asList(new Float(1), new Float(0.6), new Float(1))));
+                case 2:
+                    return merge(new ArrayList<ImageIcon>(Arrays.asList(getGridIcon(goban, x, y), p2, mp1)), new ArrayList<Float>(Arrays.asList(new Float(1), new Float(0.6), new Float(1))));
+                default:
+                    return null;
+            }
+        } else {
+            return getPlayerIcon(player);
         }
     }
 }
