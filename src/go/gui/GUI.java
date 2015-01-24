@@ -17,45 +17,8 @@ import java.awt.event.ActionListener;
  * Created by thomas on 15/01/15.
  */
 public class GUI extends JFrame {
-    private static final int TOKEN_INITIAL_SIZE = 35;
+    public static final int TOKEN_INITIAL_SIZE = 35;
     private static final int MENU_SIZE = 42;
-
-    // Initialing sprites
-    public static final ImageIcon grid_ul = new ImageIcon(new ImageIcon("sprites/ul.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_u = new ImageIcon(new ImageIcon("sprites/u.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_ur = new ImageIcon(new ImageIcon("sprites/ur.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_l = new ImageIcon(new ImageIcon("sprites/l.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_c = new ImageIcon(new ImageIcon("sprites/c.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_spot = new ImageIcon(new ImageIcon("sprites/spot.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_r = new ImageIcon(new ImageIcon("sprites/r.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_bl = new ImageIcon(new ImageIcon("sprites/bl.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_b = new ImageIcon(new ImageIcon("sprites/b.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_br = new ImageIcon(new ImageIcon("sprites/br.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-
-    public static final ImageIcon grid_p1 = new ImageIcon(new ImageIcon("sprites/p1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
-    public static final ImageIcon grid_p2 = new ImageIcon(new ImageIcon("sprites/p2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
-    public static final ImageIcon grid_p1_c = new ImageIcon(new ImageIcon("sprites/p1_c.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
-    public static final ImageIcon grid_p2_c = new ImageIcon(new ImageIcon("sprites/p2_c.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
-
-    public static final ImageIcon grid_ul_mp1 = new ImageIcon(new ImageIcon("sprites/ul_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_u_mp1 = new ImageIcon(new ImageIcon("sprites/u_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_ur_mp1 = new ImageIcon(new ImageIcon("sprites/ur_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_l_mp1 = new ImageIcon(new ImageIcon("sprites/l_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_c_mp1 = new ImageIcon(new ImageIcon("sprites/c_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_r_mp1 = new ImageIcon(new ImageIcon("sprites/r_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_bl_mp1 = new ImageIcon(new ImageIcon("sprites/bl_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_b_mp1 = new ImageIcon(new ImageIcon("sprites/b_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_br_mp1 = new ImageIcon(new ImageIcon("sprites/br_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-
-    public static final ImageIcon grid_ul_mp2 = new ImageIcon(new ImageIcon("sprites/ul_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_u_mp2 = new ImageIcon(new ImageIcon("sprites/u_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_ur_mp2 = new ImageIcon(new ImageIcon("sprites/ur_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_l_mp2 = new ImageIcon(new ImageIcon("sprites/l_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_c_mp2 = new ImageIcon(new ImageIcon("sprites/c_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_r_mp2 = new ImageIcon(new ImageIcon("sprites/r_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_bl_mp2 = new ImageIcon(new ImageIcon("sprites/bl_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_b_mp2 = new ImageIcon(new ImageIcon("sprites/b_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_br_mp2 = new ImageIcon(new ImageIcon("sprites/br_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
 
     private Goban goban;
     private Scorer scorer;
@@ -335,114 +298,6 @@ public class GUI extends JFrame {
         jScoreHelp.setEnabled(state);
     }
 
-
-    /**
-     * Allow to know if the intersection should be marked on the goban
-     * @param x x coord
-     * @param y y coord
-     * @return true if the intersection is marked
-     */
-    private boolean shouldBeSpot(int x, int y) {
-        int gobanWidth = goban.getWidth();
-        int gobanHeight = goban.getHeight();
-        int offset = 3;
-        if (gobanWidth < 10) offset = 2;
-
-        return (x == offset || x == (gobanWidth-1)/2 || x == gobanWidth-offset-1) && (y == offset || y == (gobanHeight-1)/2 || y == gobanHeight-offset-1);
-    }
-
-    public ImageIcon getGridIcon(int x, int y, int ownerID) {
-        int gobanWidth = goban.getWidth();
-        int gobanHeight = goban.getHeight();
-
-        switch (ownerID) {
-            case 1:
-                if (x == gobanWidth - 1) {
-                    if (y == 0) {
-                        return grid_ul_mp1;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_ur_mp1;
-                    } else {
-                        return grid_u_mp1;
-                    }
-                } else if (x == 0) {
-                    if (y == 0) {
-                        return grid_bl_mp1;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_br_mp1;
-                    } else {
-                        return grid_b_mp1;
-                    }
-                } else {
-                    if (y == 0) {
-                        return grid_l_mp1;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_r_mp1;
-                    } else {
-                        return grid_c_mp1;
-                    }
-                }
-            case 2:
-                if (x == gobanWidth - 1) {
-                    if (y == 0) {
-                        return grid_ul_mp2;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_ur_mp2;
-                    } else {
-                        return grid_u_mp2;
-                    }
-                } else if (x == 0) {
-                    if (y == 0) {
-                        return grid_bl_mp2;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_br_mp2;
-                    } else {
-                        return grid_b_mp2;
-                    }
-                } else {
-                    if (y == 0) {
-                        return grid_l_mp2;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_r_mp2;
-                    } else {
-                        return grid_c_mp2;
-                    }
-                }
-            case 0:
-            default:
-                if (x == gobanWidth - 1) {
-                    if (y == 0) {
-                        return grid_ul;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_ur;
-                    } else {
-                        return grid_u;
-                    }
-                } else if (x == 0) {
-                    if (y == 0) {
-                        return grid_bl;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_br;
-                    } else {
-                        return grid_b;
-                    }
-                } else {
-                    if (y == 0) {
-                        return grid_l;
-                    } else if (y == gobanHeight - 1) {
-                        return grid_r;
-                    } else {
-                        if (shouldBeSpot(x, y)) {
-                            return grid_spot;
-                        } else {
-                            return grid_c;
-                        }
-                    }
-                }
-        }
-
-    }
-
     /**
      * Draw Goban
      */
@@ -463,13 +318,9 @@ public class GUI extends JFrame {
 
                 StoneChain chain = goban.getIntersection(x, y).getStoneChain();
                 if (chain != null) {
-                    if (chain.getOwner().getIdentifier() == 1) {
-                        jIntersections[x][y] = new JButton(grid_p1);
-                    } else {
-                        jIntersections[x][y] = new JButton(grid_p2);
-                    }
+                    jIntersections[x][y].setIcon(Sprite.getPlayerIcon(chain.getOwner().getIdentifier(), 0));
                 } else {
-                    jIntersections[x][y] = new JButton(getGridIcon(x, y, 0));
+                    jIntersections[x][y] = new JButton(Sprite.getGridIcon(goban, x, y, 0));
                 }
 
                 jIntersections[x][y].setEnabled(true);
@@ -500,10 +351,9 @@ public class GUI extends JFrame {
             for (int y = 0; y < gobanHeight; y++) {
                 StoneChain sc = goban.getIntersection(x,y).getStoneChain();
                 if (sc != null) {
-                    if (sc.getOwner().getIdentifier() == 1) jIntersections[x][y].setIcon(grid_p1);
-                    else jIntersections[x][y].setIcon(grid_p2);
+                    jIntersections[x][y].setIcon(Sprite.getPlayerIcon(sc.getOwner().getIdentifier(), 0));
                 } else {
-                    jIntersections[x][y].setIcon(getGridIcon(x,y,0));
+                    jIntersections[x][y].setIcon(Sprite.getGridIcon(goban, x, y, 0));
                 }
             }
         }
@@ -519,21 +369,19 @@ public class GUI extends JFrame {
                 owner = island.getOwner().getIdentifier();
             }
             for(Intersection cross : island.getIntersections()) {
-                jIntersections[cross.getX()][cross.getY()].setIcon(getGridIcon(cross.getX(),cross.getY(),owner));
+                jIntersections[cross.getX()][cross.getY()].setIcon(Sprite.getGridIcon(goban, cross.getX(),cross.getY(),owner));
             }
         }
         for(StoneChain lchain : scorer.getDeadStones()) {
             owner = lchain.getOwner().getIdentifier();
             for(Intersection cross : lchain.getStones()) {
-                if (owner == 1) jIntersections[cross.getX()][cross.getY()].setIcon(grid_p1_c);
-                else jIntersections[cross.getX()][cross.getY()].setIcon(grid_p2_c);
+                jIntersections[cross.getX()][cross.getY()].setIcon(Sprite.getPlayerIcon(owner, 3-owner));
             }
         }
         for(StoneChain lchain : scorer.getAliveStones()) {
             owner = lchain.getOwner().getIdentifier();
             for(Intersection cross : lchain.getStones()) {
-                if (owner == 1) jIntersections[cross.getX()][cross.getY()].setIcon(grid_p1);
-                else jIntersections[cross.getX()][cross.getY()].setIcon(grid_p2);
+                jIntersections[cross.getX()][cross.getY()].setIcon(Sprite.getPlayerIcon(owner, 0));
             }
         }
     }
