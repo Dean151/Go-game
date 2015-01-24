@@ -38,22 +38,9 @@ public class PassMove implements ActionListener {
             if(goban.getSuccessivePassCount()==3) {
                 gui.initScorer();
                 gui.updateScore(null);
-                gui.setPassOrScoreEnabled(false);
+                gui.setPassEnabled(false);
+                gui.setScoreEnabled(true);
             }
         }
     }
 }
-
-/*if (gui.getGoban().getSuccessivePassCount() > 2 ) {
-                // Getting both players
-                Player odd = gui.getGoban().getPlayer(1);
-                Player even = gui.getGoban().getPlayer(2);
-
-                JOptionPane.showMessageDialog(gui,
-                        "The number of stones taken from " + odd + " is " + odd.getCapturedStones() + "\n" +
-                                "The number of stones taken from " + even + " is " + even.getCapturedStones() + "\n",
-                        "The game is over",
-                        JOptionPane.PLAIN_MESSAGE);
-
-                gui.getGoban().undo();
-}*/
