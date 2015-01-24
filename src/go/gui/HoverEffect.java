@@ -31,25 +31,27 @@ public class HoverEffect extends MouseAdapter {
      */
     @Override
     public void mouseEntered(MouseEvent e) {
-        if (goban.getIntersection(x,y).getStoneChain()==null) {
-            switch (goban.getPlayer().getIdentifier()) {
-                case 1:
-                    intersection.setIcon(GUI.grid_p1);
-                    break;
-                case 2:
-                    intersection.setIcon(GUI.grid_p2);
-                    break;
-            }
-        } else {
-            StoneChain sc = goban.getIntersection(x,y).getStoneChain();
-            switch (sc.getOwner().getIdentifier()) {
-                case 1:
-                    intersection.setIcon(GUI.grid_p1_c);
-                    break;
-                case 2:
-                    intersection.setIcon(GUI.grid_p2_c);
-                    break;
+        if(goban.getSuccessivePassCount()<3) {
+            if (goban.getIntersection(x,y).getStoneChain()==null) {
+                switch (goban.getPlayer().getIdentifier()) {
+                    case 1:
+                        intersection.setIcon(GUI.grid_p1);
+                        break;
+                    case 2:
+                        intersection.setIcon(GUI.grid_p2);
+                        break;
+                }
+            } else {
+                StoneChain sc = goban.getIntersection(x,y).getStoneChain();
+                switch (sc.getOwner().getIdentifier()) {
+                    case 1:
+                        intersection.setIcon(GUI.grid_p1_c);
+                        break;
+                    case 2:
+                        intersection.setIcon(GUI.grid_p2_c);
+                        break;
 
+                }
             }
         }
     }
@@ -61,12 +63,14 @@ public class HoverEffect extends MouseAdapter {
      */
     @Override
     public void mouseExited(MouseEvent e) {
-        StoneChain sc = goban.getIntersection(x,y).getStoneChain();
-        if (sc != null) {
-            if (sc.getOwner().getIdentifier() == 1) intersection.setIcon(GUI.grid_p1);
-            else intersection.setIcon(GUI.grid_p2);
-        } else {
-            intersection.setIcon(gui.getGridIcon(x,y));
+        if(goban.getSuccessivePassCount()<3) {
+            StoneChain sc = goban.getIntersection(x,y).getStoneChain();
+            if (sc != null) {
+                if (sc.getOwner().getIdentifier() == 1) intersection.setIcon(GUI.grid_p1);
+                else intersection.setIcon(GUI.grid_p2);
+            } else {
+                intersection.setIcon(gui.getGridIcon(x,y,0));
+            }
         }
     }
 }

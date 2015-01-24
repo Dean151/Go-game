@@ -2,6 +2,8 @@ package go.gui;
 
 import go.core.Goban;
 import go.core.Player;
+import go.core.StoneChain;
+import go.score.Island;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,22 +44,25 @@ public class PlayMove implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        Player player = gui.getGoban().getPlayer();
+        if(gui.getGoban().getSuccessivePassCount()<3) {
+            Player player = gui.getGoban().getPlayer();
+            System.out.println(player+" want to play in ["+x+"-"+y+"]");
+            try {
+                if (gui.getGoban().play(x, y, player)) {
+                    System.out.println("Move applied");
+                    gui.getGoban().nextPlayer();
+                    gui.updateGoban();
 
-        System.out.println(player+" want to play in ["+x+"-"+y+"]");
+                    // Enabling undo, disabling redo
+                    gui.setUndoEnabled(true);
+                    gui.setRedoEnabled(false);
+                }
+            } catch (Exception ex) {
 
-        try {
-            if (gui.getGoban().play(x, y, player)) {
-                System.out.println("Move applied");
-                gui.getGoban().nextPlayer();
-                gui.updateGoban();
-
-                // Enabling undo, disabling redo
-                gui.setUndoEnabled(true);
-                gui.setRedoEnabled(false);
             }
-        } catch (Exception ex) {
-
+        } else {
+            StoneChain chain = gui.getGoban().getIntersection(x,y).getStoneChain();
+            gui.updateScore(chain);
         }
     }
 }
