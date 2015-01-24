@@ -31,32 +31,31 @@ public class GUI extends JFrame {
     public static final ImageIcon grid_bl = new ImageIcon(new ImageIcon("sprites/bl.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_b = new ImageIcon(new ImageIcon("sprites/b.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_br = new ImageIcon(new ImageIcon("sprites/br.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+
     public static final ImageIcon grid_p1 = new ImageIcon(new ImageIcon("sprites/p1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon grid_p2 = new ImageIcon(new ImageIcon("sprites/p2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon grid_p1_c = new ImageIcon(new ImageIcon("sprites/p1_c.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon grid_p2_c = new ImageIcon(new ImageIcon("sprites/p2_c.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
+
     public static final ImageIcon grid_ul_mp1 = new ImageIcon(new ImageIcon("sprites/ul_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_u_mp1 = new ImageIcon(new ImageIcon("sprites/u_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_ur_mp1 = new ImageIcon(new ImageIcon("sprites/ur_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_l_mp1 = new ImageIcon(new ImageIcon("sprites/l_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_c_mp1 = new ImageIcon(new ImageIcon("sprites/c_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_spot_mp1 = new ImageIcon(new ImageIcon("sprites/c_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_r_mp1 = new ImageIcon(new ImageIcon("sprites/r_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_bl_mp1 = new ImageIcon(new ImageIcon("sprites/bl_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_b_mp1 = new ImageIcon(new ImageIcon("sprites/b_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_br_mp1 = new ImageIcon(new ImageIcon("sprites/br_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+
     public static final ImageIcon grid_ul_mp2 = new ImageIcon(new ImageIcon("sprites/ul_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_u_mp2 = new ImageIcon(new ImageIcon("sprites/u_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_ur_mp2 = new ImageIcon(new ImageIcon("sprites/ur_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_l_mp2 = new ImageIcon(new ImageIcon("sprites/l_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_c_mp2 = new ImageIcon(new ImageIcon("sprites/c_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_spot_mp2 = new ImageIcon(new ImageIcon("sprites/c_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_r_mp2 = new ImageIcon(new ImageIcon("sprites/r_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_bl_mp2 = new ImageIcon(new ImageIcon("sprites/bl_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_b_mp2 = new ImageIcon(new ImageIcon("sprites/b_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
     public static final ImageIcon grid_br_mp2 = new ImageIcon(new ImageIcon("sprites/br_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
-    public static final ImageIcon grid_p1_mp2 = new ImageIcon(new ImageIcon("sprites/p1_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
-    public static final ImageIcon grid_p2_mp1 = new ImageIcon(new ImageIcon("sprites/p2_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
 
     private Goban goban;
     private Scorer scorer;
@@ -327,7 +326,14 @@ public class GUI extends JFrame {
         jEditRedo.setEnabled(state);
     }
 
-    public void setPassOrScoreEnabled(boolean state) { jEditPass.setEnabled(state); jScoreValidate.setEnabled(!state); jScoreHelp.setEnabled(!state);}
+    public void setPassEnabled(boolean state) {
+        jEditPass.setEnabled(state);
+    }
+
+    public void setScoreEnabled(boolean state) {
+        jScoreValidate.setEnabled(state);
+        jScoreHelp.setEnabled(state);
+    }
 
 
     /**
@@ -373,11 +379,7 @@ public class GUI extends JFrame {
                     } else if (y == gobanHeight - 1) {
                         return grid_r_mp1;
                     } else {
-                        if (shouldBeSpot(x, y)) {
-                            return grid_spot_mp1;
-                        } else {
-                            return grid_c_mp1;
-                        }
+                        return grid_c_mp1;
                     }
                 }
             case 2:
@@ -403,11 +405,7 @@ public class GUI extends JFrame {
                     } else if (y == gobanHeight - 1) {
                         return grid_r_mp2;
                     } else {
-                        if (shouldBeSpot(x, y)) {
-                            return grid_spot_mp2;
-                        } else {
-                            return grid_c_mp2;
-                        }
+                        return grid_c_mp2;
                     }
                 }
             case 0:
@@ -527,8 +525,8 @@ public class GUI extends JFrame {
         for(StoneChain lchain : scorer.getDeadStones()) {
             owner = lchain.getOwner().getIdentifier();
             for(Intersection cross : lchain.getStones()) {
-                if (owner == 1) jIntersections[cross.getX()][cross.getY()].setIcon(grid_p1_mp2);
-                else jIntersections[cross.getX()][cross.getY()].setIcon(grid_p2_mp1);
+                if (owner == 1) jIntersections[cross.getX()][cross.getY()].setIcon(grid_p1_c);
+                else jIntersections[cross.getX()][cross.getY()].setIcon(grid_p2_c);
             }
         }
         for(StoneChain lchain : scorer.getAliveStones()) {

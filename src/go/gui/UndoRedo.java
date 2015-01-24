@@ -41,9 +41,10 @@ public class UndoRedo implements ActionListener {
                 // Undo action
                 gui.setRedoEnabled(true);
                 gui.getGoban().undo();
+                gui.setPassEnabled(true);
+                gui.setScoreEnabled(false);
                 if (!gui.getGoban().getGameRecord().hasPreceding()) {
                     gui.setUndoEnabled(false);
-                    gui.setPassOrScoreEnabled(true);
                 }
             } else {
                 // Redo action
@@ -57,17 +58,3 @@ public class UndoRedo implements ActionListener {
         }
     }
 }
-
-/*if (gui.getGoban().getSuccessivePassCount() > 2 ) {
-                // Getting both players
-                Player odd = gui.getGoban().getPlayer(1);
-                Player even = gui.getGoban().getPlayer(2);
-
-                JOptionPane.showMessageDialog(gui,
-                        "The number of stones taken from " + odd + " is " + odd.getCapturedStones() + "\n" +
-                                "The number of stones taken from " + even + " is " + even.getCapturedStones() + "\n",
-                        "The game is over",
-                        JOptionPane.PLAIN_MESSAGE);
-
-                gui.getGoban().undo();
-}*/
