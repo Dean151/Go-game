@@ -25,13 +25,13 @@ public class ValidateScore implements ActionListener {
         Player odd = gui.getGoban().getPlayer(1);
         Player even = gui.getGoban().getPlayer(2);
         int [] score = scorer.outputScore();
-        float Wscore = (float) (score[1]-score[0]);
+        double Wscore = (double) (score[1]-score[0]) + 6.5;
 
         JOptionPane.showMessageDialog(gui, "The number of stones taken from Black is " + odd.getCapturedStones() + "\n" +
                         "The number of stones taken from White is " + even.getCapturedStones() + "\n" +
                         "The Komi is set a a 6.5 bonus for White\n" +
-                        "The final score is Black " + score[0] + "- White " + score[1] + ".5\n" +
-                        (Wscore>0?"White":"Black") + " wins by " + Wscore + " Points.\n",
+                        "The final score is Black " + score[0] + " - White " + ((double) score[1] + 6.5) + "\n" +
+                        (Wscore>0?"White":"Black") + " wins by " + Math.abs(Wscore) + " Points.\n",
 
                 "Game Score",
                 JOptionPane.PLAIN_MESSAGE);
