@@ -1,9 +1,11 @@
 package go.gui;
 
 import go.core.Goban;
+import go.core.Intersection;
 import go.core.Main;
 import go.core.StoneChain;
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+import go.score.Island;
+import go.score.Scorer;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -33,8 +35,31 @@ public class GUI extends JFrame {
     public static final ImageIcon grid_p2 = new ImageIcon(new ImageIcon("sprites/p2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon grid_p1_c = new ImageIcon(new ImageIcon("sprites/p1_c.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
     public static final ImageIcon grid_p2_c = new ImageIcon(new ImageIcon("sprites/p2_c.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
+    public static final ImageIcon grid_ul_mp1 = new ImageIcon(new ImageIcon("sprites/ul_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_u_mp1 = new ImageIcon(new ImageIcon("sprites/u_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_ur_mp1 = new ImageIcon(new ImageIcon("sprites/ur_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_l_mp1 = new ImageIcon(new ImageIcon("sprites/l_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_c_mp1 = new ImageIcon(new ImageIcon("sprites/c_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_spot_mp1 = new ImageIcon(new ImageIcon("sprites/c_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_r_mp1 = new ImageIcon(new ImageIcon("sprites/r_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_bl_mp1 = new ImageIcon(new ImageIcon("sprites/bl_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_b_mp1 = new ImageIcon(new ImageIcon("sprites/b_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_br_mp1 = new ImageIcon(new ImageIcon("sprites/br_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_ul_mp2 = new ImageIcon(new ImageIcon("sprites/ul_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_u_mp2 = new ImageIcon(new ImageIcon("sprites/u_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_ur_mp2 = new ImageIcon(new ImageIcon("sprites/ur_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_l_mp2 = new ImageIcon(new ImageIcon("sprites/l_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_c_mp2 = new ImageIcon(new ImageIcon("sprites/c_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_spot_mp2 = new ImageIcon(new ImageIcon("sprites/c_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_r_mp2 = new ImageIcon(new ImageIcon("sprites/r_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_bl_mp2 = new ImageIcon(new ImageIcon("sprites/bl_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_b_mp2 = new ImageIcon(new ImageIcon("sprites/b_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_br_mp2 = new ImageIcon(new ImageIcon("sprites/br_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_FAST));
+    public static final ImageIcon grid_p1_mp2 = new ImageIcon(new ImageIcon("sprites/p1_mp2.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
+    public static final ImageIcon grid_p2_mp1 = new ImageIcon(new ImageIcon("sprites/p2_mp1.png").getImage().getScaledInstance(TOKEN_INITIAL_SIZE,TOKEN_INITIAL_SIZE, Image.SCALE_SMOOTH));
 
     private Goban goban;
+    private Scorer scorer;
 
     private int height;
     private int width;
@@ -57,6 +82,11 @@ public class GUI extends JFrame {
     private JMenu jMenuAbout;
     private JMenuItem jAboutInfo;
 
+    // Score Menu
+    private JMenu jMenuScore;
+    private JMenuItem jScoreHelp;
+    private JMenuItem jScoreValidate;
+
     // Goban
     private JPanel jGoban;
     private JButton[][] jIntersections;
@@ -67,6 +97,7 @@ public class GUI extends JFrame {
      */
     public GUI(Goban goban) {
         this.goban = goban;
+        this.scorer = new Scorer(goban);
 
         this.height = TOKEN_INITIAL_SIZE * goban.getHeight() + MENU_SIZE;
         this.width = TOKEN_INITIAL_SIZE * goban.getWidth();
@@ -86,8 +117,20 @@ public class GUI extends JFrame {
         pack();
     }
 
+    /**
+     *
+     * @return associated goban
+     */
     public Goban getGoban() {
         return goban;
+    }
+
+    public Scorer getScorer() {
+        return scorer;
+    }
+
+    public void initScorer() {
+        scorer.init();
     }
 
     /**
@@ -249,10 +292,31 @@ public class GUI extends JFrame {
         // Adding items to about menu
         jMenuAbout.add(jAboutInfo);
 
+        // Optional counting menu
+        jMenuScore = new JMenu("Score");
+        jScoreHelp = new JMenuItem("Help");
+        jScoreHelp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(GUI.this, "To get the score of the game please click on dead stone chains inside an enemy's territory.\n" +
+                                                        "Clicking a StoneChain toggles it's 'life' status.\n"+
+                                                        "Once this user input complete, please use the validate command","Score Help", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
+        jScoreHelp.setEnabled(false);
+        jScoreValidate = new JMenuItem("Validate");
+        jScoreValidate.setAccelerator(KeyStroke.getKeyStroke("control V"));
+        jScoreValidate.addActionListener(new ValidateScore(this));
+        jScoreValidate.setEnabled(false);
+        jScoreValidate.setEnabled(false);
+        jMenuScore.add(jScoreHelp);
+        jMenuScore.add(jScoreValidate);
+
         // Adding Menus to Bar
         jMenuBar.add(jMenuGame);
         jMenuBar.add(jMenuEdit);
         jMenuBar.add(jMenuAbout);
+        jMenuBar.add(jMenuScore);
     }
 
     public void setUndoEnabled(boolean state) {
@@ -262,6 +326,9 @@ public class GUI extends JFrame {
     public void setRedoEnabled(boolean state) {
         jEditRedo.setEnabled(state);
     }
+
+    public void setPassOrScoreEnabled(boolean state) { jEditPass.setEnabled(state); jScoreValidate.setEnabled(!state); jScoreHelp.setEnabled(!state);}
+
 
     /**
      * Allow to know if the intersection should be marked on the goban
@@ -278,39 +345,104 @@ public class GUI extends JFrame {
         return (x == offset || x == (gobanWidth-1)/2 || x == gobanWidth-offset-1) && (y == offset || y == (gobanHeight-1)/2 || y == gobanHeight-offset-1);
     }
 
-    public ImageIcon getGridIcon(int x, int y) {
+    public ImageIcon getGridIcon(int x, int y, int ownerID) {
         int gobanWidth = goban.getWidth();
         int gobanHeight = goban.getHeight();
 
-        if (x == gobanWidth - 1) {
-            if (y == 0) {
-                return grid_ul;
-            } else if (y == gobanHeight - 1) {
-                return grid_ur;
-            } else {
-                return grid_u;
-            }
-        } else if (x == 0) {
-            if (y == 0) {
-                return grid_bl;
-            } else if (y == gobanHeight - 1) {
-                return grid_br;
-            } else {
-                return grid_b;
-            }
-        } else {
-            if (y == 0) {
-                return grid_l;
-            } else if (y == gobanHeight - 1) {
-                return grid_r;
-            } else {
-                if (shouldBeSpot(x, y)) {
-                    return grid_spot;
+        switch (ownerID) {
+            case 1:
+                if (x == gobanWidth - 1) {
+                    if (y == 0) {
+                        return grid_ul_mp1;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_ur_mp1;
+                    } else {
+                        return grid_u_mp1;
+                    }
+                } else if (x == 0) {
+                    if (y == 0) {
+                        return grid_bl_mp1;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_br_mp1;
+                    } else {
+                        return grid_b_mp1;
+                    }
                 } else {
-                    return grid_c;
+                    if (y == 0) {
+                        return grid_l_mp1;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_r_mp1;
+                    } else {
+                        if (shouldBeSpot(x, y)) {
+                            return grid_spot_mp1;
+                        } else {
+                            return grid_c_mp1;
+                        }
+                    }
                 }
-            }
+            case 2:
+                if (x == gobanWidth - 1) {
+                    if (y == 0) {
+                        return grid_ul_mp2;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_ur_mp2;
+                    } else {
+                        return grid_u_mp2;
+                    }
+                } else if (x == 0) {
+                    if (y == 0) {
+                        return grid_bl_mp2;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_br_mp2;
+                    } else {
+                        return grid_b_mp2;
+                    }
+                } else {
+                    if (y == 0) {
+                        return grid_l_mp2;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_r_mp2;
+                    } else {
+                        if (shouldBeSpot(x, y)) {
+                            return grid_spot_mp2;
+                        } else {
+                            return grid_c_mp2;
+                        }
+                    }
+                }
+            case 0:
+            default:
+                if (x == gobanWidth - 1) {
+                    if (y == 0) {
+                        return grid_ul;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_ur;
+                    } else {
+                        return grid_u;
+                    }
+                } else if (x == 0) {
+                    if (y == 0) {
+                        return grid_bl;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_br;
+                    } else {
+                        return grid_b;
+                    }
+                } else {
+                    if (y == 0) {
+                        return grid_l;
+                    } else if (y == gobanHeight - 1) {
+                        return grid_r;
+                    } else {
+                        if (shouldBeSpot(x, y)) {
+                            return grid_spot;
+                        } else {
+                            return grid_c;
+                        }
+                    }
+                }
         }
+
     }
 
     /**
@@ -339,7 +471,7 @@ public class GUI extends JFrame {
                         jIntersections[x][y] = new JButton(grid_p2);
                     }
                 } else {
-                    jIntersections[x][y] = new JButton(getGridIcon(x, y));
+                    jIntersections[x][y] = new JButton(getGridIcon(x, y, 0));
                 }
 
                 jIntersections[x][y].setEnabled(true);
@@ -373,8 +505,37 @@ public class GUI extends JFrame {
                     if (sc.getOwner().getIdentifier() == 1) jIntersections[x][y].setIcon(grid_p1);
                     else jIntersections[x][y].setIcon(grid_p2);
                 } else {
-                    jIntersections[x][y].setIcon(getGridIcon(x,y));
+                    jIntersections[x][y].setIcon(getGridIcon(x,y,0));
                 }
+            }
+        }
+    }
+
+    public void updateScore(StoneChain chain) {
+        int owner;
+        scorer.flipDeathStatus(chain);
+        for(Island island : scorer.getIslands() ) {
+            if(island.getOwner()==null) {
+                owner = 0;
+            } else {
+                owner = island.getOwner().getIdentifier();
+            }
+            for(Intersection cross : island.getIntersections()) {
+                jIntersections[cross.getX()][cross.getY()].setIcon(getGridIcon(cross.getX(),cross.getY(),owner));
+            }
+        }
+        for(StoneChain lchain : scorer.getDeadStones()) {
+            owner = lchain.getOwner().getIdentifier();
+            for(Intersection cross : lchain.getStones()) {
+                if (owner == 1) jIntersections[cross.getX()][cross.getY()].setIcon(grid_p1_mp2);
+                else jIntersections[cross.getX()][cross.getY()].setIcon(grid_p2_mp1);
+            }
+        }
+        for(StoneChain lchain : scorer.getAliveStones()) {
+            owner = lchain.getOwner().getIdentifier();
+            for(Intersection cross : lchain.getStones()) {
+                if (owner == 1) jIntersections[cross.getX()][cross.getY()].setIcon(grid_p1);
+                else jIntersections[cross.getX()][cross.getY()].setIcon(grid_p2);
             }
         }
     }

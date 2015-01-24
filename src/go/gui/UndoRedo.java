@@ -1,9 +1,5 @@
 package go.gui;
 
-import go.core.Goban;
-import go.core.Player;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -40,22 +36,29 @@ public class UndoRedo implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (undo) {
-            // Undo action
-            gui.setRedoEnabled(true);
-            gui.getGoban().undo();
-            if (!gui.getGoban().getGameRecord().hasPreceding()) {
-                gui.setUndoEnabled(false);
+        if(gui.getGoban().getSuccessivePassCount()<3 || undo) {
+            if (undo) {
+                // Undo action
+                gui.setRedoEnabled(true);
+                gui.getGoban().undo();
+                if (!gui.getGoban().getGameRecord().hasPreceding()) {
+                    gui.setUndoEnabled(false);
+                    gui.setPassOrScoreEnabled(true);
+                }
+            } else {
+                // Redo action
+                gui.setUndoEnabled(true);
+                gui.getGoban().redo();
+                if (!gui.getGoban().getGameRecord().hasFollowing()) {
+                    gui.setRedoEnabled(false);
+                }
             }
-        } else {
-            // Redo action
-            gui.setUndoEnabled(true);
-            gui.getGoban().redo();
-            if (!gui.getGoban().getGameRecord().hasFollowing()) {
-                gui.setRedoEnabled(false);
-            }
-            if (gui.getGoban().getSuccessivePassCount() > 2 ) {
+            gui.updateGoban();
+        }
+    }
+}
 
+/*if (gui.getGoban().getSuccessivePassCount() > 2 ) {
                 // Getting both players
                 Player odd = gui.getGoban().getPlayer(1);
                 Player even = gui.getGoban().getPlayer(2);
@@ -67,10 +70,4 @@ public class UndoRedo implements ActionListener {
                         JOptionPane.PLAIN_MESSAGE);
 
                 gui.getGoban().undo();
-
-            }
-        }
-
-        gui.updateGoban();
-    }
-}
+}*/
