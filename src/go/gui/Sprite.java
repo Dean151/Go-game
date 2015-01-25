@@ -43,7 +43,7 @@ public class Sprite {
     public static final ImageIcon grid_p2_c = merge(new ArrayList<ImageIcon>(Arrays.asList(background, p2, wrong)), new ArrayList<Float>(Arrays.asList(new Float(1.0), new Float(1.0), new Float(0.4))));
 
     /**
-     * Merge the images listes in ArrayList, all with a 1.0 alpha transparency
+     * Merge the images listed in ArrayList, all with a 1.0 alpha transparency
      * @param images list of ImageIcons to merge
      * @return ImageIcon result of the merge
      */
@@ -58,7 +58,7 @@ public class Sprite {
     }
 
     /**
-     * Merge the images listes in ArrayList, with the corresponding alpha transparency
+     * Merge the images listed in ArrayList, with the corresponding alpha transparency
      * @param images list of ImageIcons to merge
      * @param transparency list of alpha transparency
      * @return ImageIcon result of the merge
