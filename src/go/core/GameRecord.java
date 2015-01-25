@@ -284,7 +284,7 @@ public class GameRecord {
             }
 
         } catch (Exception ex) {
-            //TODO handle ex
+            ex.getLocalizedMessage();
         }
 
         return record;

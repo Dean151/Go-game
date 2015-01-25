@@ -318,7 +318,7 @@ public class GUI extends JFrame {
 
                 StoneChain chain = goban.getIntersection(x, y).getStoneChain();
                 if (chain != null) {
-                    jIntersections[x][y].setIcon(Sprite.getPlayerIcon(chain.getOwner().getIdentifier()));
+                    jIntersections[x][y] = new JButton(Sprite.getPlayerIcon(chain.getOwner().getIdentifier()));
                 } else {
                     jIntersections[x][y] = new JButton(Sprite.getGridIcon(goban, x, y, 0));
                 }
